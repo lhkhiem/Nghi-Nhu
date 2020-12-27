@@ -1,0 +1,28 @@
+﻿@model List<Models.ViewModels.CartItemViewModel>
+<div class="header-middle-right">
+    <ul class="hm-menu">
+        <li class="hm-minicart">
+            <div class="hm-minicart-trigger">
+                <span class="item-icon"></span>
+                <span class="item-text">
+                    <span id="totalMiniCart">0 đ</span>
+                    <span id="quantityMiniCart" class="cart-item-count"></span>
+                </span>
+            </div>
+            <span></span>
+            <div class="minicart">
+                <ul id="listItem" class="minicart-product-list">
+                </ul>
+                <div class="minicart-button">
+                    <a href="/gio-hang/" class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                        <span>Giỏ hàng</span>
+                    </a>
+                    <a href="/thanh-toan/" class="li-button li-button-fullwidth li-button-sm">
+                        <span>Đặt hàng</span>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <!-- Header Mini Cart Area End Here -->
+    </ul>
+</div>

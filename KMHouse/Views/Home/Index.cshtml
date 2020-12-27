@@ -1,0 +1,556 @@
+﻿@using Models.DAO
+@{
+    var dao = new ProductCategoryDao();
+    var productDao = new ProductDao();
+    ViewBag.Title = "Nghi Như Computer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var slide = (List<Models.EF.Slide>)ViewBag.Slide;
+    var productCategory = (List<Models.EF.ProductCategory>)ViewBag.ProductCategory;
+    var product = (List<Models.ViewModels.ProductViewModel>)ViewBag.Product;
+
+}
+<div class="intro-slider-container">
+    <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
+                        "nav": false,
+						"autoplay":true,
+						"autoplayTimeout":3600,
+                        "responsive": {
+                            "992": {
+                                "nav": true
+                            }
+                        }
+                    }'>
+        @foreach (var item in slide)
+        {
+            <div class="intro-slide" style="background-image: url(@item.Image);">
+                <div class="container intro-content">
+                    <div class="row">
+                        <div class="col-auto offset-lg-3 intro-col">
+                            <h3 class="intro-subtitle">@item.Caption1</h3><!-- End .h3 intro-subtitle -->
+                            <h1 class="intro-title">
+                                @item.Caption2 <br>@item.Caption3
+                                <span>
+                                    <sup class="font-weight-light">@item.Caption4</sup>
+                                    <span class="text-primary">@item.Caption5<sup>@item.Caption6</sup></span>
+                                </span>
+                            </h1><!-- End .intro-title -->
+
+                            <a href="@item.Link" class="btn btn-outline-primary-2">
+                                <span>Xem ngay</span>
+                                <i class="icon-long-arrow-right"></i>
+                            </a>
+                        </div><!-- End .col-auto offset-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container intro-content -->
+            </div><!-- End .intro-slide -->
+        }
+    </div><!-- End .owl-carousel owl-simple -->
+
+    <span class="slider-loader"></span><!-- End .slider-loader -->
+</div><!-- End .intro-slider-container -->
+
+<div class="mb-4"></div><!-- End .mb-2 -->
+<div class="bg-light pt-3 pb-5">
+    <div class="container">
+        <div class="heading heading-flex heading-border mb-3">
+            <div class="heading-left">
+                <h2 class="title">Bán chạy</h2><!-- End .title -->
+            </div><!-- End .heading-left -->
+
+            <div class="heading-right">
+                <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" id="hot-all-link" data-toggle="tab" href="#" role="tab" aria-controls="hot-all-tab" aria-selected="true">Xem thêm</a>
+                    </li>
+                </ul>
+            </div><!-- End .heading-right -->
+        </div><!-- End .heading -->
+
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel" aria-labelledby="hot-all-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                     data-owl-options='{
+                                    "nav": false,
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": true,
+                                    "autoplay":true,
+                                    "autoplayTimeout":4800,
+                                    "responsive": {
+                                        "0": {
+                                            "items":1
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1280": {
+                                            "items":5,
+                                            "nav": true
+                                        }
+                                    }
+                                }'>
+                    @foreach (var itemTopHot in product.Where(x => x.TopHot != null && x.TopHot > DateTime.Now).OrderByDescending(x => x.CreateDate))
+                    {
+                        <div class="product">
+                            <figure class="product-media">
+                                <span class="product-label label-new">Mới</span>
+                                <a href="/chi-tiet/@itemTopHot.MetaTitle-@itemTopHot.ID">
+                                    <img src="@itemTopHot.Image" alt="@itemTopHot.Name" class="product-image">
+                                </a>
+
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>Thêm vào giỏ</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="/san-pham/@itemTopHot.MetaTitleProductCategory-@itemTopHot.ProductCategoryID">@itemTopHot.ProductCategoryName</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="/chi-tiet/@itemTopHot.MetaTitle-@itemTopHot.ID">@itemTopHot.Name</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    @if (itemTopHot.Price > 0)
+                                    {
+                                        if (itemTopHot.PromotionPrice > 0)
+                                        {
+                                            <span class="new-price">@itemTopHot.PromotionPrice.Value.ToString("N0")đ</span>
+                                            <span class="old-price">@itemTopHot.Price.Value.ToString("N0")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="product-price">@itemTopHot.Price.Value.ToString("N0")đ</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="product-price">Liên hệ</span>
+                                    }
+                                </div><!-- End .product-price -->
+                                <!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+                    }
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+            <!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+    </div><!-- End .container -->
+</div><!-- End .bg-light pt-5 pb-5 -->
+
+<div class="mb-3"></div><!-- End .mb-3 -->
+@foreach (var item in productCategory.Where(x => x.ParentID == null))
+{
+    if (dao.ParentHasProduct(item.ID) || dao.ChildHasProduct(item.ID))
+    {
+        <div class="container electronics">
+            <div class="heading heading-flex heading-border mb-3">
+                <div class="heading-left">
+                    <h2 class="title">@item.Name</h2><!-- End .title -->
+                </div><!-- End .heading-left -->
+
+                <div class="heading-right">
+                    <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@item.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">Tất cả</a>
+                        </li>
+                        @foreach (var childItem in productCategory.Where(x => x.ParentID == item.ID))
+                        {
+                            if (dao.HasProduct(childItem.ID))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@childItem.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">@childItem.Name</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div><!-- End .heading-right -->
+            </div><!-- End .heading -->
+
+            <div class="tab-content tab-content-carousel">
+                <div class="tab-pane p-0 fade show active" id="@item.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                         data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1280": {
+                                        "items":5,
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                        @foreach (var productChildAll in productDao.ListByParentCategory(item.ID).OrderByDescending(x => x.CreateDate))
+                        {
+                            <div class="product">
+                                <figure class="product-media">
+                                    <a href="product.html">
+                                        <img src="@productChildAll.Image" alt="@productChildAll.Name" class="product-image">
+                                    </a>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product btn-cart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>thêm vào giỏ</span></a>
+                                    </div><!-- End .product-action -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="/san-pham/@productChildAll.MetaTitleProductCategory-@productChildAll.ProductCategoryID">@productChildAll.ProductCategoryName</a>
+                                    </div><!-- End .product-cat -->
+                                    <h3 class="product-title"><a href="/chi-tiet/@productChildAll.MetaTitle-@productChildAll.ID">@productChildAll.Name</a></h3><!-- End .product-title -->
+                                    <div class="product-price">
+                                        @if (productChildAll.Price > 0)
+                                        {
+                                            if (productChildAll.PromotionPrice > 0)
+                                            {
+                                                <span class="new-price">@productChildAll.PromotionPrice.Value.ToString("N0")đ</span>
+                                                <span class="old-price">@productChildAll.Price.Value.ToString("N0")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="product-price">@productChildAll.Price.Value.ToString("N0")đ</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="product-price">Liên hệ</span>
+                                        }
+                                    </div><!-- End .product-price -->
+                                    <!-- End .rating-container -->
+                                </div><!-- End .product-body -->
+                            </div>
+
+                        }
+                        <!-- End .product -->
+                    </div><!-- End .owl-carousel -->
+                </div>
+                @foreach (var childItemTab in productCategory.Where(x => x.ParentID == item.ID))
+                {
+                    if (dao.HasProduct(childItemTab.ID))
+                    {
+                        <div class="tab-pane p-0 fade show" id="@childItemTab.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
+                            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                                 data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1280": {
+                                        "items":5,
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                                @foreach (var productChildItemTab in product.Where(x => x.ProductCategoryID == childItemTab.ID).OrderByDescending(x => x.CreateDate))
+                                {
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a href="product.html">
+                                                <img src="@productChildItemTab.Image" alt="@productChildItemTab.Name" class="product-image">
+                                            </a>
+                                            <div class="product-action">
+                                                <a href="#" class="btn-product btn-cart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>thêm vào giỏ</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="/san-pham/@productChildItemTab.MetaTitleProductCategory-@productChildItemTab.ProductCategoryID">@productChildItemTab.ProductCategoryName</a>
+                                            </div><!-- End .product-cat -->
+                                            <h3 class="product-title"><a href="/chi-tiet/@productChildItemTab.MetaTitle-@productChildItemTab.ID">@productChildItemTab.Name</a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                                @if (productChildItemTab.Price > 0)
+                                                {
+                                                    if (productChildItemTab.PromotionPrice > 0)
+                                                    {
+                                                        <span class="new-price">@productChildItemTab.PromotionPrice.Value.ToString("N0")đ</span>
+                                                        <span class="old-price">@productChildItemTab.Price.Value.ToString("N0")</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="product-price">@productChildItemTab.Price.Value.ToString("N0")đ</span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="product-price">Liên hệ</span>
+                                                }
+                                            </div><!-- End .product-price -->
+                                            <!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div>
+
+                                }
+                                <!-- End .product -->
+                            </div><!-- End .owl-carousel -->
+                        </div>
+                    }
+
+                }
+            </div><!-- End .tab-content -->
+        </div>
+    }
+
+}
+
+<div class="mb-3"></div><!-- End .mb-3 -->
+
+<div class="container">
+    <h2 class="title title-border mb-5">Thương hiệu</h2><!-- End .title -->
+    <div class="owl-carousel mb-5 owl-simple" data-toggle="owl"
+         data-owl-options='{
+                        "nav": false,
+                        "dots": true,
+                        "margin": 30,
+                        "loop": false,
+                        "responsive": {
+                            "0": {
+                                "items":2
+                            },
+                            "420": {
+                                "items":3
+                            },
+                            "600": {
+                                "items":4
+                            },
+                            "900": {
+                                "items":5
+                            },
+                            "1024": {
+                                "items":6
+                            },
+                            "1280": {
+                                "items":6,
+                                "nav": true,
+                                "dots": false
+                            }
+                        }
+                    }'>
+        <a href="#" class="brand">
+            <img src="/Asset/Client/assets/images/brands/1.png" alt="Brand Name">
+        </a>
+
+        <a href="#" class="brand">
+            <img src="/Asset/Client/assets/images/brands/2.png" alt="Brand Name">
+        </a>
+
+        <a href="#" class="brand">
+            <img src="/Asset/Client/assets/images/brands/3.png" alt="Brand Name">
+        </a>
+
+        <a href="#" class="brand">
+            <img src="/Asset/Client/assets/images/brands/4.png" alt="Brand Name">
+        </a>
+
+        <a href="#" class="brand">
+            <img src="/Asset/Client/assets/images/brands/5.png" alt="Brand Name">
+        </a>
+
+        <a href="#" class="brand">
+            <img src="/Asset/Client/assets/images/brands/6.png" alt="Brand Name">
+        </a>
+
+        <a href="#" class="brand">
+            <img src="/Asset/Client/assets/images/brands/7.png" alt="Brand Name">
+        </a>
+    </div><!-- End .owl-carousel -->
+</div><!-- End .container -->
+
+<div class="cta cta-horizontal cta-horizontal-box bg-primary">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-2xl-5col">
+                <h3 class="cta-title text-white">Nhận tin khuyến mãi</h3><!-- End .cta-title -->
+                <p class="cta-desc text-white"></p><!-- End .cta-desc -->
+            </div><!-- End .col-lg-5 -->
+
+            <div class="col-3xl-5col">
+                <form action="#">
+                    <div class="input-group">
+                        <input type="email" class="form-control form-control-white" placeholder="Nhập email" aria-label="Email Adress" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-white-2" style="height:46px" type="submit"><span>Nhận tin</span><i class="icon-long-arrow-right"></i></button>
+                        </div><!-- .End .input-group-append -->
+                    </div><!-- .End .input-group -->
+                </form>
+            </div><!-- End .col-lg-7 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .cta -->
+
+<div class="blog-posts bg-light pt-4 pb-7">
+    <div class="container">
+        <h2 class="title">Tin tức</h2><!-- End .title-lg text-center -->
+
+        <div class="owl-carousel owl-simple" data-toggle="owl"
+             data-owl-options='{
+                            "nav": false,
+                            "dots": true,
+                            "items": 3,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "600": {
+                                    "items":2
+                                },
+                                "992": {
+                                    "items":3
+                                },
+                                "1280": {
+                                    "items":4,
+                                    "nav": true,
+                                    "dots": false
+                                }
+                            }
+                        }'>
+            <article class="entry">
+                <figure class="entry-media">
+                    <a href="single.html">
+                        <img src="/Asset/Client/assets/images/demos/demo-13/blog/post-1.jpg" alt="image desc">
+                    </a>
+                </figure><!-- End .entry-media -->
+
+                <div class="entry-body">
+                    <div class="entry-meta">
+                        <a href="#">Nov 22, 2018</a>, 0 Comments
+                    </div><!-- End .entry-meta -->
+
+                    <h3 class="entry-title">
+                        <a href="single.html">Sed adipiscing ornare.</a>
+                    </h3><!-- End .entry-title -->
+
+                    <div class="entry-content">
+                        <p>Lorem ipsum dolor consectetuer adipiscing elit. Phasellus hendrerit. Pelletesque aliquet nibh ...</p>
+                        <a href="single.html" class="read-more">Read More</a>
+                    </div><!-- End .entry-content -->
+                </div><!-- End .entry-body -->
+            </article><!-- End .entry -->
+
+            <article class="entry">
+                <figure class="entry-media">
+                    <a href="single.html">
+                        <img src="/Asset/Client/assets/images/demos/demo-13/blog/post-2.jpg" alt="image desc">
+                    </a>
+                </figure><!-- End .entry-media -->
+
+                <div class="entry-body">
+                    <div class="entry-meta">
+                        <a href="#">Dec 12, 2018</a>, 0 Comments
+                    </div><!-- End .entry-meta -->
+
+                    <h3 class="entry-title">
+                        <a href="single.html">Vivamus vestibulum ntulla.</a>
+                    </h3><!-- End .entry-title -->
+
+                    <div class="entry-content">
+                        <p>Phasellus hendrerit. Pelletesque aliquet nibh necurna In nisi neque, aliquet vel, dapibus id ... </p>
+                        <a href="single.html" class="read-more">Read More</a>
+                    </div><!-- End .entry-content -->
+                </div><!-- End .entry-body -->
+            </article><!-- End .entry -->
+
+            <article class="entry">
+                <figure class="entry-media">
+                    <a href="single.html">
+                        <img src="/Asset/Client/assets/images/demos/demo-13/blog/post-3.jpg" alt="image desc">
+                    </a>
+                </figure><!-- End .entry-media -->
+
+                <div class="entry-body">
+                    <div class="entry-meta">
+                        <a href="#">Dec 19, 2018</a>, 2 Comments
+                    </div><!-- End .entry-meta -->
+
+                    <h3 class="entry-title">
+                        <a href="single.html">Praesent placerat risus.</a>
+                    </h3><!-- End .entry-title -->
+
+                    <div class="entry-content">
+                        <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc ...</p>
+                        <a href="single.html" class="read-more">Read More</a>
+                    </div><!-- End .entry-content -->
+                </div><!-- End .entry-body -->
+            </article><!-- End .entry -->
+
+            <article class="entry">
+                <figure class="entry-media">
+                    <a href="single.html">
+                        <img src="/Asset/Client/assets/images/demos/demo-13/blog/post-4.jpg" alt="image desc">
+                    </a>
+                </figure><!-- End .entry-media -->
+
+                <div class="entry-body">
+                    <div class="entry-meta">
+                        <a href="#">Dec 19, 2018</a>, 2 Comments
+                    </div><!-- End .entry-meta -->
+
+                    <h3 class="entry-title">
+                        <a href="single.html">Fusce pellentesque suscipit.</a>
+                    </h3><!-- End .entry-title -->
+
+                    <div class="entry-content">
+                        <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero augue. </p>
+                        <a href="single.html" class="read-more">Read More</a>
+                    </div><!-- End .entry-content -->
+                </div><!-- End .entry-body -->
+            </article><!-- End .entry -->
+
+            <article class="entry">
+                <figure class="entry-media">
+                    <a href="single.html">
+                        <img src="/Asset/Client/assets/images/demos/demo-13/blog/post-1.jpg" alt="image desc">
+                    </a>
+                </figure><!-- End .entry-media -->
+
+                <div class="entry-body">
+                    <div class="entry-meta">
+                        <a href="#">Nov 22, 2018</a>, 0 Comments
+                    </div><!-- End .entry-meta -->
+
+                    <h3 class="entry-title">
+                        <a href="single.html">Sed adipiscing ornare.</a>
+                    </h3><!-- End .entry-title -->
+
+                    <div class="entry-content">
+                        <p>Lorem ipsum dolor consectetuer adipiscing elit. Phasellus hendrerit. Pelletesque aliquet nibh ...</p>
+                        <a href="single.html" class="read-more">Read More</a>
+                    </div><!-- End .entry-content -->
+                </div><!-- End .entry-body -->
+            </article><!-- End .entry -->
+        </div><!-- End .owl-carousel -->
+    </div><!-- End .container -->
+</div><!-- End .blog-posts -->

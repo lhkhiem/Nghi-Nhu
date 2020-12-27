@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<!-- molla/index-13.html  22 Nov 2019 09:59:06 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <meta name="keywords" content="Eshop">
+    <meta name="description" content="Eshop">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Asset/Client/resource/nghinhu-favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Asset/Client/resource/nghinhu-favicon.png">
+    <link rel="manifest" href="/Asset/Client/assets/images/icons/site.html">
+    <link rel="mask-icon" href="/Asset/Client/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/Asset/Client/resource/nghinhu-favicon.png">
+    <meta name="apple-mobile-web-app-title" content="Eshop">
+    <meta name="application-name" content="Eshop">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/Asset/Client/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/Asset/Client/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/Asset/Client/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Asset/Client/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/Asset/Client/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/Asset/Client/assets/css/plugins/jquery.countdown.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/Asset/Client/assets/css/style.css">
+    <link rel="stylesheet" href="/Asset/Client/assets/css/skins/skin-demo-13.css">
+    <link rel="stylesheet" href="/Asset/Client/assets/css/demos/demo-13.css">
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <div class="page-wrapper">
+        @RenderPage("~/Views/Shared/_Header.cshtml")
+        <!-- End .header -->
+        <!-- main -->
+        <main class="main">
+            @RenderBody()
+        </main>
+        <!-- End .main -->
+        @RenderPage("~/Views/Shared/_Footer.cshtml")
+        <!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Đầu trang"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+    @RenderPage("~/Views/Shared/_MobileMenu.cshtml")
+    <!-- End .mobile-menu-container -->
+    <!-- Sign in / Register Modal -->
+    @RenderPage("~/Views/Shared/_SigninRegister.cshtml")
+    <!-- End .modal -->
+    @RenderPage("~/Views/Shared/_PopupNewsLetter.cshtml")
+
+    <!-- Plugins JS File -->
+    <script src="/Asset/Client/assets/js/jquery.min.js"></script>
+    <script src="/Asset/Client/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/Asset/Client/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/Asset/Client/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/Asset/Client/assets/js/superfish.min.js"></script>
+    <script src="/Asset/Client/assets/js/owl.carousel.min.js"></script>
+    <script src="/Asset/Client/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="/Asset/Client/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/Asset/Client/assets/js/jquery.plugin.min.js"></script>
+    <script src="/Asset/Client/assets/js/jquery.countdown.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="/Asset/Client/assets/js/main.js"></script>
+    <script src="/Asset/Client/assets/js/demos/demo-13.js"></script>
+</body>
+
+<!-- molla/index-13.html  22 Nov 2019 09:59:31 GMT -->
+</html>
