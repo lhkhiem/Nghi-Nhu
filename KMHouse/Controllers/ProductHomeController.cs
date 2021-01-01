@@ -11,7 +11,7 @@ using Models.ViewModels;
 
 namespace KMHouse.Controllers
 {
-    public class ProductHomeController : Controller
+    public class ProductHomeController : BaseClientController
     {
         public List<string> LoadImages(long id)
         {
@@ -32,9 +32,9 @@ namespace KMHouse.Controllers
             {
                 return listImagesReturn;
             }
-
         }
-        [OutputCache(CacheProfile = "Cache1DayForProduct")]
+
+        //[OutputCache(CacheProfile = "Cache1DayForProduct")]
         public ActionResult ProductDetail(long id)
         {
             var product = new ProductDao().GetByIDView(id);
@@ -44,6 +44,7 @@ namespace KMHouse.Controllers
             ViewBag.Tag = new ProductDao().ListTag(id);
             return View(product);
         }
+
         public ActionResult ProductTag(string tagId, int pageIndex = 1, int pageSize = 6, string sort = "newest")
         {
             ViewBag.Tag = new ProductDao().GetTag(tagId);
@@ -55,7 +56,7 @@ namespace KMHouse.Controllers
             ViewBag.Sort = sort;
             //Lấy danh sách sản phẩm thỏa điều kiện là danh mục sản phẩm
             var model = new ProductDao().ListAllByTag(tagId);
-            
+
             //Lấy tổng các record sản phẩm thỏa điều kiện
             int totalRecord = model.Count();
             //sắp xếp
@@ -89,6 +90,7 @@ namespace KMHouse.Controllers
             ViewBag.MaxPage = maxPage;
             return View(model);
         }
+
         public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 6, string sort = "newest")
         {
             //Lấy danh sách danh mục sản phẩm
@@ -130,7 +132,7 @@ namespace KMHouse.Controllers
             switch (sort)
             {
                 case "newest": list = list.OrderByDescending(x => x.CreateDate).ToList(); break;
-                case "price-up": list = list.OrderBy(x => (x.PromotionPrice != null&& x.PromotionPrice>0) ? x.PromotionPrice : x.Price).ToList(); break;
+                case "price-up": list = list.OrderBy(x => (x.PromotionPrice != null && x.PromotionPrice > 0) ? x.PromotionPrice : x.Price).ToList(); break;
                 case "price-down": list = list.OrderByDescending(x => (x.PromotionPrice != null && x.PromotionPrice > 0) ? x.PromotionPrice : x.Price).ToList(); break;
                 case "salest": list = list.OrderByDescending(x => x.PromotionPrice.GetValueOrDefault(0) / x.Price.GetValueOrDefault(0)).ToList(); break;
             }
@@ -157,9 +159,10 @@ namespace KMHouse.Controllers
             ViewBag.MaxPage = maxPage;
             return View(list);
         }
+
         public ActionResult ProductSearch(string keyword, int pageIndex = 1, int pageSize = 6, string sort = "newest")
         {
-            if (keyword == null) { keyword = ""; }else keyword=NonUnicode.RemoveUnicode(keyword).ToLower();
+            if (keyword == null) { keyword = ""; } else keyword = NonUnicode.RemoveUnicode(keyword).ToLower();
             ViewBag.Keyword = keyword;
             //Lấy danh sách danh mục sản phẩm
             ViewBag.ListCategory = new ProductCategoryDao().ListAll().ToList();
@@ -204,6 +207,7 @@ namespace KMHouse.Controllers
             ViewBag.MaxPage = maxPage;
             return View(model);
         }
+
         public JsonResult ListName(string q)
         {
             var data = new ProductDao().ListName(q);
@@ -212,8 +216,8 @@ namespace KMHouse.Controllers
                 dataJ = data,
                 status = true
             }, JsonRequestBehavior.AllowGet);
-
         }
+
         public ActionResult Shop(int pageIndex = 1, int pageSize = 9, string sort = "newest")
         {
             //Lấy danh sách danh mục sản phẩm
@@ -230,9 +234,9 @@ namespace KMHouse.Controllers
             switch (sort)
             {
                 case "newest": model = model.OrderByDescending(x => x.CreateDate); break;
-                case "price-up": model = model.OrderBy(x => x.PromotionPrice.GetValueOrDefault(0)>0 ? x.PromotionPrice : x.Price); break;
+                case "price-up": model = model.OrderBy(x => x.PromotionPrice.GetValueOrDefault(0) > 0 ? x.PromotionPrice : x.Price); break;
                 case "price-down": model = model.OrderByDescending(x => x.PromotionPrice.GetValueOrDefault(0) > 0 ? x.PromotionPrice : x.Price); break;
-                case "salsest": model = model.OrderBy(x => x.PromotionPrice.GetValueOrDefault(0)>0?(x.PromotionPrice.GetValueOrDefault(0) / x.Price.GetValueOrDefault(0)):1); break;
+                case "salsest": model = model.OrderBy(x => x.PromotionPrice.GetValueOrDefault(0) > 0 ? (x.PromotionPrice.GetValueOrDefault(0) / x.Price.GetValueOrDefault(0)) : 1); break;
             }
             //Lấy 1 khoảng trong list sản phẩm từ pageIndex đến pageSize để phân trang
             model = model.Skip((pageIndex - 1) * pageSize)
@@ -257,6 +261,7 @@ namespace KMHouse.Controllers
             ViewBag.MaxPage = maxPage;
             return View(model);
         }
+
         public ActionResult PrintView(long id)
         {
             var product = new ProductDao().GetByIDView(id);

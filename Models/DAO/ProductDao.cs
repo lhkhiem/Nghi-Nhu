@@ -57,6 +57,45 @@ namespace Models.DAO
             return model.ToList();
         }
 
+        public IEnumerable<ProductViewModel> ListTopHot()
+        {
+            var model = from a in db.Products.Where(x => x.TopHot != null && x.TopHot > DateTime.Now)
+                        join b in db.ProductCategories
+                        on a.ProductCategoryID equals b.ID
+                        join c in db.Units
+                        on a.UnitID equals c.ID
+                        select new ProductViewModel()
+                        {
+                            ID = a.ID,
+                            Name = a.Name,
+                            Code = a.Code,
+                            Description = a.Description,
+                            Image = a.Image,
+                            MetaDescriptions = a.MetaDescriptions,
+                            MetaKeywords = a.MetaKeywords,
+                            MetaTitle = a.MetaTitle,
+                            CreateDate = a.CreateDate,
+                            CreateBy = a.CreateBy,
+                            ModifiedBy = a.ModifiedBy,
+                            ModifiedDate = a.ModifiedDate,
+                            MoreImage = a.MoreImage,
+                            Price = a.Price,
+                            ProductCategoryName = b.Name,
+                            PromotionPrice = a.PromotionPrice,
+                            Quantity = a.Quantity,
+                            UnitName = c.Name,
+                            Warranty = a.Warranty,
+                            Status = a.Status,
+                            TopHot = a.TopHot,
+                            MetaTitleProductCategory = b.MetaTitle,
+                            ProductCategoryID = b.ID,
+                            Detail = a.Detail,
+                            Tag = a.Tag
+                        };
+            var list = model.ToList();
+            return model.OrderBy(x => x.CreateDate).ToList();
+        }
+
         public List<ProductViewModel> ListAllByTag(string tagId)
         {
             var model = from a in db.Products
@@ -140,7 +179,7 @@ namespace Models.DAO
             {
                 list1 = model.Where(x => x.ProductCategoryID == cateId).ToList();
             }
-            if (producCategorytDao.GetChild(cateId))
+            if (producCategorytDao.HasChild(cateId))
             {
                 if (producCategorytDao.ChildHasProduct(cateId))
                 {

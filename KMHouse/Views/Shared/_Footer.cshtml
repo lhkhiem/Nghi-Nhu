@@ -62,23 +62,27 @@
             <div class="row">
                 <div class="col-sm-12 col-lg-6">
                     <div class="widget widget-about">
-                        <img src="~/Asset/Client/resource/logo-nghi-nhu.png" class="footer-logo" alt="Footer Logo" width="200">
+                        @*<img src="~/Asset/Client/resource/logo-nghi-nhu.png" class="footer-logo float-left" alt="Footer Logo" width="200">*@
                         <p>
-                            Với phương châm “ Chất lượng phục vụ mang lại hiệu quả”, chúng tôi cam kết cung cấp đến Quý khách hàng những sản phẩm - dịch vụ chất lượng - hiệu quả. 
-                            <br>Rất mong nhận được sự hợp tác cùng Quý Khách Hàng!
+                            Với phương châm “ Chất lượng phục vụ mang lại hiệu quả”, chúng tôi cam kết cung cấp đến Quý khách hàng những sản phẩm - dịch vụ chất lượng - hiệu quả.
+                            Rất mong nhận được sự hợp tác cùng Quý Khách Hàng!
                         </p>
 
                         <div class="widget-about-info">
                             <div class="row">
-                                <div class="col-sm-6 col-md-4">
+                                <div class="col-sm-6 col-md-3">
                                     <span class="widget-about-title">Hotline</span>
-                                    <a href="tel:0908455888">0908 455 888</a>
+                                    <a href="tel:0908455888" style="color:red">0908 455 888</a>
                                 </div><!-- End .col-sm-6 -->
-                                <div class="col-sm-6 col-md-8">
-                                    <span class="widget-about-title">Phương thức thanh toán</span>
-                                    <figure class="footer-payments">
-                                        <img src="/Asset/Client/assets/images/payments.png" alt="Payment methods" width="272" height="20">
-                                    </figure><!-- End .footer-payments -->
+                                <div class="col-sm-6 col-md-3">
+                                    <span class="widget-about-title">Hỗ trợ khách hàng</span>
+                                    <a href="tel:0934357111">0934 357 111</a>
+                                </div><!-- End .col-sm-6 -->
+                                <hr />
+                                <div class="col-sm-6 col-md-12">
+                                    <p>Email: nghinhu.vn@gmail.com</p>
+                                    <p>MST: @ViewBag.Info.Tax</p>
+                                    <p>Địa chỉ: @ViewBag.Info.Address</p>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
                         </div><!-- End .widget-about-info -->
@@ -120,7 +124,6 @@
                             <li><a href="#">Đăng nhập</a></li>
                             <li><a href="#">Giỏ hàng</a></li>
                             <li><a href="#">Theo dõi đơn hàng</a></li>
-
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-64 col-lg-3 -->
@@ -131,7 +134,6 @@
     <div class="footer-bottom">
         <div class="container">
             <p class="footer-copyright">Copyright © 2020 NghiNhuComputer. Site created by Lê Hoàng Khiêm.</p><!-- End .footer-copyright -->
-            
 
             <div class="social-icons social-icons-color">
                 <span class="social-label">Mạng xã hội:</span>

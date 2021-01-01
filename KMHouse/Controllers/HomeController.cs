@@ -10,29 +10,15 @@ using System.Linq;
 
 namespace KMHouse.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseClientController
     {
         public ActionResult Index()
         {
             ViewBag.Slide = new SliderDao().ListActive();
             ViewBag.Product = new ProductDao().ListAll();
-            var productCategoryList = new ProductCategoryDao().ListAll();
-            ViewBag.ProductCategory = productCategoryList;
+            ViewBag.ProductTopHot = new ProductDao().ListTopHot();
+            ViewBag.ProductCategory = new ProductCategoryDao().ListHasProduct();
 
-            var list = new List<ProductCategory>();
-            foreach (var item in productCategoryList.OrderBy(x => x.DisplayOrder))
-            {
-                if (item.ParentID == null)
-                {
-                    list.Add(item);
-                    var child = productCategoryList.Where(x => x.ParentID == item.ID);
-                    foreach (var subitem in child)
-                    {
-                        list.Add(subitem);
-                    }
-                }
-            }
-            ViewBag.ProductCategoryOrder = list;
             return View();
         }
 

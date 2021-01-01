@@ -19,6 +19,7 @@ namespace KMHouse.Areas.Admin.Controllers
             ViewBag.MenuActive = "mIndexProductCategory";
             return View();
         }
+
         public JsonResult LoadData(int type, string keyword, int pageIndex, int pageSize)
         {
             string str = NonUnicode.RemoveUnicode(keyword).ToLower();
@@ -59,6 +60,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
         [HasCredential(RoleID = "PRODUCTCATEGORY_CREATE")]
         public JsonResult SaveData(string strProductCategory)
@@ -74,24 +76,24 @@ namespace KMHouse.Areas.Admin.Controllers
                 var model = new ProductCategoryDao();
                 try
                 {
-                    if (productCategory.ParentID==null)
-                    {
+                    //if (productCategory.ParentID == null)
+                    //{
                         productCategory.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
                         model.Insert(productCategory);
                         status = true;
                         action = "insert";
-                    }
-                    else
-                    {
-                        bool haveParent = new ProductCategoryDao().HasChild(productCategory.ParentID);
-                        if (!haveParent)
-                        {
-                            productCategory.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
-                            model.Insert(productCategory);
-                            status = true;
-                            action = "insert";
-                        }
-                    }
+                    //}
+                    //else
+                    //{
+                    //    bool haveParent = new ProductCategoryDao().HasChild(productCategory.ParentID);
+                    //    if (!haveParent)
+                    //    {
+                    //        productCategory.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
+                    //        model.Insert(productCategory);
+                    //        status = true;
+                    //        action = "insert";
+                    //    }
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -114,7 +116,6 @@ namespace KMHouse.Areas.Admin.Controllers
                     status = false;
                     message = ex.Message;
                 }
-
             }
 
             return Json(new
@@ -124,6 +125,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 action = action
             });
         }
+
         [HasCredential(RoleID = "PRODUCTCATEGORY_EDIT")]
         public JsonResult GetDetail(long id)
         {
@@ -134,13 +136,14 @@ namespace KMHouse.Areas.Admin.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
+
         [HasCredential(RoleID = "PRODUCTCATEGORY_DELETE")]
         public JsonResult Delete(long id)
         {
-            bool status=false;
-            string message="";
+            bool status = false;
+            string message = "";
             var isUsed = new ProductCategoryDao().CheckProductIsUsed(id);
-            var child = new ProductCategoryDao().GetChild(id);
+            var child = new ProductCategoryDao().HasChild(id);
             if (!isUsed)
             {
                 if (!child)
@@ -174,6 +177,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 message = message
             }, JsonRequestBehavior.AllowGet);
         }
+
         public void SetDropdownList(string selectedId = null)
         {
             var model = new ProductCategoryDao().ListAll();
@@ -195,6 +199,7 @@ namespace KMHouse.Areas.Admin.Controllers
             //Kết thúc sắp xếp.
             ViewBag.ID = new SelectList(list, "ID", "Name", selectedId);
         }
+
         public JsonResult ConvertString(string str)
         {
             string strConvert = StringHelper.ToUnsignString(str);
@@ -203,6 +208,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 str = strConvert
             }, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult ChangeOrder(int id, int order)
         {
             var res = new ProductCategoryDao().ChangeOrder(id, order);
@@ -220,7 +226,6 @@ namespace KMHouse.Areas.Admin.Controllers
                     status = false
                 });
             }
-
         }
     }
 }

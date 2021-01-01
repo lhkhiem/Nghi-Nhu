@@ -1,0 +1,94 @@
+﻿@model List<Models.EF.ProductCategory>
+<nav class="main-nav">
+    <ul class="menu sf-arrows">
+        <li>
+            <a href="#" class="sf-with-ul">Sản phẩm</a>
+
+            <div class="megamenu megamenu-md">
+                <div class="row no-gutters">
+                    @{
+                        int count = Model.Count();
+                    }
+                    <div class="col-md-12">
+                        <div class="menu-col">
+                            <div class="row">
+                                @{
+                                    for (int i = 0; i <= count; i += 10)
+                                    {
+                                        var listBlock = Model.Skip(i).Take(10).ToList();
+                                        <div class="col-md-4">
+                                            @foreach (var itemShop in listBlock)
+                                            {
+
+                                                if (itemShop.ParentID == null)
+                                                {
+                                                    <div class="menu-title"><a href="#">@itemShop.Name</a></div><!-- End .menu-title -->
+
+                                                }
+                                                <ul>
+                                                    @if (itemShop.ParentID != null)
+                                                    {
+                                                        <li><a href="#">@itemShop.Name</a></li>
+                                                    }
+                                                </ul>
+
+                                            }
+                                        </div><!-- End .col-md-6 -->
+                                    }
+                                }
+                            </div><!-- End .row -->
+                        </div><!-- End .menu-col -->
+                    </div><!-- End .col-md-8 -->
+                </div><!-- End .row -->
+            </div><!-- End .megamenu megamenu-md -->
+        </li>
+        <li>
+            <a href="#" class="sf-with-ul">Dịch vụ</a>
+
+            <div class="megamenu megamenu-sm">
+                <div class="row no-gutters">
+                    <div class="col-md-6">
+                        <div class="menu-col">
+                            <div class="menu-title">Product Details</div><!-- End .menu-title -->
+                            <ul>
+                                <li><a href="product.html">Default</a></li>
+                                <li><a href="product-centered.html">Centered</a></li>
+                                <li><a href="product-extended.html"><span>Extended Info<span class="tip tip-new">New</span></span></a></li>
+                                <li><a href="product-gallery.html">Gallery</a></li>
+                                <li><a href="product-sticky.html">Sticky Info</a></li>
+                                <li><a href="product-sidebar.html">Boxed With Sidebar</a></li>
+                                <li><a href="product-fullwidth.html">Full Width</a></li>
+                                <li><a href="product-masonry.html">Masonry Sticky Info</a></li>
+                            </ul>
+                        </div><!-- End .menu-col -->
+                    </div><!-- End .col-md-6 -->
+
+                    <div class="col-md-6">
+                        <div class="banner banner-overlay">
+                            <a href="category.html">
+                                <img src="/Asset/Client/assets/images/menu/banner-2.jpg" alt="Banner">
+
+                                <div class="banner-content banner-content-bottom">
+                                    <div class="banner-title text-white">New Trends<br><span><strong>spring 2019</strong></span></div><!-- End .banner-title -->
+                                </div><!-- End .banner-content -->
+                            </a>
+                        </div><!-- End .banner -->
+                    </div><!-- End .col-md-6 -->
+                </div><!-- End .row -->
+            </div><!-- End .megamenu megamenu-sm -->
+        </li>
+        <li>
+            <a href="#">Giới thiệu</a>
+        </li>
+        <li>
+            <a href="#">Liên hệ</a>
+        </li>
+
+        <li>
+            <a href="#">Khuyến mãi</a>
+        </li>
+        <li>
+            <a href="#">Bảng giá</a>
+        </li>
+    </ul><!-- End .menu -->
+</nav>

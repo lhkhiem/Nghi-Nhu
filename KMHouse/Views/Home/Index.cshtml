@@ -1,13 +1,10 @@
-﻿@using Models.DAO
-@{
-    var dao = new ProductCategoryDao();
-    var productDao = new ProductDao();
+﻿@{
     ViewBag.Title = "Nghi Như Computer";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var slide = (List<Models.EF.Slide>)ViewBag.Slide;
-    var productCategory = (List<Models.EF.ProductCategory>)ViewBag.ProductCategory;
-    var product = (List<Models.ViewModels.ProductViewModel>)ViewBag.Product;
-
+    List<Models.EF.ProductCategory> productCategory = ViewBag.ProductCategory;
+    List<Models.ViewModels.ProductViewModel> product = ViewBag.Product;
+    var productCategoryChild = productCategory.Where(x => x.ParentID != null);
+    List<Models.ViewModels.ProductViewModel> productTopHot = ViewBag.ProductTopHot;
 }
 <div class="intro-slider-container">
     <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
@@ -20,7 +17,7 @@
                             }
                         }
                     }'>
-        @foreach (var item in slide)
+        @foreach (var item in ViewBag.Slide)
         {
             <div class="intro-slide" style="background-image: url(@item.Image);">
                 <div class="container intro-content">
@@ -95,7 +92,7 @@
                                         }
                                     }
                                 }'>
-                    @foreach (var itemTopHot in product.Where(x => x.TopHot != null && x.TopHot > DateTime.Now).OrderByDescending(x => x.CreateDate))
+                    @foreach (var itemTopHot in productTopHot)
                     {
                         <div class="product">
                             <figure class="product-media">
@@ -146,34 +143,100 @@
 <div class="mb-3"></div><!-- End .mb-3 -->
 @foreach (var item in productCategory.Where(x => x.ParentID == null))
 {
-    if (dao.ParentHasProduct(item.ID) || dao.ChildHasProduct(item.ID))
-    {
-        <div class="container electronics">
-            <div class="heading heading-flex heading-border mb-3">
-                <div class="heading-left">
-                    <h2 class="title">@item.Name</h2><!-- End .title -->
-                </div><!-- End .heading-left -->
+    <div class="container electronics">
+        <div class="heading heading-flex heading-border mb-3">
+            <div class="heading-left">
+                <h2 class="title">@item.Name</h2><!-- End .title -->
+            </div><!-- End .heading-left -->
 
-                <div class="heading-right">
-                    <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+            <div class="heading-right">
+                <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@item.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">Tất cả</a>
+                    </li>
+                    @foreach (var childItem in productCategory.Where(x => x.ParentID == item.ID))
+                    {
                         <li class="nav-item">
-                            <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@item.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">Tất cả</a>
+                            <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@childItem.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">@childItem.Name</a>
                         </li>
-                        @foreach (var childItem in productCategory.Where(x => x.ParentID == item.ID))
-                        {
-                            if (dao.HasProduct(childItem.ID))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@childItem.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">@childItem.Name</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                </div><!-- End .heading-right -->
-            </div><!-- End .heading -->
+                    }
+                </ul>
+            </div><!-- End .heading-right -->
+        </div><!-- End .heading -->
 
-            <div class="tab-content tab-content-carousel">
-                <div class="tab-pane p-0 fade show active" id="@item.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="@item.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                     data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    },
+                                    "1280": {
+                                        "items":5,
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                    @foreach (var productChildAll in product.Where(x => x.ProductCategoryID == item.ID || (productCategoryChild.FirstOrDefault(y => y.ParentID == item.ID && y.ID == x.ProductCategoryID)) != null).OrderByDescending(x => x.CreateDate))
+                    {
+                        <div class="product">
+                            <figure class="product-media">
+                                <a href="product.html">
+                                    <img src="@productChildAll.Image" alt="@productChildAll.Name" class="product-image">
+                                </a>
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>thêm vào giỏ</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="/san-pham/@productChildAll.MetaTitleProductCategory-@productChildAll.ProductCategoryID">@productChildAll.ProductCategoryName</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="/chi-tiet/@productChildAll.MetaTitle-@productChildAll.ID">@productChildAll.Name</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    @if (productChildAll.Price > 0)
+                                    {
+                                        if (productChildAll.PromotionPrice > 0)
+                                        {
+                                            <span class="new-price">@productChildAll.PromotionPrice.Value.ToString("N0")đ</span>
+                                            <span class="old-price">@productChildAll.Price.Value.ToString("N0")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="product-price">@productChildAll.Price.Value.ToString("N0")đ</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="product-price">Liên hệ</span>
+                                    }
+                                </div><!-- End .product-price -->
+                                <!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div>
+
+                    }
+                    <!-- End .product -->
+                </div><!-- End .owl-carousel -->
+            </div>
+            @foreach (var childItemTab in productCategory.Where(x => x.ParentID == item.ID))
+            {
+                <div class="tab-pane p-0 fade show" id="@childItemTab.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                          data-owl-options='{
                                 "nav": false,
@@ -199,12 +262,12 @@
                                     }
                                 }
                             }'>
-                        @foreach (var productChildAll in productDao.ListByParentCategory(item.ID).OrderByDescending(x => x.CreateDate))
+                        @foreach (var productChildItemTab in product.Where(x => x.ProductCategoryID == childItemTab.ID).OrderByDescending(x => x.CreateDate))
                         {
                             <div class="product">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="@productChildAll.Image" alt="@productChildAll.Name" class="product-image">
+                                        <img src="@productChildItemTab.Image" alt="@productChildItemTab.Name" class="product-image">
                                     </a>
                                     <div class="product-action">
                                         <a href="#" class="btn-product btn-cart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>thêm vào giỏ</span></a>
@@ -213,20 +276,20 @@
 
                                 <div class="product-body">
                                     <div class="product-cat">
-                                        <a href="/san-pham/@productChildAll.MetaTitleProductCategory-@productChildAll.ProductCategoryID">@productChildAll.ProductCategoryName</a>
+                                        <a href="/san-pham/@productChildItemTab.MetaTitleProductCategory-@productChildItemTab.ProductCategoryID">@productChildItemTab.ProductCategoryName</a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="/chi-tiet/@productChildAll.MetaTitle-@productChildAll.ID">@productChildAll.Name</a></h3><!-- End .product-title -->
+                                    <h3 class="product-title"><a href="/chi-tiet/@productChildItemTab.MetaTitle-@productChildItemTab.ID">@productChildItemTab.Name</a></h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        @if (productChildAll.Price > 0)
+                                        @if (productChildItemTab.Price > 0)
                                         {
-                                            if (productChildAll.PromotionPrice > 0)
+                                            if (productChildItemTab.PromotionPrice > 0)
                                             {
-                                                <span class="new-price">@productChildAll.PromotionPrice.Value.ToString("N0")đ</span>
-                                                <span class="old-price">@productChildAll.Price.Value.ToString("N0")</span>
+                                                <span class="new-price">@productChildItemTab.PromotionPrice.Value.ToString("N0")đ</span>
+                                                <span class="old-price">@productChildItemTab.Price.Value.ToString("N0")</span>
                                             }
                                             else
                                             {
-                                                <span class="product-price">@productChildAll.Price.Value.ToString("N0")đ</span>
+                                                <span class="product-price">@productChildItemTab.Price.Value.ToString("N0")đ</span>
                                             }
                                         }
                                         else
@@ -242,85 +305,10 @@
                         <!-- End .product -->
                     </div><!-- End .owl-carousel -->
                 </div>
-                @foreach (var childItemTab in productCategory.Where(x => x.ParentID == item.ID))
-                {
-                    if (dao.HasProduct(childItemTab.ID))
-                    {
-                        <div class="tab-pane p-0 fade show" id="@childItemTab.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
-                            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                                 data-owl-options='{
-                                "nav": false,
-                                "dots": true,
-                                "margin": 20,
-                                "loop": false,
-                                "responsive": {
-                                    "0": {
-                                        "items":2
-                                    },
-                                    "480": {
-                                        "items":2
-                                    },
-                                    "768": {
-                                        "items":3
-                                    },
-                                    "992": {
-                                        "items":4
-                                    },
-                                    "1280": {
-                                        "items":5,
-                                        "nav": true
-                                    }
-                                }
-                            }'>
-                                @foreach (var productChildItemTab in product.Where(x => x.ProductCategoryID == childItemTab.ID).OrderByDescending(x => x.CreateDate))
-                                {
-                                    <div class="product">
-                                        <figure class="product-media">
-                                            <a href="product.html">
-                                                <img src="@productChildItemTab.Image" alt="@productChildItemTab.Name" class="product-image">
-                                            </a>
-                                            <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>thêm vào giỏ</span></a>
-                                            </div><!-- End .product-action -->
-                                        </figure><!-- End .product-media -->
 
-                                        <div class="product-body">
-                                            <div class="product-cat">
-                                                <a href="/san-pham/@productChildItemTab.MetaTitleProductCategory-@productChildItemTab.ProductCategoryID">@productChildItemTab.ProductCategoryName</a>
-                                            </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="/chi-tiet/@productChildItemTab.MetaTitle-@productChildItemTab.ID">@productChildItemTab.Name</a></h3><!-- End .product-title -->
-                                            <div class="product-price">
-                                                @if (productChildItemTab.Price > 0)
-                                                {
-                                                    if (productChildItemTab.PromotionPrice > 0)
-                                                    {
-                                                        <span class="new-price">@productChildItemTab.PromotionPrice.Value.ToString("N0")đ</span>
-                                                        <span class="old-price">@productChildItemTab.Price.Value.ToString("N0")</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="product-price">@productChildItemTab.Price.Value.ToString("N0")đ</span>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <span class="product-price">Liên hệ</span>
-                                                }
-                                            </div><!-- End .product-price -->
-                                            <!-- End .rating-container -->
-                                        </div><!-- End .product-body -->
-                                    </div>
-
-                                }
-                                <!-- End .product -->
-                            </div><!-- End .owl-carousel -->
-                        </div>
-                    }
-
-                }
-            </div><!-- End .tab-content -->
-        </div>
-    }
+            }
+        </div><!-- End .tab-content -->
+    </div>
 
 }
 

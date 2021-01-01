@@ -19,6 +19,114 @@ namespace Models.DAO
             return db.ProductCategories.ToList();
         }
 
+        public long Insert(ProductCategory entity)
+        {
+            if (entity.ParentID == null) entity.DisplayOrder = GetMaxDislayOrder() + 1;
+            else entity.DisplayOrder = 0;
+
+            entity.CreateDate = DateTime.Now;
+            db.ProductCategories.Add(entity);
+            db.SaveChanges();
+            return entity.ID;
+        }
+
+        public long Update(ProductCategory entity)
+        {
+            var model = db.ProductCategories.Find(entity.ID);
+            model.Name = entity.Name;
+            model.ParentID = entity.ParentID;
+            model.ModifiedBy = entity.CreateBy;
+            model.ModifiedDate = DateTime.Now;
+            model.MetaTitle = entity.MetaTitle;
+            if (entity.ParentID != null) model.DisplayOrder = 0;
+            db.SaveChanges();
+            return entity.ID;
+        }
+
+        public ProductCategory GetByID(long id)
+        {
+            return db.ProductCategories.Find(id);
+        }
+
+        public bool CheckIDExist(long id)
+        {
+            var model = db.ProductCategories.Find(id);
+            if (model == null)//không tồn tại
+                return true;
+            else return false;
+        }
+
+        public bool Delete(long id)
+        {
+            try
+            {
+                var productCategory = db.ProductCategories.Find(id);
+                var listChild = db.ProductCategories.Where(x => x.ParentID == productCategory.ID);
+                db.ProductCategories.RemoveRange(listChild);
+                db.ProductCategories.Remove(productCategory);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool CheckProductIsUsed(long id)
+        {
+            var model = db.Products.FirstOrDefault(x => x.ProductCategoryID == id);
+            if (model == null)
+                return false;//khong tim thay
+            else return true;//tim thay
+        }
+
+        public int GetMaxDislayOrder()
+        {
+            var model = db.ProductCategories.Where(x => x.ParentID == null).OrderByDescending(x => x.DisplayOrder).FirstOrDefault();
+            if (model != null)
+            {
+                return model.DisplayOrder;
+            }
+            else return 0;
+        }
+
+        public bool ChangeOrder(long id, int order)
+        {
+            var productCategory = db.ProductCategories.Find(id);
+            var item = db.ProductCategories.FirstOrDefault(x => x.DisplayOrder == order);
+            if (productCategory.DisplayOrder != order)
+            {
+                if (item == null)
+                {
+                    productCategory.DisplayOrder = order;
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    item.DisplayOrder = productCategory.DisplayOrder;
+                    productCategory.DisplayOrder = order;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            else return false;
+        }
+
+        public bool HasChild(long id)
+        {
+            if (db.ProductCategories.FirstOrDefault(x => x.ParentID == id) != null)
+                return true;
+            else
+                return false;
+        }
+
+        public List<ProductCategory> GetChild(long id)
+        {
+            return db.ProductCategories.Where(x => x.ParentID == id).ToList();
+        }
+
         public bool ParentHasProduct(long id)
         {
             var list = db.ProductCategories.Where(x => x.ParentID == null).ToList();
@@ -52,116 +160,30 @@ namespace Models.DAO
             return false;
         }
 
-        public long Insert(ProductCategory entity)
+        public List<ProductCategory> ListHasProduct()
         {
-            if (entity.ParentID == null) entity.DisplayOrder = GetMaxDislayOrder() + 1;
-            else entity.DisplayOrder = 0;
-
-            entity.CreateDate = DateTime.Now;
-            db.ProductCategories.Add(entity);
-            db.SaveChanges();
-            return entity.ID;
-        }
-
-        public long Update(ProductCategory entity)
-        {
-            var model = db.ProductCategories.Find(entity.ID);
-            model.Name = entity.Name;
-            model.ParentID = entity.ParentID;
-            model.ModifiedBy = entity.CreateBy;
-            model.ModifiedDate = DateTime.Now;
-            model.MetaTitle = entity.MetaTitle;
-            db.SaveChanges();
-            return entity.ID;
-        }
-
-        public ProductCategory GetByID(long id)
-        {
-            return db.ProductCategories.Find(id);
-        }
-
-        public bool CheckIDExist(long id)
-        {
-            var model = db.ProductCategories.Find(id);
-            if (model == null)//không tồn tại
-                return true;
-            else return false;
-        }
-
-        public bool HasChild(long? id)
-        {
-            var model = db.ProductCategories.Find(id);
-
-            if (model.ParentID != null)//không có menu con
-                return true;
-            else return false;
-        }
-
-        public bool GetChild(long id)
-        {
-            var model = db.ProductCategories.Where(x => x.ParentID == id);
-
-            if (model.Count() > 0)
-                return true;//có có menu con
-            else return false;//không có menu con
-        }
-
-        public bool Delete(long id)
-        {
-            try
+            List<ProductCategory> list = new List<ProductCategory>();
+            foreach (var item in db.ProductCategories)
             {
-                var productCategory = db.ProductCategories.Find(id);
-                var listChild = db.ProductCategories.Where(x => x.ParentID == productCategory.ID);
-                db.ProductCategories.RemoveRange(listChild);
-                db.ProductCategories.Remove(productCategory);
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public bool CheckProductIsUsed(long id)
-        {
-            var model = db.Products.FirstOrDefault(x => x.ProductCategoryID == id);
-            if (model == null)
-                return false;//khong tim thay
-            else return true;//tim thay
-        }
-
-        public int GetMaxDislayOrder()
-        {
-            var model = db.ProductCategories.Where(x => x.ParentID == null).OrderByDescending(x => x.DisplayOrder).FirstOrDefault();
-            if (model != null)
-            {
-                return model.DisplayOrder; ;
-            }
-            else return 0;
-        }
-
-        public bool ChangeOrder(long id, int order)
-        {
-            var productCategory = db.ProductCategories.Find(id);
-            var item = db.ProductCategories.FirstOrDefault(x => x.DisplayOrder == order);
-            if (productCategory.DisplayOrder != order)
-            {
-                if (item == null)
+                byte count = 0;
+                if (HasChild(item.ID))
                 {
-                    productCategory.DisplayOrder = order;
-                    db.SaveChanges();
-                    return true;
+                    if (ChildHasProduct(item.ID)) list.Add(item);
+                    foreach (var itemChild in GetChild(item.ID))
+                    {
+                        if (HasProduct(itemChild.ID))
+                        {
+                            list.Add(itemChild);
+                            count++;
+                        }
+                    }
                 }
                 else
                 {
-                    item.DisplayOrder = productCategory.DisplayOrder;
-                    productCategory.DisplayOrder = order;
-                    db.SaveChanges();
-                    return true;
+                    if (HasProduct(item.ID) && item.ParentID == null) list.Add(item);
                 }
             }
-            else return false;
+            return list;
         }
     }
 }

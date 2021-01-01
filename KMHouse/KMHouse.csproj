@@ -193,7 +193,7 @@
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserGroupController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BaseClientController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -527,6 +527,10 @@
     <Content Include="Asset\Client\resource\logo-nghi-nhu.png" />
     <Content Include="Asset\Client\resource\nghinhu-favicon.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Media\images\Product\Laptop\Laptop HP Pavilion 15-cs2056T-8.jpg" />
+    <Content Include="Media\images\Product\Photocopy\Fuji-xerox\Fuji Xerox Docucentre S2110.jpg" />
+    <Content Include="Media\images\Product\Photocopy\Fuji-xerox\Fuji-Xerox-Docucentre-S2320-S2520.jpg" />
+    <Content Include="Media\images\Product\Photocopy\Fuji-xerox\Ricoh-P-C300W.jpg" />
     <Content Include="Media\images\Slider\slide-1.png" />
     <Content Include="Media\images\Slider\slide-2.jpg" />
     <Content Include="Media\images\Slider\slide-3.jpg" />
@@ -3465,8 +3469,6 @@
     <Folder Include="Media\files\" />
     <Folder Include="Media\flash\" />
     <Folder Include="Media\images\News\" />
-    <Folder Include="Media\images\Product\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />
@@ -3845,6 +3847,10 @@
     <Content Include="Views\Shared\_PopupNewsLetter.cshtml" />
     <Content Include="Views\Shared\_SigninRegister.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\BaseClient\Menu.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Shared\_Header2.cshtml" />
+    <Content Include="Views\BaseClient\Menu2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Asset\Admin\bower_components\moment\moment.d.ts" />
