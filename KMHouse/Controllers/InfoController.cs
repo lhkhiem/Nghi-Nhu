@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace KMHouse.Controllers
 {
-    public class InfoController : Controller
+    public class InfoController : BaseClientController
     {
         // GET: About
         public ActionResult About()
@@ -18,11 +18,13 @@ namespace KMHouse.Controllers
             var model = new AboutDao().GetAbout();
             return View(model);
         }
+
         public ActionResult Contact()
         {
             var model = new ContactDao().ListAll().FirstOrDefault(x => x.Status = true);
             return View(model);
         }
+
         public JsonResult SendFeedback(string name, string address, string mobile, string email, string title, string message)
         {
             try
@@ -58,9 +60,6 @@ namespace KMHouse.Controllers
                     status = false
                 }, JsonRequestBehavior.AllowGet);
             }
-
-            
         }
-
     }
 }

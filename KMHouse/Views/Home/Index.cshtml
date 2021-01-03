@@ -152,12 +152,12 @@
             <div class="heading-right">
                 <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@item.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">Tất cả</a>
+                        <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@item.MetaTitle-@item.ID" role="tab" aria-controls="elec-new-tab" aria-selected="true">Tất cả</a>
                     </li>
                     @foreach (var childItem in productCategory.Where(x => x.ParentID == item.ID))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@childItem.MetaTitle-tab" role="tab" aria-controls="elec-new-tab" aria-selected="true">@childItem.Name</a>
+                            <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@childItem.MetaTitle-@childItem.ID" role="tab" aria-controls="elec-new-tab" aria-selected="true">@childItem.Name</a>
                         </li>
                     }
                 </ul>
@@ -165,7 +165,7 @@
         </div><!-- End .heading -->
 
         <div class="tab-content tab-content-carousel">
-            <div class="tab-pane p-0 fade show active" id="@item.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
+            <div class="tab-pane p-0 fade show active" id="@item.MetaTitle-@item.ID" role="tabpanel" aria-labelledby="elec-new-link">
                 <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                      data-owl-options='{
                                 "nav": false,
@@ -236,7 +236,7 @@
             </div>
             @foreach (var childItemTab in productCategory.Where(x => x.ParentID == item.ID))
             {
-                <div class="tab-pane p-0 fade show" id="@childItemTab.MetaTitle-tab" role="tabpanel" aria-labelledby="elec-new-link">
+                <div class="tab-pane p-0 fade show" id="@childItemTab.MetaTitle-@childItemTab.ID" role="tabpanel" aria-labelledby="elec-new-link">
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                          data-owl-options='{
                                 "nav": false,

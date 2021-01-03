@@ -14,18 +14,6 @@
             <li class="breadcrumb-item"><a href="#">@category.Name</a></li>
             <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
         </ol>
-
-        <nav class="product-pager ml-auto" aria-label="Product">
-            <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                <i class="icon-angle-left"></i>
-                <span>Lùi</span>
-            </a>
-
-            <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                <span>Tiếp theo</span>
-                <i class="icon-angle-right"></i>
-            </a>
-        </nav><!-- End .pager-nav -->
     </div><!-- End .container -->
 </nav><!-- End .breadcrumb-nav -->
 
@@ -88,28 +76,21 @@
                         </div><!-- End .product-content -->
                         <div class="details-filter-row details-row-size">
                             <label for="qty">Số lượng:</label>
-                            <div class="product-details-quantity">
+                            <div class="product-details-quantity float-left">
                                 <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                             </div><!-- End .product-details-quantity -->
                         </div><!-- End .details-filter-row -->
-
-                        <div class="product-details-action">
+                        <div class="product-details-action float-right">
+                            <a href="#" class="btn btn-outline-success">IN BÁO GIÁ</a>
+                        </div>
+                        <div class="product-details-action float-right">
                             <a href="#" class="btn-product btn-cart"><span>thêm vào giỏ</span></a>
                         </div><!-- End .product-details-action -->
-
                         <div class="product-details-footer">
                             <div class="product-cat">
                                 <span>Danh mục:</span>
                                 <a href="/san-pham/@Model.MetaTitleProductCategory-@Model.ProductCategoryID">@Model.ProductCategoryName</a>
                             </div><!-- End .product-cat -->
-
-                            <div class="social-icons social-icons-sm">
-                                <span class="social-label">Chia sẻ:</span>
-                                <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                                <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                                <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                                <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
-                            </div>
                         </div><!-- End .product-details-footer -->
                     </div><!-- End .product-details -->
                 </div><!-- End .col-md-6 -->
