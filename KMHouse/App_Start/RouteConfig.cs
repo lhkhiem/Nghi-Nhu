@@ -62,7 +62,7 @@ namespace KMHouse
            );
             routes.MapRoute(
                name: "Payment",
-               url: "thanh-toan/",
+               url: "dat-hang/",
                defaults: new { controller = "Cart", action = "Payment", id = UrlParameter.Optional },
                namespaces: new[] { "KMHouse.Controllers" }
            );
@@ -109,6 +109,12 @@ namespace KMHouse
                 namespaces: new[] { "KMHouse.Controllers" }
             );
             routes.MapRoute(
+                name: "Logout",
+                url: "dang-xuat/",
+                defaults: new { controller = "UserClient", action = "Logout", id = UrlParameter.Optional },
+                namespaces: new[] { "KMHouse.Controllers" }
+            );
+            routes.MapRoute(
                 name: "News",
                 url: "bai-viet/",
                 defaults: new { controller = "NewsClient", action = "Index", id = UrlParameter.Optional },
@@ -138,7 +144,7 @@ namespace KMHouse
                 defaults: new { controller = "ProductHome", action = "ProductDetail", id = UrlParameter.Optional },
                 namespaces: new[] { "KMHouse.Controllers" }
             );
-            
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",//{controller}/{action}/{id}

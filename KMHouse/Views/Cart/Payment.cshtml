@@ -1,55 +1,121 @@
 ﻿@model List<Models.ViewModels.CartItemViewModel>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
     ViewBag.Title = "Đặt hàng";
+    var name = string.Empty;
+    var address = string.Empty;
+    var phone = string.Empty;
+    var email = string.Empty;
+
+    if (ViewBag.User != null)
+    {
+        name = ViewBag.User.Name;
+        address = ViewBag.User.Address;
+        phone = ViewBag.User.Phone;
+        email = ViewBag.User.Email;
+    }
+    decimal totalMoney = 0;
 }
-    <div class="breadcrumb-area">
-        <div class="container">
-            <div class="breadcrumb-content">
-                <ul>
-                    <li><a href="/">Trang chủ</a></li>
-                    <li class="active">Đặt hàng</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="page-section mb-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-12 mb-30">
-                    <!-- Login Form s-->
-                    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-                        <div class="login-form">
-                            <h4 class="login-title">Thông người nhận hàng</h4>
-                            <div class="row">
-                                <div class="col-md-12 col-12 mb-20">
-                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                                    @Html.Raw(ViewBag.Info)
-                                </div>
-                                <div class="col-md-12 col-12 mb-20">
-                                    <label>Họ tên người nhận</label>
-                                    <input name="shipName" class="mb-0" type="text" required placeholder="nhập họ tên" />
-                                </div>
-                                <div class="col-md-12 col-12 mb-20">
-                                    <label>Số điện thoại người nhận</label>
-                                    <input name="mobile" type="tel" class="mb-0" required placeholder="099999999(đủ 9 số điện thoại)" pattern="[0-9]{10}"/>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <label>Địa chỉ nhận hàng</label>
-                                    <input name="address" class="mb-0" required  placeholder="nhập địa chỉ"/>
-                                </div>
+<div class="page-header text-left" style="background-image: url('/Asset/Client/assets/images/page-header-bg.jpg')">
+    <div class="container">
+        <h1 class="page-title">THÔNG TIN ĐẶT HÀNG</h1>
+    </div><!-- End .container -->
+</div><!-- End .page-header -->
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Đặt hàng</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
 
-                                <div class="col-md-12">
-                                    <button class="register-button mt-0">Đặt hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    
+<div class="page-content">
+    <div class="checkout">
+        <div class="container">
+            <form action="/dat-hang/" method="post">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h2 class="checkout-title">Nhập thông tin nhận hàng</h2><!-- End .checkout-title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>Họ tên người nhận/người nhận hộ *</label>
+                                <input name="shipName" type="text" class="form-control" value="@name" required>
+                            </div><!-- End .col-sm-6 -->
+                        </div><!-- End .row -->
 
+                        <label>Cơ quan làm việc (nếu có)</label>
+                        <input type="text" class="form-control">
+
+                        <label>Địa chỉ nhận hàng *</label>
+                        <input name="address" type="text" class="form-control" placeholder="" value="@address" required>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Số điện thoại *</label>
+                                <input name="mobile" type="tel" class="form-control" value="@phone" required>
+                            </div><!-- End .col-sm-6 -->
+
+                            <div class="col-sm-6">
+                                <label>Email *</label>
+                                <input name="email" type="email" class="form-control" value="@email" required>
+                            </div><!-- End .col-sm-6 -->
+                        </div><!-- End .row -->
+                        <label>Thông tin bổ sung (nếu có)</label>
+                        <textarea class="form-control" cols="30" rows="4" placeholder="..."></textarea>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
+                            <label class="custom-control-label" for="checkout-create-acc">Bạn chưa có tài khoản. Có muốn tài tài khoản mới không?</label>
+                        </div><!-- End .custom-checkbox -->
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
+                            <label class="custom-control-label" for="checkout-diff-address">Bạn đã có thông tin trên hệ thống có muốn thay đổi không?</label>
+                        </div><!-- End .custom-checkbox -->
+                    </div><!-- End .col-lg-9 -->
+                    <aside class="col-lg-3">
+                        <div class="summary">
+                            <h3 class="summary-title">ĐƠN HÀNG CỦA BẠN</h3><!-- End .summary-title -->
+
+                            <table class="table table-summary">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Tổng tiền</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td><a href="/chi-tiet/@item.Product.MetaTitle-@item.Product.ID">@item.Product.Name</a></td>
+                                            <td>@{var total = item.Product.Price.GetValueOrDefault(0) * item.Quantity; totalMoney += total;}@total.ToString("N0")đ</td>
+                                        </tr>
+                                    }
+
+                                    <tr>
+                                        <td>Phí vận chuyển:</td>
+                                        <td>Miễn phí</td>
+                                    </tr>
+                                    <tr class="summary-total">
+                                        <td>Tổng tiền:</td>
+                                        <td>@totalMoney.ToString("N0")</td>
+                                    </tr><!-- End .summary-total -->
+                                </tbody>
+                            </table><!-- End .table table-summary -->
+
+                            <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                <span class="btn-text">Đặt hàng</span>
+                                <span class="btn-hover-text">Xác nhận đặt hàng</span>
+                            </button>
+                        </div><!-- End .summary -->
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </form>
+        </div><!-- End .container -->
+    </div><!-- End .checkout -->
+</div><!-- End .page-content -->
+<!--================================================================================================-->

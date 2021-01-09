@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace KMHouse.Controllers
 {
-    public class NewsClientController : Controller
+    public class NewsClientController : BaseClientController
     {
         public ActionResult Index(int pageIndex = 1, int pageSize = 9)
         {
@@ -37,23 +37,26 @@ namespace KMHouse.Controllers
             ViewBag.MaxPage = maxPage;
             return View(model);
         }
+
         public ActionResult NewsDetail(long id)
         {
             var news = new NewsDao().GetByIDView(id);
             ViewBag.ListNews = new NewsDao().ListAll();
             ViewBag.NewsCategory = new NewsCategoryDao().GetByID(news.NewsCategoryID);
             ViewBag.ListNewsCategory = new NewsCategoryDao().ListAll();
-            ViewBag.ListRelate= new NewsDao().ListRelateNews(id);
+            ViewBag.ListRelate = new NewsDao().ListRelateNews(id);
             ViewBag.ListRecent = new NewsDao().ListRecentNews(5);
             ViewBag.ListTag = new NewsDao().ListTag(id);
             return View(news);
         }
+
         public ActionResult NewsTag(string tagId)
         {
             var news = new NewsDao().ListAllByTag(tagId);
             ViewBag.ListTag = new NewsDao().GetTag(tagId);
             return View(news);
         }
+
         public ActionResult NewsOfCategory(long cateId)
         {
             var news = new NewsDao().ListAllByCategory(cateId);

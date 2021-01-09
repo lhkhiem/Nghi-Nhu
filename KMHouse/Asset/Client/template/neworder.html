@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Thông tin khách hàng mới từ khách hàng: {{CustomerName}}</title>
+    <style>
+        table, td, th {
+            border-collapse: collapse;
+            border-style: solid;
+            border-width: thin;
+        }
+    </style>
+</head>
+<body>
+    <h4>THÔNG TIN ĐƠN HÀNG</h4>
+    Mã đơn hàng: {{Code}}<br />
+    Người nhận hàng:{{CustomerName}}<br />
+    Điện thoại: {{Phone}} <br />
+    Email: {{Email}} <br />
+    Địa chỉ: {{Address}} <br />
+    <b>Chi tiết đơn hàng:</b>
+    <table>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{TableCart}}
+        </tbody>
+    </table>
+    <p>Cảm ơn Quý khách đã mua hàng ủng hộ shop!</p>
+</body>
+</html>

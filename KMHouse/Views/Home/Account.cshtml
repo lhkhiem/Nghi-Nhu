@@ -1,22 +1,22 @@
 ﻿@model Models.ViewModels.UserViewModel
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
     ViewBag.Title = "Thông tin tài khoản";
 }
-
-<!-- Begin Li's Breadcrumb Area -->
-<div class="breadcrumb-area">
+<div class="page-header text-left" style="background-image: url('/Asset/Client/assets/images/page-header-bg.jpg')">
     <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="/">Trang chủ</a></li>
-                <li class="active">Thông tin khách hàng</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- Li's Breadcrumb Area End Here -->
-<!-- Begin Contact Main Page Area -->
+        <h1 class="page-title">THÔNG TIN TÀI KHOẢN KHÁCH HÀNG</h1>
+    </div><!-- End .container -->
+</div><!-- End .page-header -->
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container d-flex align-items-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thông tin tài khoản</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
 <div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
     <div class="container">
         <div class="row">
@@ -47,7 +47,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>

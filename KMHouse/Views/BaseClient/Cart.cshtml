@@ -1,0 +1,23 @@
+﻿@model List<Models.ViewModels.CartItemViewModel>
+<div class="dropdown cart-dropdown">
+    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+        <i class="icon-shopping-cart"></i>
+        <span id="quantityMiniCart" class="cart-count"></span>
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-right">
+        <div id="listItem" class="dropdown-cart-products">
+        </div><!-- End .cart-product -->
+
+        <div class="dropdown-cart-total">
+            <span>Tổng tiền</span>
+
+            <span id="totalMiniCart" class="cart-total-price">0đ</span>
+        </div><!-- End .dropdown-cart-total -->
+
+        <div class="dropdown-cart-action">
+            <a href="/gio-hang/" class="btn btn-primary">Giỏ hàng</a>
+            <a href="/dat-hang/" class="btn btn-outline-primary-2"><span>Đặt hàng</span><i class="icon-long-arrow-right"></i></a>
+        </div><!-- End .dropdown-cart-total -->
+    </div><!-- End .dropdown-menu -->
+</div><!-- End .cart-dropdown -->

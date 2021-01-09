@@ -3,10 +3,12 @@ using System.Web.Mvc;
 using Models.DAO;
 using Models.ViewModels;
 using Common;
+using Models.EF;
+using System.Web.Script.Serialization;
 
 namespace KMHouse.Controllers
 {
-    public class UserClientController : Controller
+    public class UserClientController : BaseClientController
     {
         private Uri RedirectUri
         {
@@ -19,6 +21,7 @@ namespace KMHouse.Controllers
                 return uriBiulder.Uri;
             }
         }
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -26,50 +29,68 @@ namespace KMHouse.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModelClient model)
+        public JsonResult Login(string model)
         {
+            int statusCode = 0;
+            string message = string.Empty;
+            string account = string.Empty;
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            User userStr = serializer.Deserialize<User>(model);
             if (ModelState.IsValid)
             {
-
                 var dao = new UserDao();
-                var res = dao.LoginByEmail(model.Email, Encryptor.MD5Hash(Encryptor.EncodeTo64(model.Password)));
+                var res = dao.LoginByEmail(userStr.Email, Encryptor.MD5Hash(Encryptor.EncodeTo64(userStr.Password)));
                 if (res == 1)
                 {
-                    var user = dao.GetDetailByEmail(model.Email);
+                    var user = dao.GetDetailByEmail(userStr.Email);
                     var userSession = new UserLoginSession();
                     userSession.UserName = user.UserName;
                     userSession.Email = user.Email;
                     userSession.UserID = user.ID;
                     userSession.UserGroupID = user.UserGroupID;
                     userSession.Name = user.Name;
+                    userSession.Address = user.Address;
+                    userSession.Phone = user.Phone;
                     Session.Add(ConstantSession.USER_CLIENT_SESSION, userSession);
-                    return Redirect("/");
+
+                    statusCode = res;
+                    account = user.Name;
                 }
                 else if (res == 0)
                 {
-                    ModelState.AddModelError("", "Tài khoản không tồn tại!");
+                    statusCode = res;
+                    message = "Tài khoản không tồn tại!";
                 }
                 else if (res == -1)
                 {
-                    ModelState.AddModelError("", "Tài khoản đang tạm khóa!");
+                    statusCode = res;
+                    message = "Tài khoản tạm khóa!";
                 }
                 else if (res == -2)
                 {
-                    ModelState.AddModelError("", "Mật khẩu không đúng!");
+                    statusCode = res;
+                    message = "Mật khẩu không đúng!";
                 }
-
             }
             else
             {
-                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin");
+                statusCode = -3;
+                message = "Không có quyền truy cập!";
             }
-            return View(model);
+            return Json(new
+            {
+                status = statusCode,
+                msg = message,
+                account = account
+            });
         }
+
         [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
@@ -103,7 +124,6 @@ namespace KMHouse.Controllers
                         ViewBag.Success = "Đăng ký thành công.";
                         ViewBag.DangNhap = "<a class='btn btn-success' href='/dang-nhap'>Đăng nhập</a>";
                         model = new RegisterModel();
-
                     }
                     else
                     {
@@ -113,16 +133,19 @@ namespace KMHouse.Controllers
             }
             return View(model);
         }
+
         public ActionResult Logout()
         {
             Session[ConstantSession.USER_CLIENT_SESSION] = null;
             return Redirect("/");
         }
+
         [HttpGet]
         public ActionResult ForgetPassword()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult ForgetPassword(string email)
         {
@@ -150,10 +173,12 @@ namespace KMHouse.Controllers
             }
             return View();
         }
+
         public ActionResult ChangePassword()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult ChangePassword(ChangePassViewModel model)
         {

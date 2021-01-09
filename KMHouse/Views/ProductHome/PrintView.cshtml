@@ -3,13 +3,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>In mẫu</title>
-    <link href="~/Asset/Client/style.css" rel="stylesheet" />
-    <link href="~/Asset/Client/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/Asset/Admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Asset/Admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/Asset/Client/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="~/Asset/Client/js/jQuery.print.js"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Asset/Client/resource/nghinhu-favicon.png">
+    <title>Mẫu báo giá</title>
+    <link href="~/Asset/Client/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Asset/Client/assets/js/jquery.min.js"></script>
+    <script src="~/Asset/Client/assets/js/jQuery.print.js"></script>
 </head>
 <body>
     <button id="btn-print" class="btn btn-success" style="margin:5px"><i class="fa fa-print"> In</i></button>
@@ -24,7 +22,7 @@
                 <tr>
                     <td width="30%"><img class="img" src="@Model.Image" style="width:100%" /></td>
                     <td width="70%">
-                        <p><label>TÊN SẢN PHẨM: </label><label class="text-primary name">@Model.Name</label></p>
+                        <p><label>TÊN SẢN PHẨM: &emsp;</label><label class="text-primary name">@Model.Name</label></p>
                         @if (Model.Price > 0)
                         {
                             decimal price = 0;
@@ -36,16 +34,18 @@
                             {
                                 price = Model.Price.GetValueOrDefault(0);
                             }
-                            <p><label>GIÁ SẢN PHẨM: </label><label class="text-primary name"> @price.ToString("N0")đ</label></p>
+                            <p><label>GIÁ SẢN PHẨM: &emsp;</label><label class="text-primary name"> @price.ToString("N0")đ</label></p>
 
                         }
                         else
                         {
-                            <p><label>GIÁ SẢN PHẨM: </label><label class="text-primary"> Liên hệ</label></p>
+                            <p><label>GIÁ SẢN PHẨM: &emsp;</label><label class="text-primary"> Liên hệ</label></p>
 
                         }
-                        <p><label>DANH MỤC SẢN PHẨM: </label><label class="text-primary"> @Model.ProductCategoryName</label></p>
-                        <p><label>MÔ TẢ: </label><label class="text-primary"> @Html.Raw(Model.Description)</label></p>
+                        <p><label>DANH MỤC SẢN PHẨM: &emsp;</label><label class="text-primary"> @Model.ProductCategoryName</label></p>
+                        <hr>
+                        <p> @Html.Raw(Model.Description)</p>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -53,7 +53,6 @@
                         <label>CHI TIẾT:</label>
                         <p><label class="text-primary detail">@Html.Raw(Model.Detail)</label></p>
                     </td>
-                    
                 </tr>
             </table>
         </div>
@@ -64,10 +63,10 @@
             $('#btn-print').on('click', function () {
                 $('#form').print({
                     //Add this at top
-                    prepend: "https://www.gianhangnho.com",
+                    prepend: "https://www.nghinhu.vn",
                     //Add this on bottom
-                    append: "<hr /><img src=\"/Asset/Client/images/menu/logo/logo.png\" /><p><br/>Xin cảm ơn Quý khách!</p>",
-                    
+                    append: "<hr /><img src=\"/Asset/Client/resource/logo-nghi-nhu.png\" /><p><br />Xin cảm ơn Quý khách!</p>",
+
                     //Log to console when printing is done via a deffered callback
                     deferred: $.Deferred().done(function () { console.log('Printing done', arguments); })
                 });

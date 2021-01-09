@@ -1,8 +1,5 @@
-﻿using Models.DAO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Common;
+using Models.DAO;
 using System.Web.Mvc;
 
 namespace KMHouse.Controllers
@@ -31,6 +28,11 @@ namespace KMHouse.Controllers
             var productCategoryList = dao.ListHasProduct();
 
             return PartialView(productCategoryList);
+        }
+
+        public PartialViewResult Cart()
+        {
+            return PartialView();
         }
     }
 }

@@ -298,6 +298,7 @@ namespace Models.DAO
                         on a.ProductCategoryID equals b.ID
                         join c in db.Units
                         on a.UnitID equals c.ID
+                        where a.ProductCategoryID == id
                         select new ProductViewModel()
                         {
                             ID = a.ID,
@@ -327,7 +328,7 @@ namespace Models.DAO
                             UnitID = c.ID,
                             Tag = a.Tag
                         };
-            return model.Where(x => x.ID.Equals(id)).ToList();
+            return model;
         }
 
         public ProductViewModel GetByIDView(long id)

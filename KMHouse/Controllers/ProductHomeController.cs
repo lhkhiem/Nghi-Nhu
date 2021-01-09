@@ -91,53 +91,31 @@ namespace KMHouse.Controllers
             return View(model);
         }
 
-        public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 6, string sort = "newest")
+        public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 4, string sort = "newest")
         {
+            var model = new ProductDao().GetListByIDView(cateId);
             //Lấy danh sách danh mục sản phẩm
             ViewBag.Category = new ProductCategoryDao().GetByID(cateId);
-            ViewBag.ListCategoryWithout = new ProductCategoryDao().ListAll().Where(x => x.ID != cateId).ToList();
-            ViewBag.ListCategoryChild = new ProductCategoryDao().ListAll().Where(x => x.ParentID == cateId).ToList();
+            ViewBag.ListCategoryWithout = new ProductCategoryDao().ListHasProduct().Where(x => x.ID != cateId).ToList();
+            ViewBag.Product = new ProductDao().ListAll().Where(x => x.ProductCategoryID != cateId).ToList();
             if (sort == "newest") ViewBag.Newest = "selected";
             if (sort == "price-up") ViewBag.PriceUp = "selected";
             if (sort == "price-down") ViewBag.PriceDown = "selected";
             if (sort == "salsest") ViewBag.Salsest = "selected";
             ViewBag.Sort = sort;
-            //Lấy danh sách sản phẩm thỏa điều kiện là danh mục sản phẩm
-            var model = new ProductDao().ListAll();
-            //Tạo list trống
-            List<ProductViewModel> list = new List<ProductViewModel>();
-            //Tìm tất cả danh mục con
-            var listCateChild = new ProductCategoryDao().ListAll().Where(x => x.ParentID == cateId);
 
-            if (listCateChild.Count() > 0)
-            {
-                foreach (var item in listCateChild)
-                {
-                    foreach (var product in model)
-                    {
-                        if (product.ProductCategoryID == item.ID)
-                        {
-                            list.Add(product);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                list = model.Where(x => x.ProductCategoryID == cateId).ToList();
-            }
             //Lấy tổng các record sản phẩm thỏa điều kiện
-            int totalRecord = list.Count();
+            int totalRecord = model.Count();
             //sắp xếp
             switch (sort)
             {
-                case "newest": list = list.OrderByDescending(x => x.CreateDate).ToList(); break;
-                case "price-up": list = list.OrderBy(x => (x.PromotionPrice != null && x.PromotionPrice > 0) ? x.PromotionPrice : x.Price).ToList(); break;
-                case "price-down": list = list.OrderByDescending(x => (x.PromotionPrice != null && x.PromotionPrice > 0) ? x.PromotionPrice : x.Price).ToList(); break;
-                case "salest": list = list.OrderByDescending(x => x.PromotionPrice.GetValueOrDefault(0) / x.Price.GetValueOrDefault(0)).ToList(); break;
+                case "newest": model = model.OrderByDescending(x => x.CreateDate).ToList(); break;
+                case "price-up": model = model.OrderBy(x => (x.PromotionPrice != null && x.PromotionPrice > 0) ? x.PromotionPrice : x.Price).ToList(); break;
+                case "price-down": model = model.OrderByDescending(x => (x.PromotionPrice != null && x.PromotionPrice > 0) ? x.PromotionPrice : x.Price).ToList(); break;
+                case "salest": model = model.OrderByDescending(x => x.PromotionPrice.GetValueOrDefault(0) / x.Price.GetValueOrDefault(0)).ToList(); break;
             }
             //Lấy 1 khoảng trong list sản phẩm từ pageIndex đến pageSize để phân trang
-            list = list.Skip((pageIndex - 1) * pageSize)
+            model = model.Skip((pageIndex - 1) * pageSize)
               .Take(pageSize).ToList();
             //Đếm lấy số record thực tế ở đoạn record hiện tại
             int totalRowCurent = model.Count();
@@ -157,15 +135,16 @@ namespace KMHouse.Controllers
             ViewBag.Prev = pageIndex - 1;
             ViewBag.TotalPage = totalPage;
             ViewBag.MaxPage = maxPage;
-            return View(list);
+            return View(model);
         }
 
         public ActionResult ProductSearch(string keyword, int pageIndex = 1, int pageSize = 6, string sort = "newest")
         {
             if (keyword == null) { keyword = ""; } else keyword = NonUnicode.RemoveUnicode(keyword).ToLower();
             ViewBag.Keyword = keyword;
+            ViewBag.Product = new ProductDao().ListAll().ToList();
             //Lấy danh sách danh mục sản phẩm
-            ViewBag.ListCategory = new ProductCategoryDao().ListAll().ToList();
+            ViewBag.ListCategory = new ProductCategoryDao().ListHasProduct().ToList();
             if (sort == "newest") ViewBag.Newest = "selected";
             if (sort == "price-up") ViewBag.PriceUp = "selected";
             if (sort == "price-down") ViewBag.PriceDown = "selected";
@@ -173,7 +152,9 @@ namespace KMHouse.Controllers
             ViewBag.Sort = sort;
             //Lấy danh sách sản phẩm thỏa điều kiện là danh mục sản phẩm
             var model = new ProductDao().ListAll();
-            model = model.Where(x => NonUnicode.RemoveUnicode(x.Name).ToLower().Contains(keyword));
+            model = model.Where(x => NonUnicode.RemoveUnicode(x.Name).ToLower().Contains(keyword)
+            || NonUnicode.RemoveUnicode(x.ProductCategoryName).ToLower().Contains(keyword)
+            || NonUnicode.RemoveUnicode(x.Description).ToLower().Contains(keyword));
             //Lấy tổng các record sản phẩm thỏa điều kiện
             int totalRecord = model.Count();
             //sắp xếp

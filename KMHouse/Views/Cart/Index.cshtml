@@ -1,123 +1,150 @@
 ﻿@model List<Models.ViewModels.CartItemViewModel>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
     ViewBag.Title = "Giỏ hàng";
+    decimal totalMoney = 0;
 }
-@section ScriptFooter{
-    <script src="~/Asset/Client/js/controller/CartController.js"></script>
-}
-<!-- Begin Li's Breadcrumb Area -->
-<div class="breadcrumb-area">
+<div class="page-header text-left" style="background-image: url('/Asset/Client/assets/images/page-header-bg.jpg')">
     <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="/">Trang chủ</a></li>
-                <li class="active">Giỏ hàng</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- Li's Breadcrumb Area End Here -->
-<!--Shopping Cart Area Strat-->
+        <h1 class="page-title">Giỏ hàng</h1>
+    </div><!-- End .container -->
+</div><!-- End .page-header -->
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+@if (Model.Count > 0)
+{
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <table class="table table-cart table-mobile">
+                            <thead>
+                                <tr>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-<div class="Shopping-cart-area pt-60 pb-60">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                @if (Model!=null)
-                {
-                    <form action="#">
-                        <div class="table-content table-responsive">
-                            <table class="table">
-                                <thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
                                     <tr>
-                                        <th class="li-product-remove">Xóa</th>
-                                        <th class="li-product-thumbnail">Hình ảnh</th>
-                                        <th class="cart-product-name">Sản phẩm</th>
-                                        <th class="li-product-price">Giá</th>
-                                        <th class="li-product-quantity">Số lượng</th>
-                                        <th class="li-product-subtotal">Tổng tiền</th>
+                                        <td class="product-col" style="width:300px !important;">
+                                            <div class="product">
+                                                <figure class="product-media">
+                                                    <a href="/chi-tiet/@item.Product.MetaTitle-@item.Product.ID">
+                                                        <img src="@item.Product.Image" alt="@item.Product.Name">
+                                                    </a>
+                                                </figure>
+
+                                                <h4 class="product-title">
+                                                    <a href="/chi-tiet/@item.Product.MetaTitle-@item.Product.ID">@item.Product.Name</a>
+                                                </h4><!-- End .product-title -->
+                                            </div><!-- End .product -->
+                                        </td>
+                                        <td class="price-col">
+                                            @{
+                                                decimal price = 0;
+                                                if (item.Product.PromotionPrice.GetValueOrDefault(0) > 0)
+                                                {
+                                                    price = item.Product.PromotionPrice.GetValueOrDefault(0);
+                                                }
+                                                else
+                                                {
+                                                    price = item.Product.Price.GetValueOrDefault(0);
+                                                }
+                                                totalMoney += price * item.Quantity;
+                                            }
+
+                                            @price.ToString("N0") đ
+                                        </td>
+                                        <td class="quantity-col">
+                                            <div class="cart-product-quantity">
+                                                <input data-id="@item.Product.ID" type="number" class="form-control txtQuantity" value="@item.Quantity" min="1" max="10" step="1" data-decimals="0" required>
+                                            </div><!-- End .cart-product-quantity -->
+                                        </td>
+                                        <td class="total-col">@((price * item.Quantity).ToString("N0")) đ</td>
+                                        <td class="remove-col"><button data-id="@item.Product.ID" class="btn-remove btn-delete-item"><i class="icon-close"></i></button></td>
                                     </tr>
-                                </thead>
+                                }
+                            </tbody>
+                        </table><!-- End .table table-wishlist -->
+
+                        <div class="cart-bottom">
+                            <div class="cart-discount">
+                                <a id="btnUpdate" href="#" class="btn btn-outline-dark-2"><span>CẬP NHẬT GIỎ</span><i class="icon-refresh"></i></a>
+                            </div><!-- End .cart-discount -->
+                            <a id="btnDeleteAll" href="#" class="btn btn-outline-dark-2"><span>XÓA HẾT</span><i class="icon-star"></i></a>
+                        </div><!-- End .cart-bottom -->
+                    </div><!-- End .col-lg-9 -->
+                    <aside class="col-lg-3">
+                        <div class="summary summary-cart">
+                            <h3 class="summary-title">Tổng đơn hàng</h3><!-- End .summary-title -->
+
+                            <table class="table table-summary">
                                 <tbody>
-                                    @{ decimal totalMoney = 0;}
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td class="li-product-remove"><a data-id="@item.Product.ID" class="btn-delete-item"><i class="fa fa-times"></i></a></td>
-                                            <td class="li-product-thumbnail"><a href="/chi-tiet/@item.Product.MetaTitle-@item.Product.ID"><img src="@item.Product.Image" alt="KStore" height="50"></a></td>
-                                            <td class="li-product-name"><a href="/chi-tiet/@item.Product.MetaTitle-@item.Product.ID">@item.Product.Name</a></td>
-                                            <td class="li-product-price">
-                                                <span class="amount">
-                                                    @{
-                                                        decimal price = 0;
-                                                        if (item.Product.PromotionPrice.GetValueOrDefault(0) > 0)
-                                                        {
-                                                            price = item.Product.PromotionPrice.GetValueOrDefault(0);
-                                                        }
-                                                        else
-                                                        {
-                                                            price = item.Product.Price.GetValueOrDefault(0);
-                                                        }
-                                                        totalMoney += price * item.Quantity;
-                                                    }
+                                    <tr class="summary-subtotal">
+                                        <td>Tiền hàng:</td>
+                                        <td> @totalMoney.ToString("N0") đ</td>
+                                    </tr><!-- End .summary-subtotal -->
+                                    <tr class="summary-shipping">
+                                        <td>Chi phí khác:</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
 
-                                                    @price.ToString("N0") đ
+                                    <tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                <input checked type="radio" id="free-shipping" name="shipping" class="custom-control-input">
+                                                <label class="custom-control-label" for="free-shipping">Miễn phí vận chuyển</label>
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        <td>0đ</td>
+                                    </tr><!-- End .summary-shipping-row -->
 
-                                                </span>
-                                            </td>
-                                            <td class="quantity">
-                                                <div class="cart-plus-minus">
-                                                    <input data-id="@item.Product.ID" class="cart-plus-minus-box txtQuantity" value="@item.Quantity" type="text">
-                                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal"><span class="amount">@((price * item.Quantity).ToString("N0")) đ</span></td>
-                                        </tr>
-                                    }
+                                    <tr class="summary-total">
+                                        <td>Tổng tiền đơn hàng:</td>
+                                        <td>@totalMoney.ToString("N0")đ</td>
+                                    </tr><!-- End .summary-total -->
                                 </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="coupon-all">
-                                    <div class="coupon">
-                                        <input id="btnContinue" class="button btn" value="Tiếp tục muc hàng" />
-                                        <input id="btnDeleteAll" class="button btn" value="Xóa tất cả" />
-                                        <input id="btnUpdate" class="button btn" value="Cập nhật giỏ" type="submit">
-                                    </div>
-                                    <div class="coupon">
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5 ml-auto">
-                                <div class="cart-page-total">
-                                    <h2>Thanh toán</h2>
-                                    <ul>
-                                        <li>Tổng cộng <span>@totalMoney.ToString("N0") đ</span></li>
-                                        <li>Phí vận chuyển <span>@{decimal charg = 0; } @charg đ</span></li>
-                                        <li class="totalMoney">Tổng tiền phải thanh toán <span>@((totalMoney + charg).ToString("N0")) đ</span></li>
-                                    </ul>
-                                    <a href="/thanh-toan/">Xác nhận đặt hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                }
-                else
-                {
-                    <div class="row">
-                        <span class="alert alert-info">Không có sản phẩm nào trong giỏ</span>
-                    </div>
+                            </table><!-- End .table table-summary -->
 
-                }
+                            <a href="/dat-hang/" class="btn btn-outline-primary-2 btn-order btn-block">TIẾP THEO<i class="icon-long-arrow-right"></i></a>
+                        </div><!-- End .summary -->
+
+                        <a href="/" class="btn btn-outline-dark-2 btn-block mb-3"><span>TIẾP TỤC MUA HÀNG</span><i class="icon-refresh"></i></a>
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+}
+else
+{
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <span class="text text-info">Không có sản phẩm nào trong giỏ!</span>
+                        </div>
+                        <div class="row">
+                            <a href="/" class="alert alert-success"><i class="icon-arrow-left"></i>Quay lại trang chủ</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<!--Shopping Cart Area End-->
+}

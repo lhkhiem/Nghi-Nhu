@@ -18,6 +18,7 @@ namespace KMHouse.Controllers
             ViewBag.Product = new ProductDao().ListAll();
             ViewBag.ProductTopHot = new ProductDao().ListTopHot();
             ViewBag.ProductCategory = new ProductCategoryDao().ListHasProduct();
+            ViewBag.Blog = new NewsDao().ListAll();
 
             return View();
         }
