@@ -144,7 +144,8 @@ namespace KMHouse.Controllers
             ViewBag.Keyword = keyword;
             ViewBag.Product = new ProductDao().ListAll().ToList();
             //Lấy danh sách danh mục sản phẩm
-            ViewBag.ListCategory = new ProductCategoryDao().ListHasProduct().ToList();
+            var productCategoryDao = new ProductCategoryDao();
+            ViewBag.ListCategory = productCategoryDao.ListHasProduct().ToList();
             if (sort == "newest") ViewBag.Newest = "selected";
             if (sort == "price-up") ViewBag.PriceUp = "selected";
             if (sort == "price-down") ViewBag.PriceDown = "selected";
@@ -152,8 +153,10 @@ namespace KMHouse.Controllers
             ViewBag.Sort = sort;
             //Lấy danh sách sản phẩm thỏa điều kiện là danh mục sản phẩm
             var model = new ProductDao().ListAll();
+
             model = model.Where(x => NonUnicode.RemoveUnicode(x.Name).ToLower().Contains(keyword)
             || NonUnicode.RemoveUnicode(x.ProductCategoryName).ToLower().Contains(keyword)
+            || NonUnicode.RemoveUnicode(productCategoryDao.GetParentName(x.ProductCategoryParentID) + " " + x.ProductCategoryName + " " + x.Name).ToLower().Contains(keyword)
             || NonUnicode.RemoveUnicode(x.Description).ToLower().Contains(keyword));
             //Lấy tổng các record sản phẩm thỏa điều kiện
             int totalRecord = model.Count();

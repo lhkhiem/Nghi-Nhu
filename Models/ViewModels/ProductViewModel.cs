@@ -59,12 +59,16 @@ namespace Models.ViewModels
 
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
+
         public DateTime? TopHot { get; set; }
         public bool Status { get; set; }
         public long ProductCategoryID { get; set; }
+        public long ProductCategoryParentID { get; set; }
         public string ProductCategoryName { get; set; }
+
         [StringLength(250)]
         public string MetaTitleProductCategory { get; set; }
+
         public string Tag { get; set; }
     }
 }

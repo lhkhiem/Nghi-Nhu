@@ -48,6 +48,12 @@ namespace Models.DAO
             return db.ProductCategories.Find(id);
         }
 
+        public string GetParentName(long id)
+        {
+            var parentID = this.GetByID(id).ParentID;
+            return db.ProductCategories.FirstOrDefault(x => x.ID == parentID).Name;
+        }
+
         public bool CheckIDExist(long id)
         {
             var model = db.ProductCategories.Find(id);

@@ -111,7 +111,7 @@ namespace KMHouse.Controllers
         }
 
         [HttpPost]
-        public ActionResult Payment(string shipName, string mobile, string address)
+        public ActionResult Payment(string shipName, string mobile, string address, string email)
         {
             decimal total = 0;
             var user = ((UserLoginSession)Session[ConstantSession.USER_CLIENT_SESSION]);
@@ -119,11 +119,38 @@ namespace KMHouse.Controllers
             string code = RadomString.GetUniqueKey(10);
             order.Code = code;
             order.CreateDate = DateTime.Now;
-            order.UserID = user.UserID;
             order.ShipAddress = address;
             order.ShipName = shipName;
             order.ShipMobile = mobile;
-            order.ShipEmail = user.Email;
+            if (user != null)
+            {
+                order.UserID = user.UserID;
+                order.ShipEmail = user.Email;
+            }
+            else
+            {
+                var userDao = new UserDao();
+                if (userDao.CheckEmailExist(email))
+                {
+                    order.UserID = userDao.GetDetailByEmail(email).ID;
+                    order.ShipEmail = email;
+                }
+                else
+                {
+                    var newUser = new UserViewModel();
+                    newUser.Name = shipName;
+                    newUser.Address = address;
+                    newUser.Email = email;
+                    newUser.Phone = mobile;
+                    newUser.UserGroupID = "GUEST";
+                    newUser.Status = true;
+                    newUser.UserName = email;
+                    newUser.Password = Encryptor.MD5Hash(Encryptor.EncodeTo64(email));
+                    userDao.Insert(newUser);
+                    order.UserID = userDao.GetDetailByEmail(email).ID;
+                    order.ShipEmail = email;
+                }
+            }
             order.Status = 1;
             try
             {
@@ -152,15 +179,15 @@ namespace KMHouse.Controllers
                 content = content.Replace("{{Code}}", code);
                 content = content.Replace("{{CustomerName}}", shipName);
                 content = content.Replace("{{Phone}}", mobile);
-                content = content.Replace("{{Email}}", user.Email);
+                content = content.Replace("{{Email}}", email);
                 content = content.Replace("{{Address}}", address);
 
                 template += "<tr><td colspan='4'><b>TỔNG TIỀN</b></td><td><b>" + total.ToString("N0") + "</b></td></tr>";
                 content = content.Replace("{{TableCart}}", template);
 
                 var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
-                new MailHelper().SendMail(user.Email, "Đơn hàng mới", content);//gui mail khach hang
-                //new MailHelper().SendMail(toEmail, "Đơn hàng mới", content);//gui mail cho quan tri vien
+                new MailHelper().SendMail(email, "Đơn hàng mới", content);//gui mail khach hang
+                                                                          //new MailHelper().SendMail(toEmail, "Đơn hàng mới", content);//gui mail cho quan tri vien
             }
             catch (Exception)
             {

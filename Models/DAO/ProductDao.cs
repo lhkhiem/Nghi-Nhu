@@ -51,6 +51,7 @@ namespace Models.DAO
                             TopHot = a.TopHot,
                             MetaTitleProductCategory = b.MetaTitle,
                             ProductCategoryID = b.ID,
+                            ProductCategoryParentID = b.ID,
                             Detail = a.Detail,
                             Tag = a.Tag
                         };
