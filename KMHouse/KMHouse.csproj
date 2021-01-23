@@ -546,6 +546,8 @@
     <Content Include="Media\images\Product\Printer\Ricoh-SP-230-SFNw.jpg" />
     <Content Include="Media\images\Product\Printer\Ricoh-SP-230DNw.jpg" />
     <Content Include="Media\images\Product\Printer\Ricoh-SP-C360DNw.jpg" />
+    <Content Include="Media\images\Slider\photo-tai-lieu2.jpg" />
+    <Content Include="Media\images\Slider\photo.jpg" />
     <Content Include="Media\_thumbs\Images\Product\dam-vay\set-banh-beo-sieu-cute.jpg" />
     <Content Include="Media\_thumbs\Images\Product\dam-vay\set-banh-beo-sieu-cute2.jpg" />
     <Content Include="Media\_thumbs\Images\Product\dam-vay\set-xanh.jpg" />
@@ -3423,7 +3425,6 @@
     <Content Include="Asset\Admin\plugins\iCheck\square\_all.css" />
     <Content Include="Asset\Temp\CSS  JS mau.txt" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -3439,7 +3440,6 @@
     <Folder Include="Media\files\" />
     <Folder Include="Media\flash\" />
     <Folder Include="Media\images\News\" />
-    <Folder Include="Media\images\Slider\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />
@@ -3806,7 +3806,7 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_MobileMenu.cshtml" />
+    <Content Include="Views\BaseClient\MobileMenu.cshtml" />
     <Content Include="Views\Shared\_PopupNewsLetter.cshtml" />
     <Content Include="Views\Shared\_SigninRegister.cshtml" />
     <Content Include="Views\Web.config" />

@@ -93,7 +93,7 @@ namespace KMHouse.Controllers
 
         public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 4, string sort = "newest")
         {
-            var model = new ProductDao().GetListByIDView(cateId);
+            var model = new ProductDao().ListByParentCategory(cateId);
             //Lấy danh sách danh mục sản phẩm
             ViewBag.Category = new ProductCategoryDao().GetByID(cateId);
             ViewBag.ListCategoryWithout = new ProductCategoryDao().ListHasProduct().Where(x => x.ID != cateId).ToList();

@@ -12,7 +12,7 @@
                     @foreach (var item in Model.Where(x => x.ParentID == null))
                     {
                         <li class="megamenu-container">
-                            <a class="sf-with-ul" href="#">@item.Name</a>
+                            <a class="sf-with-ul" href="/san-pham/@item.MetaTitle-@item.ID">@item.Name</a>
                             @if (Model.Where(x => x.ParentID == item.ID).Count() > 0)
                             {
                                 <div class="megamenu">

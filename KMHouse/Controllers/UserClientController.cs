@@ -85,53 +85,50 @@ namespace KMHouse.Controllers
             });
         }
 
-        [HttpGet]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult Register(RegisterModel model)
+        public JsonResult Register(string model)
         {
-            if (ModelState.IsValid)
+            int statusCode = 0;
+            string message = string.Empty;
+            string account = string.Empty;
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            User userStr = serializer.Deserialize<User>(model);
+            var dao = new UserDao();
+            if (dao.CheckEmailExist(userStr.Email))
             {
-                var dao = new UserDao();
-                if (dao.CheckUserExist(model.UserName))
+                statusCode = 0;
+                message = "Tài khoản đã tồn tại!";
+            }
+            else
+            {
+                var user = new UserViewModel();
+                user.UserName = userStr.Email;
+                user.Name = userStr.Name;
+                user.Password = Encryptor.MD5Hash(Encryptor.EncodeTo64(userStr.Password));
+                user.Phone = userStr.Phone;
+                user.Email = userStr.Email;
+                user.Address = userStr.Address;
+                user.CreateDate = DateTime.Now;
+                user.UserGroupID = "GUEST";
+                user.CreateBy = "Myself";
+                user.Status = true;
+                var result = dao.Insert(user);
+                if (result > 0)
                 {
-                    ModelState.AddModelError("", "Tên đăng nhập tồn tại");
-                }
-                else if (dao.CheckEmailExist(model.Email))
-                {
-                    ModelState.AddModelError("", "Email đã tồn tại");
+                    statusCode = 1;
+                    message = "Đăng ký thành công!";
                 }
                 else
                 {
-                    var user = new UserViewModel();
-                    user.UserName = model.UserName;
-                    user.Name = model.Name;
-                    user.Password = Encryptor.MD5Hash(Encryptor.EncodeTo64(model.Password));
-                    user.Phone = model.Phone;
-                    user.Email = model.Email;
-                    user.Address = model.Address;
-                    user.CreateDate = DateTime.Now;
-                    user.UserGroupID = "GUEST";
-                    user.CreateBy = "Myself";
-                    user.Status = true;
-                    var result = dao.Insert(user);
-                    if (result > 0)
-                    {
-                        ViewBag.Success = "Đăng ký thành công.";
-                        ViewBag.DangNhap = "<a class='btn btn-success' href='/dang-nhap'>Đăng nhập</a>";
-                        model = new RegisterModel();
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Đăng ký không thành công");
-                    }
+                    statusCode = -1;
+                    message = "Đăng ký thành công!";
                 }
             }
-            return View(model);
+            return Json(new
+            {
+                status = statusCode,
+                msg = message
+            });
         }
 
         public ActionResult Logout()
@@ -147,8 +144,10 @@ namespace KMHouse.Controllers
         }
 
         [HttpPost]
-        public ActionResult ForgetPassword(string email)
+        public JsonResult ForgetPassword(string email)
         {
+            string message = string.Empty;
+            int statusCode = 0;
             var model = new UserDao().CheckEmailExist(email);
             if (model)
             {
@@ -159,19 +158,25 @@ namespace KMHouse.Controllers
                 content = content.Replace("{{Email}}", email);
                 content = content.Replace("{{Password}}", password);
 
-                new MailHelper().SendMailRecoveryPassword(email, "KStore - Khôi phục mật khẩu", content);//gui mail khach hang
+                new MailHelper().SendMailRecoveryPassword(email, "Khôi phục mật khẩu", content);//gui mail khach hang
                 //cập nhật mật khẩu
                 var res = new UserDao().UpdatePassword(user.ID, Encryptor.MD5Hash(Encryptor.EncodeTo64(password)));
                 if (res)
                 {
-                    ViewBag.Info = "<span class='text-success'>Gửi thành công! Vui lòng kiểm tra email của bạn.</span>";
+                    statusCode = 1;
+                    message = "Gửi thành công! Vui lòng kiểm tra email của bạn, sau đó đổi lại mật khẩu";
                 }
             }
             else
             {
-                ViewBag.Info = "<span class='text-danger'>Email không tồn tại!</span>";
+                statusCode = 0;
+                message = "Email không tồn tại!";
             }
-            return View();
+            return Json(new
+            {
+                status = statusCode,
+                msg = message
+            });
         }
 
         public ActionResult ChangePassword()
@@ -193,17 +198,17 @@ namespace KMHouse.Controllers
                         var res = new UserDao().UpdatePassword(user.ID, Encryptor.MD5Hash(Encryptor.EncodeTo64(model.NewPassword)));
                         if (res)
                         {
-                            ViewBag.Info = "<span class='text-success'>Đổi mật khẩu thành công</span>";
+                            ViewBag.Error = "<span class='text text-success'>Thông báo: Đổi mật khẩu thành công!</span>";
                         }
                     }
                     else
                     {
-                        ViewBag.Info = "<span class='text-danger'>Mật khẩu cũ không đúng.</span>";
+                        ViewBag.Error = "<span class='text text-danger'>Lỗi: Mật khẩu cũ không đúng.</span>";
                     }
                 }
                 else
                 {
-                    ViewBag.Info = "<span class='text-success'>Email không đúng.</span>";
+                    ViewBag.Error = "<span class='text text-danger'>Lỗi: Email không đúng.</span>";
                 }
             }
             return View();

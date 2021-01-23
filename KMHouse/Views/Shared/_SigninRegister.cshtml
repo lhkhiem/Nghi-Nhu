@@ -37,38 +37,44 @@
                                             <span>Đăng nhập</span>
                                             <i class="icon-long-arrow-right"></i>
                                         </button>
-
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                            <label class="custom-control-label" for="signin-remember">Ghi nhớ mật khẩu</label>
-                                        </div><!-- End .custom-checkbox -->
-
-                                        <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                                        <a href="/quen-mat-khau" class="forgot-link">Quên mật khẩu?</a>
                                     </div><!-- End .form-footer -->
                                 </form>
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                <form action="#">
+                                <form id="frmRegister" action="dang-ky/" method="post">
+                                    <div id="error2"></div>
                                     <div class="form-group">
-                                        <label for="register-email">Địa chỉ email *</label>
-                                        <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                        <label for="txtEmail2">Địa chỉ email *</label>
+                                        <input type="email" class="form-control" id="txtEmail2" name="txtEmail2" required>
                                     </div><!-- End .form-group -->
 
                                     <div class="form-group">
-                                        <label for="register-password">Mật khẩu *</label>
-                                        <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                        <label for="txtPassword2">Mật khẩu *</label>
+                                        <input type="password" class="form-control" id="txtPassword2" name="txtPassword2" required>
                                     </div><!-- End .form-group -->
-
+                                    <div class="form-group">
+                                        <label for="txtName">Họ tên *</label>
+                                        <input type="text" class="form-control" id="txtName" name="txtName" required>
+                                    </div><!-- End .form-group -->
+                                    <div class="form-group">
+                                        <label for="txtAddress">Địa chỉ *</label>
+                                        <input type="text" class="form-control" id="txtAddress" name="txtAddress" required>
+                                    </div><!-- End .form-group -->
+                                    <div class="form-group">
+                                        <label for="txtPhone">Điện thoại *</label>
+                                        <input type="text" class="form-control" id="txtPhone" name="txtPhone" required>
+                                    </div><!-- End .form-group -->
                                     <div class="form-footer">
-                                        <button type="submit" class="btn btn-outline-primary-2">
+                                        <button id="register" type="button" class="btn btn-outline-primary-2">
                                             <span>Đăng ký</span>
                                             <i class="icon-long-arrow-right"></i>
                                         </button>
 
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="register-policy" required>
-                                            <label class="custom-control-label" for="register-policy">Đồng ý các điều khoản <a href="#">privacy policy</a> *</label>
-                                        </div><!-- End .custom-checkbox -->
+                                        @*<div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="register-policy" required>
+                                                <label class="custom-control-label" for="register-policy">Đồng ý các điều khoản <a href="#">privacy policy</a> *</label>
+                                            </div>*@<!-- End .custom-checkbox -->
                                     </div><!-- End .form-footer -->
                                 </form>
                             </div><!-- .End .tab-pane -->

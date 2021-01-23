@@ -10,7 +10,6 @@ namespace Models.ViewModels
 {
     public class ChangePassViewModel
     {
-
         [StringLength(50)]
         [Required(ErrorMessage = "Nhập email đăng nhập")]
         [Display(Name = "Email đăng nhập")]
@@ -26,10 +25,9 @@ namespace Models.ViewModels
         [Display(Name = "Mật khẩu mới")]
         public string NewPassword { get; set; }
 
-        [NotMapped] // Does not effect with your database
-        [Required(ErrorMessage = "Xác nhận mật khẩu")]
-        [Compare("NewPassword", ErrorMessage = "Xác nhận mật khẩu không đúng")]
-        public string ConfirmPassword { get; set; }
-
+        //[NotMapped] // Does not effect with your database
+        //[Required(ErrorMessage = "Xác nhận mật khẩu")]
+        //[Compare("NewPassword", ErrorMessage = "Xác nhận mật khẩu không đúng")]
+        //public string ConfirmPassword { get; set; }
     }
 }

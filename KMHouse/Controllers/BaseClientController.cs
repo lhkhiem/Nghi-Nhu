@@ -30,6 +30,16 @@ namespace KMHouse.Controllers
             return PartialView(productCategoryList);
         }
 
+        [ChildActionOnly]
+        public PartialViewResult MobileMenu()
+        {
+            //Lấy tất cả category có product or có category con có product
+            var dao = new ProductCategoryDao();
+            var productCategoryList = dao.ListHasProduct();
+
+            return PartialView(productCategoryList);
+        }
+
         public PartialViewResult Cart()
         {
             return PartialView();

@@ -12,6 +12,7 @@ namespace KMHouse.Controllers
 {
     public class HomeController : BaseClientController
     {
+        //[OutputCache(CacheProfile = "Cache1Day")]
         public ActionResult Index()
         {
             ViewBag.Slide = new SliderDao().ListActive();

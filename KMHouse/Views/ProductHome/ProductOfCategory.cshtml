@@ -9,13 +9,13 @@
 }
 <div class="page-header text-left" style="background-image: url('/Asset/Client/assets/images/page-header-bg.jpg')">
     <div class="container">
-        <h1 class="page-title" style="text-transform:uppercase">@categoryListWithout.FirstOrDefault(x => x.ID == category.ParentID).Name @category.Name</h1>
+        <h1 class="page-title" style="text-transform:uppercase">@category.Name</h1>
     </div><!-- End .container -->
 </div><!-- End .page-header -->
 <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
             <li class="breadcrumb-item active" aria-current="page">@category.Name</li>
         </ol>
     </div><!-- End .container -->

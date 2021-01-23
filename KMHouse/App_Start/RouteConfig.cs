@@ -132,6 +132,7 @@ namespace KMHouse
                 defaults: new { controller = "ProductHome", action = "ProductOfCategory", id = UrlParameter.Optional },
                 namespaces: new[] { "KMHouse.Controllers" }
             );
+
             routes.MapRoute(
                 name: "Shop",
                 url: "shop/",

@@ -40,7 +40,8 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
-    @RenderPage("~/Views/Shared/_MobileMenu.cshtml")
+    @*@RenderPage("~/Views/Shared/_MobileMenu.cshtml")*@
+    @{Html.RenderAction("MobileMenu", "BaseClient");}
     <!-- End .mobile-menu-container -->
     <!-- Sign in / Register Modal -->
     @RenderPage("~/Views/Shared/_SigninRegister.cshtml")
