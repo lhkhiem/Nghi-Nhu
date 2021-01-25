@@ -21,17 +21,17 @@ namespace KMHouse.Controllers
 
         public ActionResult Contact()
         {
-            var model = new ContactDao().ListAll().FirstOrDefault(x => x.Status = true);
-            return View(model);
+            //var model = new ContactDao().ListAll().FirstOrDefault(x => x.Status = true);
+            //return View(model);
+            return View();
         }
 
-        public JsonResult SendFeedback(string name, string address, string mobile, string email, string title, string message)
+        public JsonResult SendFeedback(string name, string mobile, string email, string title, string message)
         {
             try
             {
                 var feedback = new Feedback();
                 feedback.Name = name;
-                feedback.Address = address;
                 feedback.Phone = mobile;
                 feedback.CreateDate = DateTime.Now;
                 feedback.Email = email;

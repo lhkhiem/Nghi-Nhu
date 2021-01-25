@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "NghiNhu";
+    ViewBag.Title = "Nghi như";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Models.EF.ProductCategory> productCategory = ViewBag.ProductCategory;
     List<Models.ViewModels.ProductViewModel> product = ViewBag.Product;
@@ -24,36 +24,36 @@
                 <div class="container intro-content">
                     <div class="row">
                         <div class="col-auto offset-lg-3 intro-col">
-                            <h3 class="intro-subtitle">@item.Caption1</h3><!-- End .h3 intro-subtitle -->
+                            <h3 class="intro-subtitle">@item.Caption1</h3>
                             <h1 class="intro-title">
                                 @item.Caption2 <br>@item.Caption3
                                 <span>
                                     <sup class="font-weight-light">@item.Caption4</sup>
                                     <span class="text-primary">@item.Caption5<sup>@item.Caption6</sup></span>
                                 </span>
-                            </h1><!-- End .intro-title -->
+                            </h1>
 
                             <a href="@item.Link" class="btn btn-outline-primary-2">
                                 <span>Xem ngay</span>
                                 <i class="icon-long-arrow-right"></i>
                             </a>
-                        </div><!-- End .col-auto offset-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container intro-content -->
-            </div><!-- End .intro-slide -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </div><!-- End .owl-carousel owl-simple -->
+    </div>
 
-    <span class="slider-loader"></span><!-- End .slider-loader -->
-</div><!-- End .intro-slider-container -->
+    <span class="slider-loader"></span>
+</div>
 
-<div class="mb-4"></div><!-- End .mb-2 -->
+<div class="mb-4"></div>
 <div class="bg-light pt-3 pb-5">
     <div class="container">
         <div class="heading heading-flex heading-border mb-3">
             <div class="heading-left">
-                <h2 class="title">Bán chạy</h2><!-- End .title -->
-            </div><!-- End .heading-left -->
+                <h2 class="title">Bán chạy</h2>
+            </div>
 
             <div class="heading-right">
                 <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
@@ -61,8 +61,8 @@
                         <a class="nav-link" id="hot-all-link" data-toggle="tab" href="#" role="tab" aria-controls="hot-all-tab" aria-selected="true">Xem thêm</a>
                     </li>
                 </ul>
-            </div><!-- End .heading-right -->
-        </div><!-- End .heading -->
+            </div>
+        </div>
 
         <div class="tab-content tab-content-carousel">
             <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel" aria-labelledby="hot-all-link">
@@ -104,13 +104,13 @@
 
                                 <div class="product-action">
                                     <a data-id="@itemTopHot.ID" class="btn-product btn-cart addCart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>Thêm vào giỏ</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
+                                </div>
+                            </figure>
 
                             <div class="product-body">
                                 <div class="product-cat">
                                     <a href="/san-pham/@itemTopHot.MetaTitleProductCategory-@itemTopHot.ProductCategoryID">@itemTopHot.ProductCategoryName</a>
-                                </div><!-- End .product-cat -->
+                                </div>
                                 <h3 class="product-title"><a href="/chi-tiet/@itemTopHot.MetaTitle-@itemTopHot.ID">@itemTopHot.Name</a></h3><!-- End .product-title -->
                                 <div class="product-price">
                                     @if (itemTopHot.Price > 0)
@@ -129,26 +129,24 @@
                                     {
                                         <span class="product-price">Liên hệ</span>
                                     }
-                                </div><!-- End .product-price -->
-                                <!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                                </div>
+                            </div>
+                        </div>
                     }
-                </div><!-- End .owl-carousel -->
-            </div><!-- .End .tab-pane -->
-            <!-- .End .tab-pane -->
-        </div><!-- End .tab-content -->
-    </div><!-- End .container -->
-</div><!-- End .bg-light pt-5 pb-5 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="mb-3"></div><!-- End .mb-3 -->
+<div class="mb-3"></div>
 @foreach (var item in productCategory.Where(x => x.ParentID == null))
 {
     <div class="container electronics">
         <div class="heading heading-flex heading-border mb-3">
             <div class="heading-left">
-                <h2 class="title">@item.Name</h2><!-- End .title -->
-            </div><!-- End .heading-left -->
+                <h2 class="title">@item.Name</h2>
+            </div>
 
             <div class="heading-right">
                 <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
@@ -162,8 +160,8 @@
                         </li>
                     }
                 </ul>
-            </div><!-- End .heading-right -->
-        </div><!-- End .heading -->
+            </div>
+        </div>
 
         <div class="tab-content tab-content-carousel">
             <div class="tab-pane p-0 fade show active" id="@item.MetaTitle-@item.ID" role="tabpanel" aria-labelledby="elec-new-link">
@@ -201,13 +199,13 @@
                                 </a>
                                 <div class="product-action">
                                     <a data-id="@productChildAll.ID" class="btn-product btn-cart addCart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>thêm vào giỏ</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
+                                </div>
+                            </figure>
 
                             <div class="product-body">
                                 <div class="product-cat">
                                     <a href="/san-pham/@productChildAll.MetaTitleProductCategory-@productChildAll.ProductCategoryID">@productChildAll.ProductCategoryName</a>
-                                </div><!-- End .product-cat -->
+                                </div>
                                 <h3 class="product-title"><a href="/chi-tiet/@productChildAll.MetaTitle-@productChildAll.ID">@productChildAll.Name</a></h3><!-- End .product-title -->
                                 <div class="product-price">
                                     @if (productChildAll.Price > 0)
@@ -226,14 +224,12 @@
                                     {
                                         <span class="product-price">Liên hệ</span>
                                     }
-                                </div><!-- End .product-price -->
-                                <!-- End .rating-container -->
-                            </div><!-- End .product-body -->
+                                </div>
+                            </div>
                         </div>
 
                     }
-                    <!-- End .product -->
-                </div><!-- End .owl-carousel -->
+                </div>
             </div>
             @foreach (var childItemTab in productCategory.Where(x => x.ParentID == item.ID))
             {
@@ -272,13 +268,13 @@
                                     </a>
                                     <div class="product-action">
                                         <a data-id="@productChildItemTab" class="btn-product btn-cart addCart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>thêm vào giỏ</span></a>
-                                    </div><!-- End .product-action -->
-                                </figure><!-- End .product-media -->
+                                    </div>
+                                </figure>
 
                                 <div class="product-body">
                                     <div class="product-cat">
                                         <a href="/san-pham/@productChildItemTab.MetaTitleProductCategory-@productChildItemTab.ProductCategoryID">@productChildItemTab.ProductCategoryName</a>
-                                    </div><!-- End .product-cat -->
+                                    </div>
                                     <h3 class="product-title"><a href="/chi-tiet/@productChildItemTab.MetaTitle-@productChildItemTab.ID">@productChildItemTab.Name</a></h3><!-- End .product-title -->
                                     <div class="product-price">
                                         @if (productChildItemTab.Price > 0)
@@ -297,26 +293,22 @@
                                         {
                                             <span class="product-price">Liên hệ</span>
                                         }
-                                    </div><!-- End .product-price -->
-                                    <!-- End .rating-container -->
-                                </div><!-- End .product-body -->
+                                    </div>
+                                </div>
                             </div>
 
                         }
-                        <!-- End .product -->
-                    </div><!-- End .owl-carousel -->
+                    </div>
                 </div>
 
             }
-        </div><!-- End .tab-content -->
+        </div>
     </div>
-
 }
-
-<div class="mb-3"></div><!-- End .mb-3 -->
+<div class="mb-3"></div>
 
 <div class="container">
-    <h2 class="title title-border mb-5">Thương hiệu</h2><!-- End .title -->
+    <h2 class="title title-border mb-5">Thương hiệu</h2>
     <div class="owl-carousel mb-5 owl-simple" data-toggle="owl"
          data-owl-options='{
                         "nav": false,
@@ -368,16 +360,15 @@
         <a href="#" class="brand">
             <img src="~/Asset/Client/assets/images/icon-logo/samsung.jpg" alt="Samsung">
         </a>
-    </div><!-- End .owl-carousel -->
-</div><!-- End .container -->
-
+    </div>
+</div>
 <div class="cta cta-horizontal cta-horizontal-box bg-primary">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-2xl-5col">
-                <h3 class="cta-title text-white">Nhận tin khuyến mãi</h3><!-- End .cta-title -->
-                <p class="cta-desc text-white"></p><!-- End .cta-desc -->
-            </div><!-- End .col-lg-5 -->
+                <h3 class="cta-title text-white">Nhận tin khuyến mãi</h3>
+                <p class="cta-desc text-white"></p>
+            </div>
 
             <div class="col-3xl-5col">
                 <form action="#">
@@ -385,17 +376,16 @@
                         <input type="email" class="form-control form-control-white" placeholder="Nhập email" aria-label="Email Adress" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-white-2" style="height:46px" type="submit"><span>Nhận tin</span><i class="icon-long-arrow-right"></i></button>
-                        </div><!-- .End .input-group-append -->
-                    </div><!-- .End .input-group -->
+                        </div>
+                    </div>
                 </form>
-            </div><!-- End .col-lg-7 -->
-        </div><!-- End .row -->
-    </div><!-- End .container -->
-</div><!-- End .cta -->
-
+            </div>
+        </div>
+    </div>
+</div>
 <div class="blog-posts bg-light pt-4 pb-7">
     <div class="container">
-        <h2 class="title">Tin tức</h2><!-- End .title-lg text-center -->
+        <h2 class="title">Tin tức</h2>
 
         <div class="owl-carousel owl-simple" data-toggle="owl"
              data-owl-options='{
@@ -428,25 +418,24 @@
                         <a href="/chi-tiet-tin/@blogs.MetaTitle-@blogs.ID">
                             <img src="@blogs.Image" alt="@blogs.Name">
                         </a>
-                    </figure><!-- End .entry-media -->
+                    </figure>
 
                     <div class="entry-body">
                         <div class="entry-meta">
                             <a href="#">@blogs.CreateDate</a>
-                        </div><!-- End .entry-meta -->
+                        </div>
 
                         <h3 class="entry-title">
                             <a href="/chi-tiet-tin/@blogs.MetaTitle-@blogs.ID">@blogs.Name</a>
-                        </h3><!-- End .entry-title -->
+                        </h3>
 
                         <div class="entry-content">
                             <p>@Html.Raw(blogs.Description)</p>
                             <a href="/chi-tiet-tin/@blogs.MetaTitle-@blogs.ID" class="read-more">Đọc thêm</a>
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
+                        </div>
+                    </div>
                 </article>
             }
-            <!-- End .entry -->
-        </div><!-- End .owl-carousel -->
-    </div><!-- End .container -->
-</div><!-- End .blog-posts -->
+        </div>
+    </div>
+</div>

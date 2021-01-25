@@ -1,74 +1,105 @@
-﻿@model Models.EF.Contact
+﻿@*@model Models.EF.Contact*@
 @{
     ViewBag.Title = "Liên hệ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-<!-- Begin Li's Breadcrumb Area -->
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="/">Trang chủ</a></li>
-                <li class="active">Liên hệ</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- Li's Breadcrumb Area End Here -->
-<!-- Begin Contact Main Page Area -->
-<div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
-    <div class="container mb-60">
-        <h4>VỊ TRÍ TRÊN BẢN ĐỒ</h4>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d982.2375234835758!2d105.08971317451363!3d10.02097719191399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0b3981bab89f9%3A0xe5a76106a09780a9!2zMjUsIDE3IE5ndXnhu4VuIELhu4luaCBLaGnDqm0sIFbEqW5oIFRoYW5oLCBS4bqhY2ggR2nDoSwgdOG7iW5oIEtpw6puIEdpYW5nLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1587614342784!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-    </div>
-    <hr />
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container d-flex align-items-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Liên hệ &amp;Phản hồi</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="page-content pb-0">
     <div class="container">
         <div class="row">
-            <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
-                <div class="contact-page-side-content">
-                    @Html.Raw(Model.Content)
-                </div>
-            </div>
-            
-            <div class="col-lg-6 col-md-12 order-2 order-lg-1">
-                <div class="contact-form-content pt-sm-55 pt-xs-55">
-                    <h3>Thông tin phản hồi</h3>
-                    <div class="contact-form">
-                        <form id="feedback" method="post">
-                            <div class="form-group">
-                                <label>Họ tên <span class="required">(*)</span></label>
-                                <input type="text" id="customername" name="customername" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Địa chỉ Email <span class="required">(*)</span></label>
-                                <input type="email" id="customerEmail" name="customerEmail" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Địa chỉ</label>
-                                <input type="text" id="contactAddress">
-                            </div>
-                            <div class="form-group">
-                                <label>Điện thoại</label>
-                                <input type="text" id="contactPhone">
-                            </div>
-                            <div class="form-group" hidden>
-                                <label>Tiêu đề</label>
-                                <input type="text" id="contactSubject">
-                            </div>
-                            <div class="form-group mb-30">
-                                <label>Nội dung<span class="required">(*)</span></label>
-                                <textarea id="contactMessage" name="contactMessage" style="height:100px" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button id="submit" class="li-btn-3">Gửi phản hồi</button>
-                                <label id="info" class="pull-right"></label>
-                            </div>
-                        </form>
-                    </div>
-                    <p class="form-messege"></p>
-                </div>
-            </div>
-        </div>
+            <div class="col-lg-6 mb-2 mb-lg-0">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12840.725604370227!2d105.09302141983892!3d9.980978281645243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0b465ff31914b%3A0x920b828205fff9c4!2zNzQ0IMSQxrDhu51uZyAzIFRow6FuZyAyLCBWxKluaCBM4bqhYywgUuG6oWNoIEdpw6EsIHThu4luaCBLacOqbiBHaWFuZywgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1611383968857!5m2!1svi!2s" width="550" height="350" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="contact-info">
+                            <h3>Liên hệ</h3>
+
+                            <ul class="contact-list">
+                                <li>
+                                    <i class="icon-map-marker"></i>
+                                    Số 744 đường 3/2, Phường Vĩnh Lạc - Thành phố Rạch Giá - Kiên Giang
+                                </li>
+                                <li>
+                                    <i class="icon-phone"></i>
+                                    <a href="tel:0908455888">0908 455 888</a>
+                                </li>
+                                <li>
+                                    <i class="icon-envelope"></i>
+                                    <a href="mailto:#">nghinhu.vn@gmail.com</a>
+                                </li>
+                            </ul><!-- End .contact-list -->
+                        </div><!-- End .contact-info -->
+                    </div><!-- End .col-sm-7 -->
+
+                    <div class="col-sm-5">
+                        <div class="contact-info">
+                            <h3>Thời gian làm việc</h3>
+
+                            <ul class="contact-list">
+                                <li>
+                                    <i class="icon-clock-o"></i>
+                                    <span class="text-dark">Thứ 2 - Thứ 6</span><br>Sáng: 07h-11h <br />Chiều: 13h-17h
+                                </li>
+                                <li>
+                                    <i class="icon-calendar"></i>
+                                    <span class="text-dark">Thứ 7</span> <br>7h-11h
+                                </li>
+                            </ul><!-- End .contact-list -->
+                        </div><!-- End .contact-info -->
+                    </div><!-- End .col-sm-5 -->
+                </div><!-- End .row -->
+            </div><!-- End .col-lg-6 -->
+            <div class="col-lg-6">
+                <h2 class="title mb-1">Phản hồi?</h2><!-- End .title mb-2 -->
+                <p class="mb-2">Gửi câu hỏi, phản hồi hoặc bất cứ đều gì bạn muốn</p>
+
+                <form id="feedback" action="/phan-hoi" method="post" class="contact-form mb-3">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="name" class="sr-only">Họ tên</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Họ tên *" required>
+                        </div><!-- End .col-sm-6 -->
+
+                        <div class="col-sm-6">
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email *" required>
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="phone" class="sr-only">Phone</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="Số điện thoại">
+                        </div><!-- End .col-sm-6 -->
+
+                        <div class="col-sm-6">
+                            <label for="title" class="sr-only">Chủ đề</label>
+                            <input type="text" class="form-control" id="title" placeholder="Chủ đề">
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <label for="message" class="sr-only">Nội dung</label>
+                    <textarea class="form-control" cols="30" rows="10" id="message" name="message" required placeholder="Nội dung *"></textarea>
+                    <hr />
+                    <button id="submit" type="button" class="btn btn-outline-primary-2 btn-minwidth-sm">
+                        <span>GỬI</span>
+                        <i class="icon-long-arrow-right"></i>
+                    </button>
+                    <label id="info" class="pull-right"></label>
+                </form><!-- End .contact-form -->
+            </div><!-- End .col-lg-6 -->
+        </div><!-- End .row -->
+        <hr class="mt-4 mb-5">
     </div>
-</div>
+</div><!-- End .page-content -->
 <!-- Contact Main Page Area End Here -->
+@section script{
+    <script src="~/Asset/Client/assets/js/controller/SendFeedback.js"></script>
+}

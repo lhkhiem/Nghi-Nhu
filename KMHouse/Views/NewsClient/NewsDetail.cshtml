@@ -19,11 +19,11 @@
     <div class="container">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-            @*<li class="breadcrumb-item"><a href="#">Tin tức</a></li>*@
+            <li class="breadcrumb-item"><a href="/tin-tuc">Tin tức</a></li>
             <li class="breadcrumb-item active" aria-current="page">Chi tiết tin</li>
         </ol>
-    </div><!-- End .container -->
-</nav><!-- End .breadcrumb-nav -->
+    </div>
+</nav>
 
 <div class="page-content">
     <div class="container">
@@ -31,7 +31,7 @@
             <div class="col-lg-9">
                 <article class="entry single-entry">
                     <figure class="entry-media">
-                        <img src="/Asset/Client/assets/images/blog/single/1.jpg" alt="image desc">
+                        <img src="@Model.Image" alt="image desc">
                     </figure><!-- End .entry-media -->
 
                     <div class="entry-body">
@@ -58,13 +58,13 @@
                         <div class="entry-footer row no-gutters flex-column flex-md-row">
                             <div class="col-md">
                                 <div class="entry-tags">
-                                    <span>Tags:</span> <a href="#">photography</a> <a href="#">style</a>
+                                    <span>Tags liên quan:</span> <a href="#">photography</a> <a href="#">style</a>
                                 </div><!-- End .entry-tags -->
                             </div><!-- End .col -->
 
                             <div class="col-md-auto mt-2 mt-md-0">
                                 <div class="social-icons social-icons-color">
-                                    <span class="social-label">Share this post:</span>
+                                    <span class="social-label">Chia sẻ tin:</span>
                                     <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
                                     <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
                                     <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
@@ -73,46 +73,9 @@
                             </div><!-- End .col-auto -->
                         </div><!-- End .entry-footer row no-gutters -->
                     </div><!-- End .entry-body -->
-
-                    <div class="entry-author-details">
-                        <figure class="author-media">
-                            <a href="#">
-                                <img src="/Asset/Client/assets/images/blog/single/author.jpg" alt="User name">
-                            </a>
-                        </figure><!-- End .author-media -->
-
-                        <div class="author-body">
-                            <div class="author-header row no-gutters flex-column flex-md-row">
-                                <div class="col">
-                                    <h4><a href="#">John Doe</a></h4>
-                                </div><!-- End .col -->
-                                <div class="col-auto mt-1 mt-md-0">
-                                    <a href="#" class="author-link">View all posts by John Doe <i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .col -->
-                            </div><!-- End .row -->
-
-                            <div class="author-content">
-                                <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas auguae, eu vulputate magna eros eu erat. Aliquam erat volutpat. </p>
-                            </div><!-- End .author-content -->
-                        </div><!-- End .author-body -->
-                    </div><!-- End .entry-author-details-->
                 </article><!-- End .entry -->
-
-                <nav class="pager-nav" aria-label="Page navigation">
-                    <a class="pager-link pager-link-prev" href="#" aria-label="Previous" tabindex="-1">
-                        Previous Post
-                        <span class="pager-link-title">Cras iaculis ultricies nulla</span>
-                    </a>
-
-                    <a class="pager-link pager-link-next" href="#" aria-label="Next" tabindex="-1">
-                        Next Post
-                        <span class="pager-link-title">Praesent placerat risus</span>
-                    </a>
-                </nav><!-- End .pager-nav -->
-
                 <div class="related-posts">
-                    <h3 class="title">Related Posts</h3><!-- End .title -->
-
+                    <h3 class="title">Tin tương tự</h3><!-- End .title -->
                     <div class="owl-carousel owl-simple" data-toggle="owl"
                          data-owl-options='{
                                         "nav": false,
@@ -230,186 +193,53 @@
                         </article><!-- End .entry -->
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .related-posts -->
-
-                <div class="comments">
-                    <h3 class="title">3 Comments</h3><!-- End .title -->
-
-                    <ul>
-                        <li>
-                            <div class="comment">
-                                <figure class="comment-media">
-                                    <a href="#">
-                                        <img src="/Asset/Client/assets/images/blog/comments/1.jpg" alt="User name">
-                                    </a>
-                                </figure>
-
-                                <div class="comment-body">
-                                    <a href="#" class="comment-reply">Reply</a>
-                                    <div class="comment-user">
-                                        <h4><a href="#">Jimmy Pearson</a></h4>
-                                        <span class="comment-date">November 9, 2018 at 2:19 pm</span>
-                                    </div><!-- End .comment-user -->
-
-                                    <div class="comment-content">
-                                        <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. </p>
-                                    </div><!-- End .comment-content -->
-                                </div><!-- End .comment-body -->
-                            </div><!-- End .comment -->
-
-                            <ul>
-                                <li>
-                                    <div class="comment">
-                                        <figure class="comment-media">
-                                            <a href="#">
-                                                <img src="/Asset/Client/assets/images/blog/comments/2.jpg" alt="User name">
-                                            </a>
-                                        </figure>
-
-                                        <div class="comment-body">
-                                            <a href="#" class="comment-reply">Reply</a>
-                                            <div class="comment-user">
-                                                <h4><a href="#">Lena  Knight</a></h4>
-                                                <span class="comment-date">November 9, 2018 at 2:19 pm</span>
-                                            </div><!-- End .comment-user -->
-
-                                            <div class="comment-content">
-                                                <p>Morbi interdum mollis sapien. Sed ac risus.</p>
-                                            </div><!-- End .comment-content -->
-                                        </div><!-- End .comment-body -->
-                                    </div><!-- End .comment -->
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <div class="comment">
-                                <figure class="comment-media">
-                                    <a href="#">
-                                        <img src="/Asset/Client/assets/images/blog/comments/3.jpg" alt="User name">
-                                    </a>
-                                </figure>
-
-                                <div class="comment-body">
-                                    <a href="#" class="comment-reply">Reply</a>
-                                    <div class="comment-user">
-                                        <h4><a href="#">Johnathan Castillo</a></h4>
-                                        <span class="comment-date">November 9, 2018 at 2:19 pm</span>
-                                    </div><!-- End .comment-user -->
-
-                                    <div class="comment-content">
-                                        <p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-                                    </div><!-- End .comment-content -->
-                                </div><!-- End .comment-body -->
-                            </div><!-- End .comment -->
-                        </li>
-                    </ul>
-                </div><!-- End .comments -->
-                <div class="reply">
-                    <div class="heading">
-                        <h3 class="title">Leave A Reply</h3><!-- End .title -->
-                        <p class="title-desc">Your email address will not be published. Required fields are marked *</p>
-                    </div><!-- End .heading -->
-
-                    <form action="#">
-                        <label for="reply-message" class="sr-only">Comment</label>
-                        <textarea name="reply-message" id="reply-message" cols="30" rows="4" class="form-control" required placeholder="Comment *"></textarea>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="reply-name" class="sr-only">Name</label>
-                                <input type="text" class="form-control" id="reply-name" name="reply-name" required placeholder="Name *">
-                            </div><!-- End .col-md-6 -->
-
-                            <div class="col-md-6">
-                                <label for="reply-email" class="sr-only">Email</label>
-                                <input type="email" class="form-control" id="reply-email" name="reply-email" required placeholder="Email *">
-                            </div><!-- End .col-md-6 -->
-                        </div><!-- End .row -->
-
-                        <button type="submit" class="btn btn-outline-primary-2">
-                            <span>POST COMMENT</span>
-                            <i class="icon-long-arrow-right"></i>
-                        </button>
-                    </form>
-                </div><!-- End .reply -->
             </div><!-- End .col-lg-9 -->
 
             <aside class="col-lg-3">
                 <div class="sidebar">
                     <div class="widget widget-search">
-                        <h3 class="widget-title">Search</h3><!-- End .widget-title -->
+                        <h3 class="widget-title">Tìm kiếm</h3><!-- End .widget-title -->
 
                         <form action="#">
-                            <label for="ws" class="sr-only">Search in blog</label>
-                            <input type="search" class="form-control" name="ws" id="ws" placeholder="Search in blog" required>
+                            <label for="ws" class="sr-only">Tìm trong danh mục</label>
+                            <input type="search" class="form-control" name="ws" id="ws" placeholder="Tìm trong danh mục" required>
                             <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
                         </form>
                     </div><!-- End .widget -->
 
                     <div class="widget widget-cats">
-                        <h3 class="widget-title">Categories</h3><!-- End .widget-title -->
+                        <h3 class="widget-title">Danh mục tin</h3><!-- End .widget-title -->
 
                         <ul>
-                            <li><a href="#">Lifestyle<span>3</span></a></li>
-                            <li><a href="#">Shopping<span>3</span></a></li>
-                            <li><a href="#">Fashion<span>1</span></a></li>
-                            <li><a href="#">Travel<span>3</span></a></li>
-                            <li><a href="#">Hobbies<span>2</span></a></li>
+                            @foreach (var item in listNewsCategory)
+                            {
+                                <li><a href="/tin-tuc/@item.MetaTitle-@item.ID">@item.Name<span>></span></a></li>
+                            }
                         </ul>
                     </div><!-- End .widget -->
 
                     <div class="widget">
-                        <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
+                        <h3 class="widget-title">Tin phổ biến</h3><!-- End .widget-title -->
 
                         <ul class="posts-list">
-                            <li>
-                                <figure>
-                                    <a href="#">
-                                        <img src="/Asset/Client/assets/images/blog/sidebar/post-1.jpg" alt="post">
-                                    </a>
-                                </figure>
+                            @if (listRecent.Count > 0)
+                            {
+                                foreach (var newsRecent in listRecent)
+                                {
+                                    <li>
+                                        <figure>
+                                            <a href="#">
+                                                <img src="@newsRecent.Image" alt="@newsRecent.Name">
+                                            </a>
+                                        </figure>
 
-                                <div>
-                                    <span>Nov 22, 2018</span>
-                                    <h4><a href="#">Aliquam tincidunt mauris eurisus.</a></h4>
-                                </div>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="#">
-                                        <img src="/Asset/Client/assets/images/blog/sidebar/post-2.jpg" alt="post">
-                                    </a>
-                                </figure>
-
-                                <div>
-                                    <span>Nov 19, 2018</span>
-                                    <h4><a href="#">Cras ornare tristique elit.</a></h4>
-                                </div>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="#">
-                                        <img src="/Asset/Client/assets/images/blog/sidebar/post-3.jpg" alt="post">
-                                    </a>
-                                </figure>
-
-                                <div>
-                                    <span>Nov 12, 2018</span>
-                                    <h4><a href="#">Vivamus vestibulum ntulla nec ante.</a></h4>
-                                </div>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="#">
-                                        <img src="/Asset/Client/assets/images/blog/sidebar/post-4.jpg" alt="post">
-                                    </a>
-                                </figure>
-
-                                <div>
-                                    <span>Nov 25, 2018</span>
-                                    <h4><a href="#">Donec quis dui at dolor  tempor interdum.</a></h4>
-                                </div>
-                            </li>
+                                        <div>
+                                            <span>@newsRecent.CreateDate</span>
+                                            <h4><a href="#">@Html.Raw(newsRecent.Name)</a></h4>
+                                        </div>
+                                    </li>
+                                }
+                            }
                         </ul><!-- End .posts-list -->
                     </div><!-- End .widget -->
 
@@ -424,7 +254,7 @@
                     </div><!-- End .widget -->
 
                     <div class="widget">
-                        <h3 class="widget-title">Browse Tags</h3><!-- End .widget-title -->
+                        <h3 class="widget-title">Tags tin tức</h3><!-- End .widget-title -->
 
                         <div class="tagcloud">
                             <a href="#">fashion</a>
@@ -438,142 +268,23 @@
                     </div><!-- End .widget -->
 
                     <div class="widget widget-text">
-                        <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
+                        <h3 class="widget-title">Quảng cáo</h3><!-- End .widget-title -->
 
                         <div class="widget-text-content">
                             <p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, pulvinar nunc sapien ornare nisl.</p>
                         </div><!-- End .widget-text-content -->
                     </div><!-- End .widget -->
+                    <div class="widget widget-banner-sidebar">
+                        <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
+
+                        <div class="banner-sidebar">
+                            <a href="#">
+                                <img src="/Asset/Client/assets/images/blog/sidebar/banner.jpg" alt="banner">
+                            </a>
+                        </div><!-- End .banner-ad -->
+                    </div><!-- End .widget -->
                 </div><!-- End .sidebar sidebar-shop -->
             </aside><!-- End .col-lg-3 -->
         </div><!-- End .row -->
     </div><!-- End .container -->
-</div><!-- End .page-content -->
-<div class="li-main-blog-page li-main-blog-details-page pt-60 pb-60 pb-sm-45 pb-xs-45">
-    <div class="container">
-        <div class="row">
-            <!-- Begin Li's Blog Sidebar Area -->
-            <div class="col-lg-3 order-lg-1 order-2">
-                <div class="li-blog-sidebar-wrapper">
-                    <div class="li-blog-sidebar pt-25">
-                        <h4 class="li-blog-sidebar-title">Danh mục tin</h4>
-                        <ul class="li-blog-archive">
-                            @foreach (var item in listNewsCategory)
-                            {
-                                int itemCount = listNews.Count(x => x.NewsCategoryID.Equals(item.ID));
-                                if (itemCount > 0)
-                                {
-                                    <li><a href="/bai-viet/@item.MetaTitle-@item.ID">@item.Name (@listNews.Count(x => x.NewsCategoryID.Equals(item.ID)))</a></li>
-                                }
-                            }
-                        </ul>
-                    </div>
-                    <div class="li-blog-sidebar">
-                        <h4 class="li-blog-sidebar-title">Bài gần đây</h4>
-                        @foreach (var item2 in listRecent)
-                        {
-                            <div class="li-blog-single-item pb-30">
-                                <div class="li-blog-banner" style="padding-right:70px">
-                                    <a href="/chi-tiet-tin/@item2.MetaTitle-@item2.ID"><img class="img-full" src="@item2.Image" alt="@item2.Name"></a>
-                                </div>
-                                <div class="li-blog-content">
-                                    <div class="li-blog-details">
-                                        <p class="li-blog-heading pt-25">
-                                            <a href="/chi-tiet-tin/@item2.MetaTitle-@item2.ID">@item2.Name</a>
-                                            <span> @string.Format("{0:dd/MM/yyyy}", item2.CreateDate)</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    <div class="li-blog-sidebar">
-                        <h4 class="li-blog-sidebar-title">Tags</h4>
-                        <ul class="li-blog-tags">
-                            @foreach (var tag in listTag)
-                            {
-                                <li><a href="/tag/@tag.ID">@tag.Name</a></li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- Li's Blog Sidebar Area End Here -->
-            <!-- Begin Li's Main Content Area -->
-            <div class="col-lg-9 order-lg-2 order-1">
-                <div class="row li-main-content">
-                    <div class="col-lg-12">
-                        <div class="li-blog-single-item pb-30">
-                            <div class="li-blog-content">
-                                <div class="li-blog-details">
-                                    <h2 class="li-blog-heading"><a href="#">@Model.Name</a></h2>
-                                    <div class="li-blog-meta">
-                                        <a class="author"><i class="fa fa-user"></i> @Model.CreateBy</a>
-                                        <a class="comment"><i class="fa fa-hashtag"></i> @Model.NewsCategoryName</a>
-                                        <a class="post-time"><i class="fa fa-calendar"></i> @string.Format("{0:dd/MM/yyyy}", @Model.CreateDate)</a>
-                                    </div>
-                                    @Html.Raw(Model.Detail)
-                                    <div class="li-tag-line">
-                                        <h4>tag:</h4>
-                                        @foreach (var tag in listTag)
-                                        {
-                                            <a href="/tag/@tag.ID">@tag.Name</a><span>,</span>
-                                        }
-                                    </div>
-                                    <div class="li-blog-sharing text-center pt-30">
-                                        <h4>Chia sẻ bài viết:</h4>
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                        <a href="#"><i class="fa fa-pinterest"></i></a>
-                                        <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--relate news-->
-                        <div class="li-blog-sidebar">
-                            <h3 class="li-blog-sidebar-title">Tin cùng danh mục</h3>
-                        </div>
-                        <div class="col-lg-12 order-lg-3 order-1">
-                            <div class="row li-main-content">
-
-                                @if (listRelate.Count > 0)
-                                {
-                                    foreach (var newsRelate in listRelate)
-                                    {
-                                        <div class="col-lg-4 col-md-4">
-                                            <div class="li-blog-single-item pb-25">
-                                                <div class="li-blog-banner">
-                                                    <a href="/chi-tiet-tin/@newsRelate.MetaTitle-@newsRelate.ID"><img class="img-full" src="@newsRelate.Image" alt="@newsRelate.Name"></a>
-                                                </div>
-                                                <div class="li-blog-content">
-                                                    <div class="li-blog-details">
-                                                        <h3 class="li-blog-heading pt-25"><a href="/chi-tiet-tin/@newsRelate.MetaTitle-@newsRelate.ID">@newsRelate.Name</a></h3>
-                                                        <div class="li-blog-meta">
-                                                            <a class="author"><i class="fa fa-user"></i> @newsRelate.CreateBy</a>
-                                                            <a class="comment"><i class="fa fa-hashtag"></i> @newsRelate.NewsCategoryName</a>
-                                                            <a class="post-time"><i class="fa fa-calendar"></i> @string.Format("{0:dd/MM/yyyy}", @newsRelate.CreateDate)</a>
-                                                        </div>
-                                                        @Html.Raw(newsRelate.Description.Length < 200 ? newsRelate.Description : newsRelate.Description.Substring(0, 150))
-                                                        <a class="read-more" href="/chi-tiet-tin/@newsRelate.MetaTitle-@newsRelate.ID">Chi tiết...</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <div class="border-top">Không có sản tin nào</div>
-                                }
-                            </div>
-                        </div>
-                        <!--relate news end-->
-                    </div>
-                </div>
-            </div>
-            <!-- Li's Main Content Area End Here -->
-        </div>
-    </div>
 </div>
-<!-- Li's Main Blog Page Area End Here -->

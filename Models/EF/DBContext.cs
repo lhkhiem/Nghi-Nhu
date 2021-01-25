@@ -75,10 +75,6 @@ namespace Models.EF
                 .IsUnicode(false);
 
             modelBuilder.Entity<Product>()
-                .Property(e => e.Image)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Product>()
                 .Property(e => e.Price)
                 .HasPrecision(18, 0);
 
