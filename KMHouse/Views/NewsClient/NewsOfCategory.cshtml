@@ -1,107 +1,170 @@
 ﻿@model List<Models.ViewModels.NewsViewModel>
 @{
     ViewBag.Title = "Bài viết";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
     var listNews = (List<Models.ViewModels.NewsViewModel>)ViewBag.ListNews;
     var newsCategory = (Models.EF.NewsCategory)ViewBag.NewsCategory;
     var listRecent = (List<Models.ViewModels.NewsViewModel>)ViewBag.ListRecent;
     var listNewsCategory = (List<Models.EF.NewsCategory>)ViewBag.ListNewsCategory;
 }
-<!-- Begin Li's Breadcrumb Area -->
-<div class="breadcrumb-area">
+<div class="page-header text-left" style="background-image: url('/Asset/Client/assets/images/page-header-bg.jpg')">
     <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="/bai-viet/">Tin tức</a></li>
-                <li class="active">@newsCategory.Name</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- Li's Breadcrumb Area End Here -->
-<!-- Begin Li's Main Blog Page Area -->
-<div class="li-main-blog-page pt-60 pb-55">
+        <h1 class="page-title" style="text-transform:uppercase">@newsCategory.Name</h1>
+    </div><!-- End .container -->
+</div><!-- End .page-header -->
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/bai-viet">Bài viết</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@newsCategory.Name</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="page-content">
     <div class="container">
         <div class="row">
-            <!-- Begin Li's Blog Sidebar Area -->
-            <div class="col-lg-3 order-lg-1 order-2">
-                <div class="li-blog-sidebar-wrapper">
-                    <div class="li-blog-sidebar pt-25">
-                        <h4 class="li-blog-sidebar-title">Danh mục tin</h4>
-                        <ul class="li-blog-archive">
+            <div class="col-lg-9">
+                @foreach (var news in Model)
+                {
+                    <article class="entry entry-list">
+                        <div class="row align-items-center">
+                            <div class="col-md-5">
+                                <figure class="entry-media">
+                                    <a href="/chi-tiet-bai-viet/@news.MetaTitle-@news.ID">
+                                        <img src="@news.Image" alt="@news.Name">
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="entry-body">
+                                    <div class="entry-meta">
+                                        <span class="entry-author">
+                                            đăng bởi @news.CreateBy
+                                        </span>
+                                        <span class="meta-separator">|</span>
+                                        <span>@news.CreateDate</span>
+                                        <span class="meta-separator">|</span>
+                                        <span>2 Bình luận</span>
+                                    </div><!-- End .entry-meta -->
+
+                                    <h2 class="entry-title">
+                                        <a href="/chi-tiet-bai-viet/@news.MetaTitle-@news.ID">@news.Name</a>
+                                    </h2><!-- End .entry-title -->
+
+                                    <div class="entry-cats">
+                                        <i>Danh mục:</i> <a href="/bai-viet/@news.NewsCategoryMetaTitle-@news.NewsCategoryID">@news.NewsCategoryName</a>
+                                    </div><!-- End .entry-cats -->
+
+                                    <div class="entry-content">
+                                        @Html.Raw(news.Description)
+                                        <a href="/chi-tiet-bai-viet/@news.MetaTitle-@news.ID" class="read-more">Chi tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                }
+                @{
+                    if (ViewBag.TotalPage > 1)
+                    {
+                        var pageDisplay = (int)ViewBag.MaxPage;//Tổng số trang cho phép hiển thị trên trang hiện tại, tránh hiển thị nhiều trang trên thanh trang
+                        int totalPage = (int)ViewBag.TotalPage;//tổng số record
+                        int currentPage = ((int)ViewBag.PageIndex);//Trang hiện tại
+
+                        // Create numeric links
+                        //Tính toán để hiển thị số trang trên thanh
+                        var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                        var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+                        //link gán cho nút
+                        var link = "/bai-viet/";
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                @if (currentPage > ViewBag.First)
+                                {
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="@link?pageIndex=@ViewBag.Prev" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Lùi
+                                        </a>
+                                    </li>
+                                }
+                                @for (int k = startPageIndex; k <= endPageIndex; k++)
+                                {
+                                    if (currentPage == k)
+                                    {
+                                        <li class="page-item active" aria-current="page"><a class="page-link" href="@link?pageIndex=@k">@k</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a class="page-link" href="@link?pageIndex=@k">@k</a></li>
+                                    }
+                                }
+
+                                @if (currentPage < totalPage)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="@link?pageIndex=@ViewBag.Next" aria-label="Next">
+                                            Tới <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    }
+                    else if (ViewBag.totalRecord == 0)
+                    {
+                        <div class="border-top">Không có bài viết  nào</div>
+                    }
+                }
+            </div>
+            <aside class="col-lg-3">
+                <div class="sidebar">
+                    <div class="widget widget-search">
+                        <h3 class="widget-title">Tìm kiếm</h3>
+
+                        <form action="">
+                            <label for="ws" class="sr-only">Tìm trong danh mục</label>
+                            <input type="search" class="form-control" name="ws" id="ws" placeholder="Tìm trong danh mục" required>
+                            <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Tìm</span></button>
+                        </form>
+                    </div>
+                    <div class="widget widget-cats">
+                        <h3 class="widget-title">Danh mục tin</h3>
+
+                        <ul>
                             @foreach (var item in listNewsCategory)
                             {
-                                int itemCount = listNews.Count(x => x.NewsCategoryID.Equals(item.ID));
-                                if (itemCount > 0)
+                                <li><a href="/bai-viet/@item.MetaTitle-@item.ID">@item.Name<span>></span></a></li>
+                            }
+                        </ul>
+                    </div>
+
+                    <div class="widget">
+                        <h3 class="widget-title">Tin phổ biến</h3>
+
+                        <ul class="posts-list">
+                            @if (listRecent.Count > 0)
+                            {
+                                foreach (var newsRecent in listRecent)
                                 {
-                                    <li><a href="/bai-viet/@item.MetaTitle-@item.ID">@item.Name (@listNews.Count(x => x.NewsCategoryID.Equals(item.ID)))</a></li>
+                                    <li>
+                                        <figure>
+                                            <a href="#">
+                                                <img src="@newsRecent.Image" alt="@newsRecent.Name">
+                                            </a>
+                                        </figure>
+
+                                        <div>
+                                            <span>@newsRecent.CreateDate</span>
+                                            <h4><a href="/bai-viet/@newsRecent.MetaTitle-@newsRecent.ID">@Html.Raw(newsRecent.Name)</a></h4>
+                                        </div>
+                                    </li>
                                 }
                             }
                         </ul>
                     </div>
-                    <div class="li-blog-sidebar">
-                        <h4 class="li-blog-sidebar-title">Bài gần đây</h4>
-                        @foreach (var item2 in listRecent)
-                        {
-                            <div class="li-blog-single-item pb-30">
-                                <div class="li-blog-banner" style="padding-right:70px">
-                                    <a href="/chi-tiet-tin/@item2.MetaTitle-@item2.ID"><img class="img-full" src="@item2.Image" alt="@item2.Name"></a>
-
-                                </div>
-                                <div class="li-blog-content">
-                                    <div class="li-blog-details">
-                                        <p class="li-blog-heading pt-25">
-                                            <a href="/chi-tiet-tin/@item2.MetaTitle-@item2.ID">@item2.Name</a>
-                                            <span> @string.Format("{0:dd/MM/yyyy}", item2.CreateDate)</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-
-                    </div>
                 </div>
-            </div>
-            <!-- Li's Blog Sidebar Area End Here -->
-            <!-- Begin Li's Main Content Area -->
-            <div class="col-lg-9 order-lg-2 order-1">
-                <div class="row li-main-content">
-                    @if (Model.Count > 0)
-                    {
-                        foreach (var item in Model)
-                        {
-                            <div class="col-lg-6 col-md-6">
-                                <div class="li-blog-single-item pb-25">
-                                    <div class="li-blog-banner">
-                                        <a href="/chi-tiet-tin/@item.MetaTitle-@item.ID"><img class="img-full" src="@item.Image" alt="@item.Name"></a>
-                                    </div>
-                                    <div class="li-blog-content">
-                                        <div class="li-blog-details">
-                                            <h3 class="li-blog-heading pt-25"><a href="/chi-tiet-tin/@item.MetaTitle-@item.ID">@item.Name</a></h3>
-                                            <div class="li-blog-meta">
-                                                <a class="author"><i class="fa fa-user"></i> @item.CreateBy</a>
-                                                <a class="comment"><i class="fa fa-hashtag"></i> @item.NewsCategoryName</a>
-                                                <a class="post-time"><i class="fa fa-calendar"></i> @string.Format("{0:dd/MM/yyyy}", item.CreateDate)</a>
-                                            </div>
-                                            @Html.Raw(item.Description.Length < 200 ? item.Description : item.Description.Substring(0, 150))
-                                            <a class="read-more" href="/chi-tiet-tin/@item.MetaTitle-@item.ID">Chi tiết...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                    else
-                    {
-                        <span class="text-info">Không có tin nào</span>
-                    }
-                    <!-- Begin Li's Pagination Area -->
-                    <!--Phân trang-->
-                    <!-- Li's Pagination End Here Area -->
-                </div>
-            </div>
-            <!-- Li's Main Content Area End Here -->
+            </aside>
         </div>
     </div>
 </div>
-<!-- Li's Main Blog Page Area End Here -->

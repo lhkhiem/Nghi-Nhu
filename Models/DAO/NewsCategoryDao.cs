@@ -10,15 +10,18 @@ namespace Models.DAO
 {
     public class NewsCategoryDao
     {
-        DBContext db = null;
+        private DBContext db = null;
+
         public NewsCategoryDao()
         {
             db = new DBContext();
         }
+
         public IEnumerable<NewsCategory> ListAll()
-        {            
-            return  db.NewsCategories.ToList();
+        {
+            return db.NewsCategories.ToList();
         }
+
         public long Insert(NewsCategory entity)
         {
             if (entity.ParentID == null) entity.DisplayOrder = GetMaxDislayOrder() + 1;
@@ -29,6 +32,7 @@ namespace Models.DAO
             db.SaveChanges();
             return entity.ID;
         }
+
         public long Update(NewsCategory entity)
         {
             var model = db.NewsCategories.Find(entity.ID);
@@ -40,10 +44,39 @@ namespace Models.DAO
             db.SaveChanges();
             return entity.ID;
         }
+
+        public IEnumerable<NewsCategory> ListSortByParent()
+        {
+            List<NewsCategory> list = new List<NewsCategory>();
+            foreach (var item in db.NewsCategories.Where(x => x.ParentID == null).OrderBy(x => x.DisplayOrder))
+            {
+                list.Add(item);
+                if (HasChild(item.ID))
+                {
+                    list.AddRange(GetChild(item.ID));
+                }
+            }
+            return list;
+        }
+
+        public bool HasChild(long id)
+        {
+            if (db.NewsCategories.FirstOrDefault(x => x.ParentID == id) != null)
+                return true;
+            else
+                return false;
+        }
+
+        public List<NewsCategory> GetChild(long id)
+        {
+            return db.NewsCategories.Where(x => x.ParentID == id).ToList();
+        }
+
         public NewsCategory GetByID(long id)
         {
             return db.NewsCategories.Find(id);
         }
+
         public bool CheckIDExist(long id)
         {
             var model = db.NewsCategories.Find(id);
@@ -51,7 +84,8 @@ namespace Models.DAO
                 return true;
             else return false;
         }
-        public bool IsSubMenu(long ?id)
+
+        public bool IsSubMenu(long? id)
         {
             var model = db.NewsCategories.Find(id);
 
@@ -59,6 +93,7 @@ namespace Models.DAO
                 return true;
             else return false;
         }
+
         public bool Delete(long id)
         {
             try
@@ -73,6 +108,7 @@ namespace Models.DAO
                 return false;
             }
         }
+
         public bool CheckNewsIsUsed(long id)
         {
             var model = db.News.FirstOrDefault(x => x.NewsCategoryID == id);
@@ -80,15 +116,17 @@ namespace Models.DAO
                 return false;//khong tim thay
             else return true;//tim thay
         }
+
         public int GetMaxDislayOrder()
         {
-            var model = db.NewsCategories.Where(x=>x.ParentID==null).OrderByDescending(x => x.DisplayOrder).FirstOrDefault();
+            var model = db.NewsCategories.Where(x => x.ParentID == null).OrderByDescending(x => x.DisplayOrder).FirstOrDefault();
             if (model != null)
             {
                 return model.DisplayOrder; ;
             }
             else return 0;
         }
+
         public bool ChangeOrder(int id, int order)
         {
             var menu = db.NewsCategories.Find(id);

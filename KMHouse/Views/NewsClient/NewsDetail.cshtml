@@ -19,7 +19,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="/tin-tuc">Tin tức</a></li>
+            <li class="breadcrumb-item"><a href="/bai-viet">Bài viết</a></li>
             <li class="breadcrumb-item active" aria-current="page">Chi tiết tin</li>
         </ol>
     </div>
@@ -40,16 +40,12 @@
                                 by <a href="#">@Model.CreateBy</a>
                             </span>
                             <span class="meta-separator">|</span>
-                            <a href="#">@Model.CreateDate</a>
+                            <span>@Model.CreateDate</span>
                             <span class="meta-separator">|</span>
-                            <a href="#">Đã xem(0)</a>
+                            <span>Đã xem(0)</span>
+                            <span class="meta-separator">|</span>
+                            <span>trong <a href="/tin-tuc/@Model.NewsCategoryMetaTitle-@Model.NewsCategoryID">@Model.NewsCategoryName</a></span>
                         </div><!-- End .entry-meta -->
-
-                        <div class="entry-title">@Html.Raw(Model.Name)</div>
-
-                        <div class="entry-cats">
-                            in <a href="/tin-tuc/@Model.NewsCategoryMetaTitle-@Model.NewsCategoryID">@Model.NewsCategoryName</a>
-                        </div><!-- End .entry-cats -->
 
                         <div class="entry-content editor-content">
                             @Html.Raw(Model.Detail)
@@ -73,11 +69,13 @@
                             </div><!-- End .col-auto -->
                         </div><!-- End .entry-footer row no-gutters -->
                     </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-                <div class="related-posts">
-                    <h3 class="title">Tin tương tự</h3><!-- End .title -->
-                    <div class="owl-carousel owl-simple" data-toggle="owl"
-                         data-owl-options='{
+                </article>
+                @if (listRelate.Count > 0)
+                {
+                    <div class="related-posts">
+                        <h3 class="title">Tin tương tự</h3><!-- End .title -->
+                        <div class="owl-carousel owl-simple" data-toggle="owl"
+                             data-owl-options='{
                                         "nav": false,
                                         "dots": true,
                                         "margin": 20,
@@ -94,113 +92,44 @@
                                             }
                                         }
                                     }'>
-                        <article class="entry entry-grid">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="/Asset/Client/assets/images/blog/grid/3cols/post-1.jpg" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
+                            @foreach (var newsRelate in listRelate)
+                            {
+                                <article class="entry entry-grid">
+                                    <figure class="entry-media">
+                                        <a href="single.html">
+                                            <img src="/Asset/Client/assets/images/blog/grid/3cols/post-1.jpg" alt="image desc">
+                                        </a>
+                                    </figure>
 
-                            <div class="entry-body">
-                                <div class="entry-meta">
-                                    <a href="#">Nov 22, 2018</a>
-                                    <span class="meta-separator">|</span>
-                                    <a href="#">2 Comments</a>
-                                </div><!-- End .entry-meta -->
+                                    <div class="entry-body">
+                                        <div class="entry-meta">
+                                            <a href="#">Nov 22, 2018</a>
+                                            <span class="meta-separator">|</span>
+                                            <a href="#">2 Comments</a>
+                                        </div>
 
-                                <h2 class="entry-title">
-                                    <a href="single.html">Cras ornare tristique elit.</a>
-                                </h2><!-- End .entry-title -->
+                                        <h2 class="entry-title">
+                                            <a href="single.html">Cras ornare tristique elit.</a>
+                                        </h2>
 
-                                <div class="entry-cats">
-                                    in <a href="#">Lifestyle</a>,
-                                    <a href="#">Shopping</a>
-                                </div><!-- End .entry-cats -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
-
-                        <article class="entry entry-grid">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="/Asset/Client/assets/images/blog/grid/3cols/post-2.jpg" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
-
-                            <div class="entry-body">
-                                <div class="entry-meta">
-                                    <a href="#">Nov 21, 2018</a>
-                                    <span class="meta-separator">|</span>
-                                    <a href="#">0 Comments</a>
-                                </div><!-- End .entry-meta -->
-
-                                <h2 class="entry-title">
-                                    <a href="single.html">Vivamus ntulla necante.</a>
-                                </h2><!-- End .entry-title -->
-
-                                <div class="entry-cats">
-                                    in <a href="#">Lifestyle</a>
-                                </div><!-- End .entry-cats -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
-
-                        <article class="entry entry-grid">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="/Asset/Client/assets/images/blog/grid/3cols/post-3.jpg" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
-
-                            <div class="entry-body">
-                                <div class="entry-meta">
-                                    <a href="#">Nov 18, 2018</a>
-                                    <span class="meta-separator">|</span>
-                                    <a href="#">3 Comments</a>
-                                </div><!-- End .entry-meta -->
-
-                                <h2 class="entry-title">
-                                    <a href="single.html">Utaliquam sollicitudin leo.</a>
-                                </h2><!-- End .entry-title -->
-
-                                <div class="entry-cats">
-                                    in <a href="#">Fashion</a>,
-                                    <a href="#">Lifestyle</a>
-                                </div><!-- End .entry-cats -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
-
-                        <article class="entry entry-grid">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="/Asset/Client/assets/images/blog/grid/3cols/post-4.jpg" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
-
-                            <div class="entry-body">
-                                <div class="entry-meta">
-                                    <a href="#">Nov 15, 2018</a>
-                                    <span class="meta-separator">|</span>
-                                    <a href="#">4 Comments</a>
-                                </div><!-- End .entry-meta -->
-
-                                <h2 class="entry-title">
-                                    <a href="single.html">Fusce pellentesque suscipit.</a>
-                                </h2><!-- End .entry-title -->
-
-                                <div class="entry-cats">
-                                    in <a href="#">Travel</a>
-                                </div><!-- End .entry-cats -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
-                    </div><!-- End .owl-carousel -->
-                </div><!-- End .related-posts -->
-            </div><!-- End .col-lg-9 -->
+                                        <div class="entry-cats">
+                                            in <a href="#">Lifestyle</a>,
+                                            <a href="#">Shopping</a>
+                                        </div>
+                                    </div>
+                                </article>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
 
             <aside class="col-lg-3">
                 <div class="sidebar">
                     <div class="widget widget-search">
                         <h3 class="widget-title">Tìm kiếm</h3><!-- End .widget-title -->
 
-                        <form action="#">
+                        <form action="">
                             <label for="ws" class="sr-only">Tìm trong danh mục</label>
                             <input type="search" class="form-control" name="ws" id="ws" placeholder="Tìm trong danh mục" required>
                             <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
@@ -213,7 +142,7 @@
                         <ul>
                             @foreach (var item in listNewsCategory)
                             {
-                                <li><a href="/tin-tuc/@item.MetaTitle-@item.ID">@item.Name<span>></span></a></li>
+                                <li><a href="/bai-viet/@item.MetaTitle-@item.ID">@item.Name<span>></span></a></li>
                             }
                         </ul>
                     </div><!-- End .widget -->
@@ -235,56 +164,16 @@
 
                                         <div>
                                             <span>@newsRecent.CreateDate</span>
-                                            <h4><a href="#">@Html.Raw(newsRecent.Name)</a></h4>
+                                            <h4><a href="/bai-viet/@newsRecent.MetaTitle-@newsRecent.ID">@Html.Raw(newsRecent.Name)</a></h4>
                                         </div>
                                     </li>
                                 }
                             }
                         </ul><!-- End .posts-list -->
                     </div><!-- End .widget -->
-
-                    <div class="widget widget-banner-sidebar">
-                        <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
-
-                        <div class="banner-sidebar">
-                            <a href="#">
-                                <img src="/Asset/Client/assets/images/blog/sidebar/banner.jpg" alt="banner">
-                            </a>
-                        </div><!-- End .banner-ad -->
-                    </div><!-- End .widget -->
-
-                    <div class="widget">
-                        <h3 class="widget-title">Tags tin tức</h3><!-- End .widget-title -->
-
-                        <div class="tagcloud">
-                            <a href="#">fashion</a>
-                            <a href="#">style</a>
-                            <a href="#">women</a>
-                            <a href="#">photography</a>
-                            <a href="#">travel</a>
-                            <a href="#">shopping</a>
-                            <a href="#">hobbies</a>
-                        </div><!-- End .tagcloud -->
-                    </div><!-- End .widget -->
-
-                    <div class="widget widget-text">
-                        <h3 class="widget-title">Quảng cáo</h3><!-- End .widget-title -->
-
-                        <div class="widget-text-content">
-                            <p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, pulvinar nunc sapien ornare nisl.</p>
-                        </div><!-- End .widget-text-content -->
-                    </div><!-- End .widget -->
-                    <div class="widget widget-banner-sidebar">
-                        <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
-
-                        <div class="banner-sidebar">
-                            <a href="#">
-                                <img src="/Asset/Client/assets/images/blog/sidebar/banner.jpg" alt="banner">
-                            </a>
-                        </div><!-- End .banner-ad -->
-                    </div><!-- End .widget -->
                 </div><!-- End .sidebar sidebar-shop -->
-            </aside><!-- End .col-lg-3 -->
-        </div><!-- End .row -->
-    </div><!-- End .container -->
+            </aside>
+        </div>
+    </div>
 </div>
+<hr />

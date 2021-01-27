@@ -14,7 +14,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tìm kiếm sản phẩm</li>
+            <li class="breadcrumb-item active" aria-current="page">Tìm thấy (@ViewBag.totalRecord) sản phẩm</li>
         </ol>
     </div><!-- End .container -->
 </nav><!-- End .breadcrumb-nav -->
@@ -53,7 +53,7 @@
                 else
                 {
                     <div class="row">
-                        <span class="text text-warning">Không tìm thấy sản phẩm nào với keywork="@keyword"</span>
+                        <span class="text">Không tìm thấy sản phẩm nào với keywork="@keyword"</span>
                     </div>
                     <div class="row">
                         <a href="/" class="alert alert-success"><i class="icon-arrow-left"></i>Quay lại trang chủ</a>

@@ -21,14 +21,11 @@
                 dataType: 'json',
                 success: function (res) {
                     if (res.status == 1) {
-                        //var box = bootbox.dialog({
-                        //    message: '<p class="text-center">Đã thêm thành công</p>',
-                        //    size: "small",
-                        //    closeButton: false,
-                        //});
+                        //var box = bootbox.alert("Đã thêm vào giỏ");
                         //setTimeout(function () {
                         //    box.modal('hide');
                         //}, 1500);
+                        alert("Đã thêm vào giỏ");
                         addCart.loadMiniCart();
                     }
                     else {

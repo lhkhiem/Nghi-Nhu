@@ -8,7 +8,7 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="/bai-viet/">Tin tức</a></li>
+                <li><a href="/bai-viet/">Bài viết</a></li>
                 <li class="active">tag"@listTag.Name"</li>
             </ul>
         </div>
@@ -25,18 +25,18 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="li-blog-single-item pb-25">
                                 <div class="li-blog-banner">
-                                    <a href="/chi-tiet-tin/@item.MetaTitle-@item.ID"><img class="img-full" src="@item.Image" alt="@item.Name"></a>
+                                    <a href="/chi-tiet-bai-viet/@item.MetaTitle-@item.ID"><img class="img-full" src="@item.Image" alt="@item.Name"></a>
                                 </div>
                                 <div class="li-blog-content">
                                     <div class="li-blog-details">
-                                        <h3 class="li-blog-heading pt-25"><a href="/chi-tiet-tin/@item.MetaTitle-@item.ID">@item.Name</a></h3>
+                                        <h3 class="li-blog-heading pt-25"><a href="/chi-tiet-bai-viet/@item.MetaTitle-@item.ID">@item.Name</a></h3>
                                         <div class="li-blog-meta">
                                             <a class="author"><i class="fa fa-user"></i> @item.CreateBy</a>
                                             <a class="comment"><i class="fa fa-hashtag"></i> @item.NewsCategoryName</a>
                                             <a class="post-time"><i class="fa fa-calendar"></i> @string.Format("{0:dd/MM/yyyy}", item.CreateDate)</a>
                                         </div>
                                         @Html.Raw(item.Description.Length < 200 ? item.Description : item.Description.Substring(0, 150))
-                                        <a class="read-more" href="/chi-tiet-tin/@item.MetaTitle-@item.ID">Chi tiết...</a>
+                                        <a class="read-more" href="/chi-tiet-bai-viet/@item.MetaTitle-@item.ID">Chi tiết...</a>
                                     </div>
                                 </div>
                             </div>

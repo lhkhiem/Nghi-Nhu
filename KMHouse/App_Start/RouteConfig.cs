@@ -50,7 +50,7 @@ namespace KMHouse
            );
             routes.MapRoute(
                name: "News Detail",
-               url: "chi-tiet-tin/{Metatitle}-{id}",
+               url: "chi-tiet-bai-viet/{Metatitle}-{id}",
                defaults: new { controller = "NewsClient", action = "NewsDetail", id = UrlParameter.Optional },
                namespaces: new[] { "KMHouse.Controllers" }
            );

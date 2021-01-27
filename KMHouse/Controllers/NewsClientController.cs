@@ -1,5 +1,6 @@
 ﻿using Models.DAO;
 using Models.EF;
+using Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,11 @@ namespace KMHouse.Controllers
 {
     public class NewsClientController : BaseClientController
     {
-        public ActionResult Index(int pageIndex = 1, int pageSize = 9)
+        public ActionResult Index(int pageIndex = 1, int pageSize = 3)
         {
             var model = new NewsDao().ListAll();
+            ViewBag.ListNewsCategory = new NewsCategoryDao().ListAll();
+            ViewBag.ListRecent = new NewsDao().ListRecentNews(5);
             int totalRecord = model.Count();
             //Lấy 1 khoảng trong list sản phẩm từ pageIndex đến pageSize để phân trang
             model = model.Skip((pageIndex - 1) * pageSize)
@@ -59,12 +62,26 @@ namespace KMHouse.Controllers
 
         public ActionResult NewsOfCategory(long cateId)
         {
-            var news = new NewsDao().ListAllByCategory(cateId);
+            var newsCategory = new NewsCategoryDao();
+            var news = new NewsDao();
+            List<NewsViewModel> list = new List<NewsViewModel>();
+            if (newsCategory.HasChild(cateId))
+            {
+                var listCategoryChild = newsCategory.GetChild(cateId);
+                foreach (var item in listCategoryChild)
+                {
+                    list.AddRange(news.ListAllByCategory(item.ID));
+                }
+            }
+            else
+            {
+                list = news.ListAllByCategory(cateId);
+            }
             ViewBag.ListNews = new NewsDao().ListAll();
             ViewBag.ListRecent = new NewsDao().ListRecentNews(5);
             ViewBag.ListNewsCategory = new NewsCategoryDao().ListAll();
             ViewBag.NewsCategory = new NewsCategoryDao().GetByID(cateId);
-            return View(news);
+            return View(list);
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿@model List<Models.EF.ProductCategory>
+@{
+    var newsCategory = (List<Models.EF.NewsCategory>)ViewBag.NewsCategoryList;
+}
 <!--left menu-->
 <div class="header-left">
     <div class="dropdown category-dropdown show is-on" data-visible="true">
@@ -88,23 +91,26 @@
                 </div><!-- End .megamenu megamenu-md -->
             </li>
             <li>
-                <a href="#" class="sf-with-ul">Tin tức</a>
+                <a href="/bai-viet" class="sf-with-ul">Dịch vụ &amp; Bài viết</a>
 
                 <div class="megamenu megamenu-sm">
                     <div class="row no-gutters">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="menu-col">
-                                <div class="menu-title">Dịch vụ thuê máy</div><!-- End .menu-title -->
-                                <ul>
-                                    <li><a href="product.html">Thuê máy in</a></li>
-                                    <li><a href="product-centered.html">Thuê máy photocopy</a></li>
-                                </ul>
-                                <div class="menu-title">Dịch vụ photo, in ấn</div><!-- End .menu-title -->
-                                <ul>
-                                    <li><a href="product.html">In văn bản</a></li>
-                                    <li><a href="product-centered.html">In văn bản màu</a></li>
-                                    <li><a href="product-gallery.html">Photocopy tài liệu</a></li>
-                                </ul>
+                                @foreach (var item in newsCategory)
+                                {
+                                    if (item.ParentID == null)
+                                    {
+                                        <div class="menu-title"><a href="/bai-viet/@item.MetaTitle-@item.ID">@item.Name</a></div><!-- End .menu-title -->
+                                    }
+                                    else
+                                    {
+                                        <ul>
+                                            <li><a href="/bai-viet/@item.MetaTitle-@item.ID">@item.Name</a></li>
+                                        </ul>
+                                    }
+
+                                }
                             </div><!-- End .menu-col -->
                         </div><!-- End .col-md-6 -->
                     </div><!-- End .row -->

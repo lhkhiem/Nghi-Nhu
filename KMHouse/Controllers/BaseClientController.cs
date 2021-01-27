@@ -17,7 +17,7 @@ namespace KMHouse.Controllers
             //Lấy tất cả category có product or có category con có product
             var dao = new ProductCategoryDao();
             var productCategoryList = dao.ListHasProduct();
-
+            ViewBag.NewsCategoryList = new NewsCategoryDao().ListSortByParent();
             return PartialView(productCategoryList);
         }
 
@@ -26,7 +26,7 @@ namespace KMHouse.Controllers
             //Lấy tất cả category có product or có category con có product
             var dao = new ProductCategoryDao();
             var productCategoryList = dao.ListHasProduct();
-
+            ViewBag.NewsCategoryList = new NewsCategoryDao().ListSortByParent();
             return PartialView(productCategoryList);
         }
 

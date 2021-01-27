@@ -149,7 +149,7 @@ namespace Models.DAO
             byte count = 0;
             foreach (var cate in list)
             {
-                if (db.Products.FirstOrDefault(x => x.ProductCategoryID == cate.ID) != null)
+                if (db.Products.FirstOrDefault(x => x.ProductCategoryID == cate.ID && x.Status == true) != null)
                 {
                     count++;
                 }
@@ -160,11 +160,16 @@ namespace Models.DAO
 
         public bool HasProduct(long id)
         {
-            var products = db.Products.FirstOrDefault(x => x.ProductCategoryID == id);
+            var products = db.Products.FirstOrDefault(x => x.ProductCategoryID == id && x.Status == true);
 
             if (products != null) return true;
             return false;
         }
+
+        //public IEnumerable<ProductCategory> ListHasProduct()
+        //{
+        //    return db.ProductCategories.ToList();
+        //}
 
         public List<ProductCategory> ListHasProduct()
         {

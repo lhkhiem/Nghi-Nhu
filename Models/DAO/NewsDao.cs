@@ -1,22 +1,21 @@
 ﻿using Common;
 using Models.EF;
 using Models.ViewModels;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models.DAO
 {
     public class NewsDao
     {
-        DBContext db = null;
+        private DBContext db = null;
+
         public NewsDao()
         {
             db = new DBContext();
         }
+
         public IEnumerable<NewsViewModel> ListAll()
         {
             var model = from a in db.News
@@ -44,6 +43,7 @@ namespace Models.DAO
                         };
             return model.ToList();
         }
+
         public List<NewsViewModel> ListAllByTag(string tagId)
         {
             var model = (from a in db.News
@@ -59,20 +59,21 @@ namespace Models.DAO
                              CreateDate = a.CreateDate,
                              CreateBy = a.CreateBy,
                              ID = a.ID,
-                             NewsCategoryName=c.Name
+                             NewsCategoryName = c.Name
                          }).AsEnumerable().Select(x => new NewsViewModel()
                          {
                              Name = x.Name,
                              MetaTitle = x.MetaTitle,
                              Image = x.Image,
                              Description = x.Description,
-                             CreateBy=x.CreateBy,
-                             CreateDate=x.CreateDate,
-                             ID=x.ID,
-                             NewsCategoryName=x.NewsCategoryName
+                             CreateBy = x.CreateBy,
+                             CreateDate = x.CreateDate,
+                             ID = x.ID,
+                             NewsCategoryName = x.NewsCategoryName
                          });
             return model.ToList();
         }
+
         public List<NewsViewModel> ListAllByCategory(long cateId)
         {
             var model = (from a in db.News
@@ -101,6 +102,7 @@ namespace Models.DAO
                          });
             return model.ToList();
         }
+
         public bool Insert(News entity)
         {
             try
@@ -124,14 +126,12 @@ namespace Models.DAO
                         {
                             //insert to Tag table
                             this.InsertTag(tagId, tag);
-
                         }
                         //Insert to NewsTag table
                         if (!existedNews)
                         {
                             this.InsertNewsTag(entity.ID, tagId);
                         }
-
                     }
                 }
                 return true;
@@ -141,6 +141,7 @@ namespace Models.DAO
                 return false;
             }
         }
+
         public bool Update(News entity)
         {
             try
@@ -172,7 +173,6 @@ namespace Models.DAO
                         {
                             //insert to Tag table
                             this.InsertTag(tagId, tag);
-
                         }
                         //Insert to NewsTag table
                         if (!existedNews)
@@ -188,10 +188,12 @@ namespace Models.DAO
                 return false;
             }
         }
+
         public News GetByID(long id)
         {
             return db.News.Find(id);
         }
+
         public NewsViewModel GetByIDView(long id)
         {
             var model = from a in db.News.Where(x => x.ID.Equals(id))
@@ -219,6 +221,7 @@ namespace Models.DAO
                         };
             return model.FirstOrDefault();
         }
+
         public bool Delete(long id)
         {
             try
@@ -234,6 +237,7 @@ namespace Models.DAO
                 return false;
             }
         }
+
         public bool ChangeStatus(long id)
         {
             var entity = db.News.Find(id);
@@ -241,6 +245,7 @@ namespace Models.DAO
             db.SaveChanges();
             return entity.Status;
         }
+
         public void InsertTag(string id, string name)
         {
             var tag = new Tag();
@@ -249,6 +254,7 @@ namespace Models.DAO
             db.Tags.Add(tag);
             db.SaveChanges();
         }
+
         public void InsertNewsTag(long newsId, string tagId)
         {
             var newsTag = new NewsTag();
@@ -257,19 +263,23 @@ namespace Models.DAO
             db.NewsTags.Add(newsTag);
             db.SaveChanges();
         }
+
         public bool CheckTag(string id)
         {
             return db.Tags.Count(x => x.ID == id) > 0;
         }
+
         public bool CheckNewsTag(long newsId, string tagId)
         {
             return db.NewsTags.Count(x => x.TagID == tagId && x.NewsID == newsId) > 0;
         }
+
         public void RemoveAllNewsTag(long newsId)
         {
             db.NewsTags.RemoveRange(db.NewsTags.Where(x => x.NewsID == newsId));
             db.SaveChanges();
         }
+
         public List<Tag> ListTag(long newsId)
         {
             var model = (from a in db.Tags
@@ -286,20 +296,24 @@ namespace Models.DAO
                          });
             return model.ToList();
         }
+
         public Tag GetTag(string id)
         {
             return db.Tags.Find(id);
         }
+
         public List<NewsViewModel> ListRelateNews(long id)
         {
             var entity = this.GetByIDView(id);
             var list = this.ListAll();
             return list.Where(x => x.ID != id && x.NewsCategoryID.Equals(entity.NewsCategoryID)).ToList();
         }
+
         public List<NewsViewModel> ListRecentNews(int number)
         {
             return this.ListAll().OrderByDescending(x => x.CreateDate).Take(number).ToList();
         }
+
         public List<string> ListName(string keyword)
         {
             return db.News.Where(x => x.Name.Contains(keyword)).Select(x => x.Name).ToList();

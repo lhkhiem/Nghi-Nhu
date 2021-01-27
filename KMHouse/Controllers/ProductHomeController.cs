@@ -156,8 +156,7 @@ namespace KMHouse.Controllers
 
             model = model.Where(x => NonUnicode.RemoveUnicode(x.Name).ToLower().Contains(keyword)
             || NonUnicode.RemoveUnicode(x.ProductCategoryName).ToLower().Contains(keyword)
-            || NonUnicode.RemoveUnicode(productCategoryDao.GetParentName(x.ProductCategoryParentID) + " " + x.ProductCategoryName + " " + x.Name).ToLower().Contains(keyword)
-            || NonUnicode.RemoveUnicode(x.Description).ToLower().Contains(keyword));
+            || NonUnicode.RemoveUnicode(productCategoryDao.GetParentName(x.ProductCategoryParentID) + " " + x.ProductCategoryName + " " + x.Name).ToLower().Contains(keyword));
             //Lấy tổng các record sản phẩm thỏa điều kiện
             int totalRecord = model.Count();
             //sắp xếp
