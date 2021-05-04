@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Models.EF.ProductCategory> productCategory = ViewBag.ProductCategory;
     List<Models.ViewModels.ProductViewModel> product = ViewBag.Product;
-    var productCategoryChild = productCategory.Where(x => x.ParentID != null);
+    var productCategoryChild = productCategory.Where(x => x.ParentID != 0);
     List<Models.ViewModels.ProductViewModel> productTopHot = ViewBag.ProductTopHot;
     List<Models.ViewModels.NewsViewModel> blog = ViewBag.Blog;
 }
@@ -140,7 +140,7 @@
 </div>
 
 <div class="mb-3"></div>
-@foreach (var item in productCategory.Where(x => x.ParentID == null))
+@foreach (var item in productCategory.Where(x => x.ParentID == 0))
 {
     <div class="container electronics">
         <div class="heading heading-flex heading-border mb-3">

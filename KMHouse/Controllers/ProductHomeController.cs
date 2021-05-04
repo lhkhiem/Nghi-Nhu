@@ -42,6 +42,7 @@ namespace KMHouse.Controllers
             ViewBag.Category = new ProductCategoryDao().GetByID(product.ProductCategoryID);
             ViewBag.RelateProducts = new ProductDao().ListRelateProduct(id);
             ViewBag.Tag = new ProductDao().ListTag(id);
+            ViewBag.ProductOption = new ProductOptionDao().ListByProduct(id).ToList();
             return View(product);
         }
 
@@ -91,7 +92,7 @@ namespace KMHouse.Controllers
             return View(model);
         }
 
-        public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 4, string sort = "newest")
+        public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 40, string sort = "newest")
         {
             var model = new ProductDao().ListByParentCategory(cateId);
             //Lấy danh sách danh mục sản phẩm
@@ -138,7 +139,7 @@ namespace KMHouse.Controllers
             return View(model);
         }
 
-        public ActionResult ProductSearch(string keyword, int pageIndex = 1, int pageSize = 6, string sort = "newest")
+        public ActionResult ProductSearch(string keyword, int pageIndex = 1, int pageSize = 40, string sort = "newest")
         {
             if (keyword == null) { keyword = ""; } else keyword = NonUnicode.RemoveUnicode(keyword).ToLower();
             ViewBag.Keyword = keyword;
@@ -155,8 +156,8 @@ namespace KMHouse.Controllers
             var model = new ProductDao().ListAll();
 
             model = model.Where(x => NonUnicode.RemoveUnicode(x.Name).ToLower().Contains(keyword)
-            || NonUnicode.RemoveUnicode(x.ProductCategoryName).ToLower().Contains(keyword)
-            || NonUnicode.RemoveUnicode(productCategoryDao.GetParentName(x.ProductCategoryParentID) + " " + x.ProductCategoryName + " " + x.Name).ToLower().Contains(keyword));
+            || NonUnicode.RemoveUnicode(x.ProductCategoryName).Contains(keyword)
+            || NonUnicode.RemoveUnicode(x.ProductCategoryName + " " + x.Name).ToLower().Contains(keyword));
             //Lấy tổng các record sản phẩm thỏa điều kiện
             int totalRecord = model.Count();
             //sắp xếp

@@ -9,18 +9,35 @@ namespace Models.EF
     [Table("Slide")]
     public partial class Slide
     {
+        [Key]
         public int ID { get; set; }
+
+        [StringLength(250)]
+        public string Name { get; set; }
 
         [StringLength(250)]
         public string Image { get; set; }
 
-        public int? DisplayOrder { get; set; }
+        [StringLength(500)]
+        public string Caption1 { get; set; }
+
+        [StringLength(500)]
+        public string Caption2 { get; set; }
+
+        [StringLength(500)]
+        public string Caption3 { get; set; }
+
+        [StringLength(500)]
+        public string Caption4 { get; set; }
+
+        [StringLength(500)]
+        public string Caption5 { get; set; }
+
+        [StringLength(500)]
+        public string Caption6 { get; set; }
 
         [StringLength(250)]
         public string Link { get; set; }
-
-        [StringLength(500)]
-        public string Description { get; set; }
 
         public DateTime? CreateDate { get; set; }
 
@@ -32,6 +49,8 @@ namespace Models.EF
         [StringLength(50)]
         public string ModifiedBy { get; set; }
 
-        public bool? Status { get; set; }
+        public int DisplayOrder { get; set; }
+
+        public bool Status { get; set; }
     }
 }

@@ -153,7 +153,7 @@
             </div><!-- End .col-lg-9 -->
             <aside class="col-lg-3 order-lg-first">
                 <div class="sidebar sidebar-shop">
-                    @foreach (var item2 in categoryList.Where(x => x.ParentID == null))
+                    @foreach (var item2 in categoryList.Where(x => x.ParentID == 0))
                     {
 
                         <div class="widget widget-collapsible">

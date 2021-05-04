@@ -9,7 +9,6 @@ namespace Models.EF
     [Table("ProductCategory")]
     public partial class ProductCategory
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long ID { get; set; }
 
         [StringLength(250)]
@@ -29,9 +28,6 @@ namespace Models.EF
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
-
-        public bool? Status { get; set; }
-
-        public bool? ShowOnHome { get; set; }
+        public int DisplayOrder { get; set; }
     }
 }

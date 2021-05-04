@@ -37,10 +37,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group-sm">
                             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "col-sm-6 control-label" })
                             <div class="col-sm-12">
@@ -51,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group-sm">
                             @Html.LabelFor(model => model.PromotionPrice, htmlAttributes: new { @class = "col-sm-6 control-label" })
                             <div class="col-sm-12">
@@ -59,6 +58,17 @@
                             </div>
                             <div class="col-sm-12">
                                 <span>><label class="convertNumber" id="convertPromotionPrice">0đ</label></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-sm">
+                            <label class="col-sm-12 control-label">VAT?</label>
+                            <div class="col-sm-12">
+                                <select class="form-control">
+                                    <option value="VAT">Giá bao gồm VAT</option>
+                                    <option value="NOVAT">Giá không bao gồm VAT</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -80,6 +90,27 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group-sm">
+                            <label class="col-sm-12 control-label">Thương hiệu</label>
+                            <div class="col-sm-12">
+                                <select class="form-control">
+                                    <option value="RICOH">RICOH</option>
+                                    <option value="FUJIXEROX">FUJI XEROX</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group-sm">
+                            @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "col-sm-12 control-label" })
+                            <div class="col-sm-12">
+                                @Html.TextBoxFor(model => model.Tag, htmlAttributes: new { @class = "form-control", @id = "txtMetaTitle", @required = "true", @placeholder = "tag1,tag2,tag3,tagx.." })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-sm">
                             @Html.LabelFor(model => model.TopHot, htmlAttributes: new { @class = "col-sm-12 control-label" })
                             <div class="col-sm-12">
                                 <div class="input-group date">
@@ -88,16 +119,6 @@
                                     </div>
                                     @Html.TextBoxFor(model => model.TopHot, htmlAttributes: new { @id = "datepicker1", @class = "form-control pull-right", @placeholder = "dd/mm/yyy" })
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group-sm">
-                            @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "col-sm-12 control-label" })
-                            <div class="col-sm-12">
-                                @Html.TextBoxFor(model => model.Tag, htmlAttributes: new { @class = "form-control", @id = "txtMetaTitle", @required = "true", @placeholder = "tag1,tag2,tag3,tagx.." })
                             </div>
                         </div>
                     </div>
@@ -112,7 +133,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -149,6 +169,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group-sm">
+                            <div class="col-sm-12">
+                                <label style="margin-top:30px">
+                                    Hiện trang chủ
+                                    @Html.CheckBoxFor(model => model.ShowOnHome, new { @class = "flat-red", @checked = "checked" })
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="box-footer">
@@ -160,4 +190,3 @@
         }
     </div>
 </section>
-

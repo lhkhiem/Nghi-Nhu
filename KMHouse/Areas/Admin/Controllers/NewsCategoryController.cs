@@ -19,6 +19,7 @@ namespace KMHouse.Areas.Admin.Controllers
             ViewBag.MenuActive = "mIndexNewsCategory";
             return View();
         }
+
         public JsonResult LoadData(int type, string keyword, int pageIndex, int pageSize)
         {
             string str = NonUnicode.RemoveUnicode(keyword).ToLower();
@@ -59,6 +60,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
         [HasCredential(RoleID = "NEWSCATEGORY_CREATE")]
         public JsonResult SaveData(string strNewsCategory)
@@ -74,7 +76,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 var model = new NewsCategoryDao();
                 try
                 {
-                    if (newsCategory.ParentID==null)
+                    if (newsCategory.ParentID == null)
                     {
                         newsCategory.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
                         model.Insert(newsCategory);
@@ -114,7 +116,6 @@ namespace KMHouse.Areas.Admin.Controllers
                     status = false;
                     message = ex.Message;
                 }
-
             }
 
             return Json(new
@@ -124,6 +125,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 action = action
             });
         }
+
         [HasCredential(RoleID = "NEWSCATEGORY_EDIT")]
         public JsonResult GetDetail(long id)
         {
@@ -134,6 +136,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
+
         [HasCredential(RoleID = "NEWSCATEGORY_DELETE")]
         public JsonResult Delete(long id)
         {
@@ -164,8 +167,8 @@ namespace KMHouse.Areas.Admin.Controllers
                     message = "Có tin đang dùng. Vui lòng kiểm tra lại"
                 }, JsonRequestBehavior.AllowGet);
             }
-
         }
+
         public void SetDropdownList(string selectedId = null)
         {
             var model = new NewsCategoryDao().ListAll();
@@ -187,6 +190,7 @@ namespace KMHouse.Areas.Admin.Controllers
             //Kết thúc sắp xếp.
             ViewBag.ID = new SelectList(list, "ID", "Name", selectedId);
         }
+
         public JsonResult ConvertString(string str)
         {
             string strConvert = StringHelper.ToUnsignString(str);
@@ -195,6 +199,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 str = strConvert
             }, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult ChangeOrder(int id, int order)
         {
             var res = new NewsCategoryDao().ChangeOrder(id, order);
@@ -212,7 +217,6 @@ namespace KMHouse.Areas.Admin.Controllers
                     status = false
                 });
             }
-
         }
     }
 }

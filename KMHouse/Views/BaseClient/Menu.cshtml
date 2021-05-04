@@ -12,7 +12,7 @@
         <div class="dropdown-menu show">
             <nav class="side-nav">
                 <ul class="menu-vertical sf-arrows">
-                    @foreach (var item in Model.Where(x => x.ParentID == null))
+                    @foreach (var item in Model.Where(x => x.ParentID == 0).OrderBy(x => x.DisplayOrder))
                     {
                         <li class="megamenu-container">
                             <a class="sf-with-ul" href="/san-pham/@item.MetaTitle-@item.ID">@item.Name</a>
@@ -68,13 +68,13 @@
                                                 @foreach (var itemShop in listBlock)
                                                 {
 
-                                                    if (itemShop.ParentID == null)
+                                                    if (itemShop.ParentID == 0)
                                                     {
                                                         <div class="menu-title"><a href="#">@itemShop.Name</a></div><!-- End .menu-title -->
 
                                                     }
                                                     <ul>
-                                                        @if (itemShop.ParentID != null)
+                                                        @if (itemShop.ParentID != 0)
                                                         {
                                                             <li><a href="/san-pham/@itemShop.MetaTitle-@itemShop.ID">@itemShop.Name</a></li>
                                                         }
@@ -99,7 +99,7 @@
                             <div class="menu-col">
                                 @foreach (var item in newsCategory)
                                 {
-                                    if (item.ParentID == null)
+                                    if (item.ParentID == 0)
                                     {
                                         <div class="menu-title"><a href="/bai-viet/@item.MetaTitle-@item.ID">@item.Name</a></div><!-- End .menu-title -->
                                     }

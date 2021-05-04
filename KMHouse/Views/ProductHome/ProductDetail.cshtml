@@ -6,6 +6,7 @@
     var relateProducts = (List<Models.ViewModels.ProductViewModel>)ViewBag.RelateProducts;
     var imageList = (List<string>)ViewBag.ListImage;
     var tag = (List<Models.EF.Tag>)ViewBag.Tag;
+    var productOption = (List<Models.ViewModels.ProductOptionViewModel>)ViewBag.ProductOption;
 }
 <div class="page-header text-left" style="background-image: url('/Asset/Client/assets/images/page-header-bg.jpg')">
     <div class="container">
@@ -64,11 +65,13 @@
                             <div class="product-price">
                                 @if (Model.PromotionPrice > 0)
                                 {
-                                    <div class="product-price">@Model.PromotionPrice.Value.ToString("N0")đ</div>
+                                    <div class="product-price">@Model.PromotionPrice.Value.ToString("N0")đ </div>
+                                    <p style="margin-left:5px; color:red">(Giá chưa bao gồm VAT)</p>
                                 }
                                 else
                                 {
-                                    <div class="product-price">@Model.Price.Value.ToString("N0")đ</div><!-- End .product-price -->
+                                    <div class="product-price">@Model.Price.Value.ToString("N0")đ </div>
+                                    <p style="margin-left:5px; color:red">(Giá chưa bao gồm VAT)</p>
                                 }
                             </div><!-- End .product-price -->
                         }
@@ -89,8 +92,24 @@
                             <a data-id="@Model.ID" href="" class="btn-product btn-cart addCart"><span>thêm vào giỏ</span></a>
                             <a href="/print-view/@Model.ID" target="_blank" class="btn btn-outline-lightgray" style="margin-left:5px">IN BÁO GIÁ</a>
                         </div>
+
                         <div class="product-details-action float-right">
-                        </div><!-- End .product-details-action -->
+                        </div>
+                        @if (productOption.Count>0)
+                        {
+                            <label class="badge badge-dark">Tùy chọn:</label>
+                            <div class="row">
+                                @foreach (var opt in productOption)
+                                {
+
+                                    <div class="col-md-6">
+                                        <input type="checkbox" value="@opt.OptionID">
+                                        <label>@opt.OptionName - </label>
+                                        <label style="color:#39f">@opt.Price.ToString("N0")đ</label>
+                                    </div>
+                                }
+                            </div>
+                        }
                         <div class="product-details-footer">
                             <div class="product-cat">
                                 <span>Danh mục:</span>

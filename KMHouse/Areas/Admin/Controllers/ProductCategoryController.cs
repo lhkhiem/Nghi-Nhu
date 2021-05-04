@@ -20,34 +20,30 @@ namespace KMHouse.Areas.Admin.Controllers
             return View();
         }
 
-        public JsonResult LoadData(int type, string keyword, int pageIndex, int pageSize)
+        public JsonResult LoadData(int categoryParent, string keyword, int pageIndex, int pageSize)
         {
             string str = NonUnicode.RemoveUnicode(keyword).ToLower();
-            var model = new ProductCategoryDao().ListAll();
-            switch (type)
-            {
-                case 0: model = model.Where(x => NonUnicode.RemoveUnicode(x.Name.ToLower()).Contains(str)); break;
-            }
+            var model = new ProductCategoryDao().ListAll().Where(x => x.ParentID == categoryParent && NonUnicode.RemoveUnicode(x.Name.ToLower()).Contains(str));
 
             int totalRow = model.Count();
             //Sắp xếp theo danh mục cha
-            var list = new List<ProductCategory>();
-            model = model.OrderBy(x => x.DisplayOrder);
-            foreach (var item in model)
-            {
-                if (item.ParentID == null)
-                {
-                    list.Add(item);
-                    var child = model.Where(x => x.ParentID == item.ID);
-                    foreach (var subitem in child)
-                    {
-                        list.Add(subitem);
-                    }
-                }
-            }
+            //var list = new List<ProductCategory>();
+            model = model.OrderBy(x => x.DisplayOrder)
+            //foreach (var item in model)
+            //{
+            //    if (item.ParentID == 0)
+            //    {
+            //        list.Add(item);
+            //        var child = model.Where(x => x.ParentID == item.ID);
+            //        foreach (var subitem in child)
+            //        {
+            //            list.Add(subitem);
+            //        }
+            //    }
+            //}
             ////Kết thúc sắp xếp.
 
-            model = list
+            //model = list
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize);
             int totalRowCurent = model.Count();
@@ -78,10 +74,10 @@ namespace KMHouse.Areas.Admin.Controllers
                 {
                     //if (productCategory.ParentID == null)
                     //{
-                        productCategory.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
-                        model.Insert(productCategory);
-                        status = true;
-                        action = "insert";
+                    productCategory.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
+                    model.Insert(productCategory);
+                    status = true;
+                    action = "insert";
                     //}
                     //else
                     //{
@@ -129,11 +125,15 @@ namespace KMHouse.Areas.Admin.Controllers
         [HasCredential(RoleID = "PRODUCTCATEGORY_EDIT")]
         public JsonResult GetDetail(long id)
         {
-            var model = new ProductCategoryDao().GetByID(id);
+            var dao = new ProductCategoryDao();
+            var model = dao.GetByID(id);
+            var hasChild = dao.HasChild(id);
+
             return Json(new
             {
                 data = model,
-                status = true
+                status = true,
+                hasChild = hasChild
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -178,26 +178,71 @@ namespace KMHouse.Areas.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public void SetDropdownList(string selectedId = null)
+        public JsonResult SetParentList(long id)
         {
-            var model = new ProductCategoryDao().ListAll();
-            List<ProductCategory> list = new List<ProductCategory>();
-            model = model.OrderBy(x => x.ID);
-            foreach (var item in model)
+            var data = new ProductCategoryDao().ListAll().Where(x => x.ParentID == id).ToList();
+            return Json(new
             {
-                if (item.ParentID == null)
+                data = data
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public void SetDropdownList(long? selectedId = null)
+        {
+            //var model = new ProductCategoryDao().ListAll();
+            //List<ProductCategory> list = new List<ProductCategory>();
+            //model = model.OrderBy(x => x.ID);
+            //foreach (var item in model)
+            //{
+            //    if (item.ParentID == null)
+            //    {
+            //        list.Add(item);
+            //        var child = model.Where(x => x.ParentID == item.ID);
+            //        foreach (var subitem in child)
+            //        {
+            //            subitem.Name = "-- " + subitem.Name;
+            //            list.Add(subitem);
+            //        }
+            //    }
+            var dao = new ProductCategoryDao();
+            List<SelectListItem> categoryList = new List<SelectListItem>();
+            categoryList.Add(new SelectListItem()
+            {
+                Text = "---------",
+                Value = "0",
+            });
+            //if (!dao.HasChild(selectedId))
+            //{
+            var model = dao.ListAll();
+            var listParent = model.Where(x => x.ParentID == 0).OrderBy(x => x.DisplayOrder).ToList();
+            var listChild = model.Where(x => x.ParentID != 0).ToList();
+            foreach (var item in listParent)
+            {
+                categoryList.Add(new SelectListItem()
                 {
-                    list.Add(item);
-                    var child = model.Where(x => x.ParentID == item.ID);
+                    Text = item.Name,
+                    Value = item.ID.ToString(),
+                    Selected = selectedId != null && item.ID == selectedId ? true : false
+                });
+                if (dao.HasChild(item.ID))
+                {
+                    var child = listChild.Where(x => x.ParentID == item.ID).ToList();
                     foreach (var subitem in child)
                     {
                         subitem.Name = "-- " + subitem.Name;
-                        list.Add(subitem);
+                        categoryList.Add(new SelectListItem()
+                        {
+                            Text = subitem.Name,
+                            Value = subitem.ID.ToString(),
+                            Selected = selectedId != null && subitem.ID == selectedId ? true : false
+                        });
                     }
                 }
             }
+            //}
+            ViewBag.ID = categoryList;
             //Kết thúc sắp xếp.
-            ViewBag.ID = new SelectList(list, "ID", "Name", selectedId);
+            //ViewBag.ID = private new SelectList(list, "ID", "Name", selectedId);
         }
 
         public JsonResult ConvertString(string str)
@@ -217,14 +262,14 @@ namespace KMHouse.Areas.Admin.Controllers
                 return Json(new
                 {
                     status = true
-                });
+                }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json(new
                 {
                     status = false
-                });
+                }, JsonRequestBehavior.AllowGet);
             }
         }
     }

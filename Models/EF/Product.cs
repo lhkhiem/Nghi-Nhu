@@ -35,26 +35,33 @@
         [Column(TypeName = "xml")]
         [Display(Name = "Kho ảnh sản phẩm")]
         public string MoreImage { get; set; }
+
         [Display(Name = "Giá")]
         public decimal? Price { get; set; }
+
         [Display(Name = "Giá giảm")]
         public decimal? PromotionPrice { get; set; }
+
         [Display(Name = "Đơn vị")]
         public byte UnitID { get; set; }
+
         [Display(Name = "Số lượng")]
         public byte? Quantity { get; set; }
 
         [Column(TypeName = "ntext")]
         [Display(Name = "Chi tiết")]
         public string Detail { get; set; }
+
         [Display(Name = "Bảo hành")]
         public int? Warranty { get; set; }
+
         [Display(Name = "Ngày tạo")]
         public DateTime? CreateDate { get; set; }
 
         [StringLength(50)]
         [Display(Name = "Người tạo")]
         public string CreateBy { get; set; }
+
         [Display(Name = "Ngày sửa")]
         public DateTime? ModifiedDate { get; set; }
 
@@ -69,17 +76,22 @@
         [StringLength(250)]
         [Display(Name = "Mô tả SEO")]
         public string MetaDescriptions { get; set; }
+
         [Display(Name = "Trạng thái")]
         public bool Status { get; set; }
+
         [Display(Name = "Hiện trang chủ")]
         public bool ShowOnHome { get; set; }
+
         [DataType(DataType.Date)]
         [Display(Name = "Tot Hot")]
         public DateTime? TopHot { get; set; }
 
         public bool? ViewCount { get; set; }
+
         [Display(Name = "Danh mục")]
         public long ProductCategoryID { get; set; }
+
         [StringLength(500)]
         [Display(Name = "Tag SEO")]
         public string Tag { get; set; }

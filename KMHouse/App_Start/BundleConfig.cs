@@ -19,13 +19,13 @@ namespace KMHouse
 
                  ));
             bundles.Add(new ScriptBundle("~/bundles/jquery_client").Include(
-                "~/Asset/Client/assets/js/jquery.elevateZoom.min.js",
                 "~/Asset/Client/assets/js/bootstrap.bundle.min.js",
                 "~/Asset/Client/assets/js/jquery.waypoints.min.js",
                 "~/Asset/Client/assets/js/owl.carousel.min.js",
                 "~/Asset/Client/assets/js/jquery.magnific-popup.min.js",
                 "~/Asset/Client/assets/js/main.js",
                 "~/Asset/Client/assets/js/demos/demo-13.js",
+                "~/Asset/Client/assets/js/jquery.elevateZoom.min.js",
                 "~/Asset/Admin/Js/jquery.validate.min.js",
                 "~/Asset/Admin/Js/bootbox.min.js",
                 "~/Asset/Client/assets/js/numeral.min.js",

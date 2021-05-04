@@ -41,5 +41,6 @@
 	Lưu ý: trong Entity Model phải có khóa [Key] cho thuộc tính ID mới sử dụng được
 
 3. Để sử dụng được CkFinder ta phải Add References các file .dll trong thư mục ...bin/debug của plugin CKFinder
+Kiểm tra và sửa đổi file config.ascx 
 	Câu lệnh gọi thuần java được viết ở cuối trang Layout.
 4. Để hiển thị lỗi cụ thể mở file web.config tìm đến dòng lệnh <customErrors mode="On"> đổi thành <customErrors mode="Off">

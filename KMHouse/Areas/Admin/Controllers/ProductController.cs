@@ -21,6 +21,7 @@ namespace KMHouse.Areas.Admin.Controllers
             @ViewBag.MenuActive = "mIndexProduct";
             return View();
         }
+
         public JsonResult LoadData(int type, string keyword, bool status, int pageIndex, int pageSize)
         {
             string str = NonUnicode.RemoveUnicode(keyword).ToLower();
@@ -59,18 +60,20 @@ namespace KMHouse.Areas.Admin.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult Create()
         {
             SetDropdownList();
             @ViewBag.MenuActive = "mIndexProduct";
             return View();
         }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(Product product)
         {
             product.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
-            product.Price = product.Price ==null ? 0 : product.Price;
+            product.Price = product.Price == null ? 0 : product.Price;
             var res = new ProductDao().Insert(product);
             if (res)
             {
@@ -83,19 +86,19 @@ namespace KMHouse.Areas.Admin.Controllers
             SetDropdownList();
             return RedirectToAction("Index");
         }
+
         public ActionResult Edit(long id)
         {
-
             ViewBag.MenuActive = "mIndexProduct";
             var product = new ProductDao().GetByID(id);
             SetDropdownList(product.UnitID, product.ProductCategoryID);
             return View(product);
         }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(Product product)
         {
-
             var res = new ProductDao().Update(product);
             if (res)
             {
@@ -108,6 +111,32 @@ namespace KMHouse.Areas.Admin.Controllers
             SetDropdownList(product.UnitID, product.ProductCategoryID);
             return RedirectToAction("Index");
         }
+
+        public ActionResult Copy(long id)
+        {
+            var product = new ProductDao().GetByID(id);
+            SetDropdownList(product.UnitID, product.ProductCategoryID);
+            return View(product);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Copy(Product product)
+        {
+            product.CreateBy = ((UserLoginSession)Session[ConstantSession.USER_SESSION]).UserName;
+            var res = new ProductDao().Insert(product);
+            if (res)
+            {
+                ViewBag.Info = "Cập nhật thành công!";
+            }
+            else
+            {
+                ViewBag.Info = "Cập nhật không thành công!";
+            }
+            SetDropdownList(product.UnitID, product.ProductCategoryID);
+            return RedirectToAction("Index");
+        }
+
         public JsonResult ChangeStatus(long id)
         {
             var res = new ProductDao().ChangeStatus(id);
@@ -116,6 +145,7 @@ namespace KMHouse.Areas.Admin.Controllers
                 status = res
             });
         }
+
         public JsonResult Delete(long id)
         {
             var res = new ProductDao().Delete(id);
@@ -133,8 +163,8 @@ namespace KMHouse.Areas.Admin.Controllers
                     status = false
                 }, JsonRequestBehavior.AllowGet);
             }
-
         }
+
         public void SetDropdownList(int? selectedUnit = null, long? selectedProduct = null)
         {
             //set product category
@@ -143,7 +173,7 @@ namespace KMHouse.Areas.Admin.Controllers
             model = model.OrderBy(x => x.ID);
             foreach (var item in model)
             {
-                if (item.ParentID == null)
+                if (item.ParentID == 0)
                 {
                     list.Add(item);
                     var child = model.Where(x => x.ParentID == item.ID);
@@ -187,11 +217,11 @@ namespace KMHouse.Areas.Admin.Controllers
                     data = listImagesReturn
                 }, JsonRequestBehavior.AllowGet);
             }
-
         }
+
         public JsonResult SaveImages(long id, string images)
         {
-            string domainName= ConfigurationManager.AppSettings["domainName"].ToString();
+            string domainName = ConfigurationManager.AppSettings["domainName"].ToString();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             var listImages = serializer.Deserialize<List<string>>(images);
             XElement xElement = new XElement("Images");
@@ -210,15 +240,15 @@ namespace KMHouse.Areas.Admin.Controllers
                     status = true
                 });
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return Json(new
                 {
                     status = false
                 });
             }
-
         }
+
         public JsonResult ConvertString(string str)
         {
             string strConvert = StringHelper.ToUnsignString(str);
@@ -226,6 +256,77 @@ namespace KMHouse.Areas.Admin.Controllers
             {
                 str = strConvert
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SetListOption(long productId)
+        {
+            var option = new ProductDao().ListOptionNotExist(productId);
+            return Json(new
+            {
+                data = option
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult LoadListOption(long productId)
+        {
+            var list = new ProductOptionDao().ListByProduct(productId);
+            if (list != null)
+            {
+                return Json(new
+                {
+                    status = true,
+                    data = list
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new
+                {
+                    status = false
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult AddProductOption(long productId, long optionId, decimal price)
+        {
+            var item = new ProductOption();
+            item.ProductID = productId;
+            item.OptionID = optionId;
+            item.Price = price;
+            var res = new ProductOptionDao().Insert(item);
+            if (res)
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new
+                {
+                    status = false
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult DeleteProductOption(long productId, long OptionId)
+        {
+            var res = new ProductOptionDao().Delete(productId, OptionId);
+            if (res)
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new
+                {
+                    status = false
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

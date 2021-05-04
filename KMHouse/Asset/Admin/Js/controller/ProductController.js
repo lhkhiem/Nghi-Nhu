@@ -1,6 +1,7 @@
 ﻿var productConfig = {
     pageSize: $('#sltPageSize').val(),
     pageIndex: 1,
+    productId: 0
 }
 var productController = {
     init: function () {
@@ -104,10 +105,39 @@ var productController = {
                         $('#imageList').html('');
                         alert('Cập nhật thành công');
                     }
-
                 }
             });
         });
+        $('.btn-option').off('click').on('click', function (e) {
+            e.preventDefault();
+            productConfig.productId = $(this).data('id');
+
+            productController.setListOption(productConfig.productId);
+            productController.loadListOption(productConfig.productId);
+            $('#modalOption').modal('show');
+        });
+        $('#btnOptionAdd').off('click').on('click', function (e) {
+            e.preventDefault();
+            if ($('#option').val() != null) {
+                $('#optionList').append(
+
+                    '<li>' +
+                    '<span class="option-item col-md-9">' + $('#option option:selected').text() + '</span>' +
+                    '<span>' + $('#optionPrice').val() + 'vnđ</span>' +
+                    '<a href="#" data-id="' + $('#option').val() + '" class="optionDelete pull-right"><i class="fa fa-remove"></i></a>' +
+                    '</li>'
+                );
+                productController.insertOption(productConfig.productId, $('#option').val(), $('#optionPrice').val())
+                productController.setListOption(productConfig.productId);
+            }
+            //alert($('#option').val());
+        });
+        $('#optionList').off('click').on('click', '.optionDelete', function (e) {
+            e.preventDefault();
+            productController.deleteOption(productConfig.productId, $(this).data('id'));
+            productController.setListOption(productConfig.productId);
+            productController.loadListOption(productConfig.productId);
+        })
         //Code của trang Create và Edit--------------------------------------------------------
         $('#txtMetaTitle').off('click').on('click', function (e) {
             var str = $('#txtName').val();
@@ -131,7 +161,6 @@ var productController = {
         });
     },
     convertString: function (str) {
-
         $.ajax({
             url: '/Product/ConvertString',
             data: {
@@ -142,6 +171,72 @@ var productController = {
             success: function (response) {
                 $('#txtMetaTitle').val(response.str);
             }
+        });
+    },
+    setListOption: function (productId) {
+        $.ajax({
+            url: '/Product/SetListOption',
+            data: {
+                productId: productId
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                var data = response.data;
+                var html = '';
+                $.each(data, function (i, item) {
+                    html += '<option value="' + item.ID + '">' + item.Name + '</>'
+                });
+                $('#option').html(html);
+            }
+        });
+    },
+    loadListOption: function (productId) {
+        $.ajax({
+            url: '/Product/LoadListOption',
+            data: {
+                productId: productId
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                if (res.status) {
+                    var data = res.data;
+                    var html = '';
+                    $.each(data, function (i, item) {
+                        html +=
+                            '<li>' +
+                            '<span class="option-item col-md-9">' + item.OptionName + '</span>' +
+                            '<span>' + item.Price + 'vnđ</span>' +
+                            '<a href="#" data-id="' + item.OptionID + '" class="optionDelete pull-right"><i class="fa fa-remove"></i></a>' +
+                            '</li>';
+                    });
+                    $('#optionList').html(html);
+                }
+            }
+        });
+    },
+    insertOption: function (productId, optionId, price) {
+        $.ajax({
+            url: '/Product/AddProductOption',
+            type: 'GET',
+            data: {
+                productId: productId,
+                optionId: optionId,
+                price: price
+            },
+            dataType: 'json',
+        });
+    },
+    deleteOption: function (productId, optionId) {
+        $.ajax({
+            url: '/Product/DeleteProductOption',
+            data: {
+                productId: productId,
+                optionId: optionId
+            },
+            type: 'POST',
+            dataType: 'json',
         });
     },
     loadImages: function () {
@@ -168,13 +263,7 @@ var productController = {
             }
         });
     },
-    //formatCurrency: function (number) {
-    //    var n = number.split('').reverse().join("");
-    //    var n2 = n.replace(/\d\d\d(?!$)/g, "$&,");
-    //    return n2.split('').reverse().join('') + 'VNĐ';
-    //},
     convertString: function (str) {
-
         $.ajax({
             url: '/ProductCategory/ConvertString',
             data: {
@@ -248,7 +337,6 @@ var productController = {
                             UnitName: item.UnitName,
                             Status: item.Status == true ? "<a data-id=" + item.ID + " class=\"label label-success btn-active\">Active</a>" : "<a data-id=" + item.ID + " class=\"label label-danger btn-active\">Lock</a>"
                         });
-
                     });
                     $('#tblData').html(html);
                     $('#lbTotal').text(response.totalCurent + " / " + response.total + ' tổng số bản ghi');

@@ -469,5 +469,30 @@ namespace Models.DAO
         {
             return db.Tags.Find(id);
         }
+
+        public IEnumerable<Option> ListOptionNotExist(long productId)
+        {
+            var model =
+                (from a in db.Options
+                 select new
+                 {
+                     ID = a.ID,
+                     Name = a.Name
+                 }).Except
+                    (from b in db.ProductOptions
+                     join c in db.Options on b.OptionID equals c.ID
+                     where b.ProductID.Equals(productId)
+                     select new
+                     {
+                         ID = b.OptionID,
+                         Name = c.Name
+                     }
+                    ).AsEnumerable().Select(x => new Option()
+                    {
+                        ID = x.ID,
+                        Name = x.Name
+                    });
+            return model.ToList();
+        }
     }
 }
