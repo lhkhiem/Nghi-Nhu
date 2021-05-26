@@ -46,28 +46,29 @@
 
     <span class="slider-loader"></span>
 </div>
+@if (productTopHot.Count > 0)
+{
+    <div class="mb-4"></div>
+    <div class="bg-light pt-3 pb-5">
+        <div class="container">
+            <div class="heading heading-flex heading-border mb-3">
+                <div class="heading-left">
+                    <h2 class="title">Bán chạy</h2>
+                </div>
 
-<div class="mb-4"></div>
-<div class="bg-light pt-3 pb-5">
-    <div class="container">
-        <div class="heading heading-flex heading-border mb-3">
-            <div class="heading-left">
-                <h2 class="title">Bán chạy</h2>
+                <div class="heading-right">
+                    <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" id="hot-all-link" data-toggle="tab" href="#" role="tab" aria-controls="hot-all-tab" aria-selected="true">Xem thêm</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="heading-right">
-                <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link" id="hot-all-link" data-toggle="tab" href="#" role="tab" aria-controls="hot-all-tab" aria-selected="true">Xem thêm</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="tab-content tab-content-carousel">
-            <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel" aria-labelledby="hot-all-link">
-                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                     data-owl-options='{
+            <div class="tab-content tab-content-carousel">
+                <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel" aria-labelledby="hot-all-link">
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                         data-owl-options='{
                                     "nav": false,
                                     "dots": true,
                                     "margin": 20,
@@ -93,51 +94,52 @@
                                         }
                                     }
                                 }'>
-                    @foreach (var itemTopHot in productTopHot)
-                    {
-                        <div class="product">
-                            <figure class="product-media">
-                                <span class="product-label label-new">Mới</span>
-                                <a href="/chi-tiet/@itemTopHot.MetaTitle-@itemTopHot.ID">
-                                    <img src="@itemTopHot.Image" alt="@itemTopHot.Name" class="product-image">
-                                </a>
+                        @foreach (var itemTopHot in productTopHot)
+                        {
+                            <div class="product">
+                                <figure class="product-media">
+                                    <span class="product-label label-new">Mới</span>
+                                    <a href="/chi-tiet/@itemTopHot.MetaTitle-@itemTopHot.ID">
+                                        <img src="@itemTopHot.Image" alt="@itemTopHot.Name" class="product-image">
+                                    </a>
 
-                                <div class="product-action">
-                                    <a data-id="@itemTopHot.ID" class="btn-product btn-cart addCart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>Thêm vào giỏ</span></a>
-                                </div>
-                            </figure>
+                                    <div class="product-action">
+                                        <a data-id="@itemTopHot.ID" class="btn-product btn-cart addCart" title="Thêm vào giỏ hàng" style="padding-bottom: 1rem;"><span>Thêm vào giỏ</span></a>
+                                    </div>
+                                </figure>
 
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="/san-pham/@itemTopHot.MetaTitleProductCategory-@itemTopHot.ProductCategoryID">@itemTopHot.ProductCategoryName</a>
-                                </div>
-                                <h3 class="product-title"><a href="/chi-tiet/@itemTopHot.MetaTitle-@itemTopHot.ID">@itemTopHot.Name</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    @if (itemTopHot.Price > 0)
-                                    {
-                                        if (itemTopHot.PromotionPrice > 0)
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="/san-pham/@itemTopHot.MetaTitleProductCategory-@itemTopHot.ProductCategoryID">@itemTopHot.ProductCategoryName</a>
+                                    </div>
+                                    <h3 class="product-title"><a href="/chi-tiet/@itemTopHot.MetaTitle-@itemTopHot.ID">@itemTopHot.Name</a></h3><!-- End .product-title -->
+                                    <div class="product-price">
+                                        @if (itemTopHot.Price > 0)
                                         {
-                                            <span class="new-price">@itemTopHot.PromotionPrice.Value.ToString("N0")đ</span>
-                                            <span class="old-price">@itemTopHot.Price.Value.ToString("N0")</span>
+                                            if (itemTopHot.PromotionPrice > 0)
+                                            {
+                                                <span class="new-price">@itemTopHot.PromotionPrice.Value.ToString("N0")đ</span>
+                                                <span class="old-price">@itemTopHot.Price.Value.ToString("N0")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="product-price">@itemTopHot.Price.Value.ToString("N0")đ</span>
+                                            }
                                         }
                                         else
                                         {
-                                            <span class="product-price">@itemTopHot.Price.Value.ToString("N0")đ</span>
+                                            <span class="product-price">Liên hệ</span>
                                         }
-                                    }
-                                    else
-                                    {
-                                        <span class="product-price">Liên hệ</span>
-                                    }
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
 
 <div class="mb-3"></div>
 @foreach (var item in productCategory.Where(x => x.ParentID == 0))

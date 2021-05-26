@@ -37,10 +37,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group-sm">
                             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "col-sm-6 control-label" })
                             <div class="col-sm-12">
@@ -51,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group-sm">
                             @Html.LabelFor(model => model.PromotionPrice, htmlAttributes: new { @class = "col-sm-6 control-label" })
                             <div class="col-sm-12">
@@ -59,6 +58,19 @@
                             </div>
                             <div class="col-sm-12">
                                 <span>><label class="convertNumber" id="convertPromotionPrice">0đ</label></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-sm">
+                            <label class="col-sm-12 control-label">VAT?</label>
+                            <div class="col-sm-12">
+                                @Html.DropDownListFor(model => model.VAT, new List<SelectListItem> {
+                                 new SelectListItem { Value="Bao gồm VAT", Text="Bao gồm VAT" },
+                                 new SelectListItem { Value ="Chưa bao gồm VAT", Text="Chưa bao gồm VAT" },
+                                 new SelectListItem { Value ="Không có VAT", Text="Không có VAT"},
+                              },
+                            htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -80,14 +92,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group-sm">
-                            @Html.LabelFor(model => model.TopHot, htmlAttributes: new { @class = "col-sm-12 control-label" })
+                            <label class="col-sm-12 control-label">Thương hiệu</label>
                             <div class="col-sm-12">
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    @Html.TextBoxFor(model => model.TopHot, htmlAttributes: new { @id = "datepicker1", @class = "form-control pull-right", @placeholder = "dd/mm/yyy" })
-                                </div>
+                                @Html.DropDownListFor(model => model.BrandID, null, htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -113,7 +120,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -161,4 +167,3 @@
         }
     </div>
 </section>
-

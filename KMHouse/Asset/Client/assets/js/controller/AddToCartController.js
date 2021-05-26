@@ -88,8 +88,9 @@
                     $.each(data, function (i, item) {
                         totalItem += 1;
                         var price = 0;
-                        if (item.Product.PromotionPrice != null) price = item.Product.PromotionPrice * item.Quantity;
-                        else price = item.Product.Price * item.Quantity;
+                        var priceItem = 0;
+                        if (item.Product.PromotionPrice != null) { price = item.Product.PromotionPrice * item.Quantity; priceItem = item.Product.PromotionPrice; }
+                        else { price = item.Product.Price * item.Quantity; priceItem=item.Product.Price };
                         totalPrice += price;
                         name = item.Product.Name;
                         //if (item.Product.Name.length > 10) name = item.Product.Name.substring(0, 10) + "..."; else name = item.Product.Name;
@@ -108,7 +109,7 @@
                             '<a href="/chi-tiet/' + item.Product.MetaTitle + '-' + item.Product.ID + '">' + name + '</a>' +
                             '</h4>' +
                             '<span class="cart-product-info">' +
-                            '<span class="cart-product-qty">' + item.Quantity + '</span> x ' + numeral(price).format('0,0[.]00') + '</span>' +
+                            '<span class="cart-product-qty">' + item.Quantity + '</span> x ' + numeral(priceItem).format('0,0[.]00') + '</span>' +
                             '</div >' +
 
                             '<figure class="product-image-container">' +

@@ -165,7 +165,7 @@ namespace KMHouse.Areas.Admin.Controllers
             }
         }
 
-        public void SetDropdownList(int? selectedUnit = null, long? selectedProduct = null)
+        public void SetDropdownList(int? selectedUnit = null, long? selectedProduct = null, byte? sltBrand = null)
         {
             //set product category
             var model = new ProductCategoryDao().ListAll();
@@ -190,6 +190,7 @@ namespace KMHouse.Areas.Admin.Controllers
             //set unit
             var unit = new UnitDao();
             ViewBag.UnitID = new SelectList(unit.ListAll(), "ID", "Name", selectedUnit);
+            ViewBag.BrandID = new SelectList(new BrandDao().ListAll(), "ID", "Name", sltBrand);
         }
 
         public JsonResult LoadImages(long id)

@@ -66,12 +66,12 @@
                                 @if (Model.PromotionPrice > 0)
                                 {
                                     <div class="product-price">@Model.PromotionPrice.Value.ToString("N0")đ </div>
-                                    <p style="margin-left:5px; color:red">(Giá chưa bao gồm VAT)</p>
+                                    <p style="margin-left:5px; color:red">(@Model.VAT)</p>
                                 }
                                 else
                                 {
                                     <div class="product-price">@Model.Price.Value.ToString("N0")đ </div>
-                                    <p style="margin-left:5px; color:red">(Giá chưa bao gồm VAT)</p>
+                                    <p style="margin-left:5px; color:red">(@Model.VAT)</p>
                                 }
                             </div><!-- End .product-price -->
                         }
@@ -95,7 +95,7 @@
 
                         <div class="product-details-action float-right">
                         </div>
-                        @if (productOption.Count>0)
+                        @if (productOption.Count > 0)
                         {
                             <label class="badge badge-dark">Tùy chọn:</label>
                             <div class="row">

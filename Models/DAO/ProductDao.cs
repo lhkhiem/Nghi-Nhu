@@ -26,6 +26,8 @@ namespace Models.DAO
                         on a.ProductCategoryID equals b.ID
                         join c in db.Units
                         on a.UnitID equals c.ID
+                        join d in db.Brands
+                        on a.BrandID equals d.ID
                         select new ProductViewModel()
                         {
                             ID = a.ID,
@@ -53,7 +55,10 @@ namespace Models.DAO
                             ProductCategoryID = b.ID,
                             ProductCategoryParentID = b.ID,
                             Detail = a.Detail,
-                            Tag = a.Tag
+                            Tag = a.Tag,
+                            VAT = a.VAT,
+                            BrandID = a.BrandID,
+                            BrandName = d.Name
                         };
             return model.ToList();
         }
@@ -65,6 +70,8 @@ namespace Models.DAO
                         on a.ProductCategoryID equals b.ID
                         join c in db.Units
                         on a.UnitID equals c.ID
+                        join d in db.Brands
+                        on a.BrandID equals d.ID
                         select new ProductViewModel()
                         {
                             ID = a.ID,
@@ -106,6 +113,8 @@ namespace Models.DAO
                         on a.UnitID equals c.ID
                         join d in db.ProductTags on a.ID equals d.ProductID
                         where d.TagID == tagId
+                        join e in db.Brands
+                        on a.BrandID equals e.ID
                         select new ProductViewModel()
                         {
                             ID = a.ID,
@@ -132,7 +141,10 @@ namespace Models.DAO
                             MetaTitleProductCategory = b.MetaTitle,
                             ProductCategoryID = b.ID,
                             Detail = a.Detail,
-                            Tag = a.Tag
+                            Tag = a.Tag,
+                            VAT = a.VAT,
+                            BrandID = a.BrandID,
+                            BrandName = e.Name
                         };
             return model.ToList();
         }
@@ -144,6 +156,8 @@ namespace Models.DAO
                         on a.ProductCategoryID equals b.ID
                         join c in db.Units
                         on a.UnitID equals c.ID
+                        join d in db.Brands
+                        on a.BrandID equals d.ID
                         select new ProductViewModel()
                         {
                             ID = a.ID,
@@ -170,7 +184,10 @@ namespace Models.DAO
                             MetaTitleProductCategory = b.MetaTitle,
                             ProductCategoryID = b.ID,
                             Detail = a.Detail,
-                            Tag = a.Tag
+                            Tag = a.Tag,
+                            VAT = a.VAT,
+                            BrandID = a.BrandID,
+                            BrandName = d.Name
                         };
             var producCategorytDao = new ProductCategoryDao();
             List<ProductViewModel> list1 = new List<ProductViewModel>();
@@ -194,6 +211,49 @@ namespace Models.DAO
                 }
             }
             return list1.Concat(list2).ToList();
+        }
+
+        public List<ProductViewModel> ListByParentCategory2(long cateId)
+        {
+            var model = from a in db.Products
+                        join b in db.ProductCategories
+                        on a.ProductCategoryID equals b.ID
+                        join c in db.Units
+                        on a.UnitID equals c.ID
+                        join d in db.Brands
+                        on a.BrandID equals d.ID
+                        select new ProductViewModel()
+                        {
+                            ID = a.ID,
+                            Name = a.Name,
+                            Code = a.Code,
+                            Description = a.Description,
+                            Image = a.Image,
+                            MetaDescriptions = a.MetaDescriptions,
+                            MetaKeywords = a.MetaKeywords,
+                            MetaTitle = a.MetaTitle,
+                            CreateDate = a.CreateDate,
+                            CreateBy = a.CreateBy,
+                            ModifiedBy = a.ModifiedBy,
+                            ModifiedDate = a.ModifiedDate,
+                            MoreImage = a.MoreImage,
+                            Price = a.Price,
+                            ProductCategoryName = b.Name,
+                            PromotionPrice = a.PromotionPrice,
+                            Quantity = a.Quantity,
+                            UnitName = c.Name,
+                            Warranty = a.Warranty,
+                            Status = a.Status,
+                            TopHot = a.TopHot,
+                            MetaTitleProductCategory = b.MetaTitle,
+                            ProductCategoryID = b.ID,
+                            Detail = a.Detail,
+                            Tag = a.Tag,
+                            VAT = a.VAT,
+                            BrandID = a.BrandID,
+                            BrandName = d.Name
+                        };
+            return model.ToList();
         }
 
         public bool Insert(Product entity)
@@ -251,6 +311,8 @@ namespace Models.DAO
                 model.MoreImage = entity.MoreImage;
                 model.Price = entity.Price;
                 model.ProductCategoryID = entity.ProductCategoryID;
+                model.BrandID = entity.BrandID;
+                model.VAT = entity.VAT;
                 model.PromotionPrice = entity.PromotionPrice;
                 model.Quantity = entity.Quantity;
                 model.UnitID = entity.UnitID;
@@ -299,6 +361,8 @@ namespace Models.DAO
                         on a.ProductCategoryID equals b.ID
                         join c in db.Units
                         on a.UnitID equals c.ID
+                        join d in db.Brands
+                        on a.BrandID equals d.ID
                         where a.ProductCategoryID == id
                         select new ProductViewModel()
                         {
@@ -327,7 +391,10 @@ namespace Models.DAO
                             ProductCategoryID = b.ID,
                             Detail = a.Detail,
                             UnitID = c.ID,
-                            Tag = a.Tag
+                            Tag = a.Tag,
+                            VAT = a.VAT,
+                            BrandID = a.BrandID,
+                            BrandName = d.Name
                         };
             return model;
         }
@@ -339,6 +406,8 @@ namespace Models.DAO
                         on a.ProductCategoryID equals b.ID
                         join c in db.Units
                         on a.UnitID equals c.ID
+                        join d in db.Brands
+                        on a.BrandID equals d.ID
                         select new ProductViewModel()
                         {
                             ID = a.ID,
@@ -366,7 +435,10 @@ namespace Models.DAO
                             ProductCategoryID = b.ID,
                             Detail = a.Detail,
                             UnitID = c.ID,
-                            Tag = a.Tag
+                            Tag = a.Tag,
+                            VAT = a.VAT,
+                            BrandID = a.BrandID,
+                            BrandName = d.Name
                         };
             return model.FirstOrDefault();
         }

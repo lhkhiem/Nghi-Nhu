@@ -4,6 +4,7 @@
     var category = (Models.EF.ProductCategory)ViewBag.Category;
     var product = (List<Models.ViewModels.ProductViewModel>)ViewBag.Product;
     var categoryListWithout = (List<Models.EF.ProductCategory>)ViewBag.ListCategoryWithout;
+    var listCateChild = (List<Models.EF.ProductCategory>)ViewBag.ListCateChild;
     ViewBag.Title = "" + category.Name;
     ViewBag.Keyword = category.MetaTitle;
 }
@@ -51,42 +52,93 @@
                 </div><!-- End .toolbox -->
                 <div class="products mb-3">
                     <div class="row justify-content-lg-start">
-                        @foreach (var item in Model.Where(x => x.Status == true))
+                        @if (listCateChild != null)
                         {
-                            <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-                                <div class="product product-7 text-left">
-                                    <figure class="product-media">
-                                        <a href="/chi-tiet/@item.MetaTitle-@item.ID">
-                                            <img src="@item.Image" alt="@item.Name" class="product-image">
-                                        </a>
-                                        <div class="product-action">
-                                            <a data-id="@item.ID" href="" class="btn-product btn-cart addCart"><span>Thêm giỏ hàng</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
+                            foreach (var cateChild in listCateChild)
+                            {
+                                <div class="col-md-12" style="border-bottom:1px solid #f8f8f8">
+                                    <h5 style="text-transform:uppercase">@cateChild.Name</h5>
+                                </div>
 
-                                    <div class="product-body">
-                                        <h3 class="product-title"><a href="/chi-tiet/@item.MetaTitle-@item.ID">@item.Name</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            @if (item.Price > 0)
-                                            {
-                                                if (item.PromotionPrice > 0)
+                                foreach (var item in Model.Where(x => x.Status == true && x.ProductCategoryID == cateChild.ID))
+                                {
+                                    <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                        <div class="product product-7 text-left">
+                                            <figure class="product-media">
+                                                <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                    <img src="@item.Image" alt="@item.Name" class="product-image">
+                                                </a>
+                                                <div class="product-action">
+                                                    <a data-id="@item.ID" href="" class="btn-product btn-cart addCart"><span>Thêm giỏ hàng</span></a>
+                                                </div><!-- End .product-action -->
+                                            </figure><!-- End .product-media -->
+
+                                            <div class="product-body">
+                                                <h3 class="product-title"><a href="/chi-tiet/@item.MetaTitle-@item.ID">@item.Name</a></h3><!-- End .product-title -->
+                                                <div class="product-price">
+                                                    @if (item.Price > 0)
+                                                    {
+                                                        if (item.PromotionPrice > 0)
+                                                        {
+                                                            <span class="new-price">@item.PromotionPrice.Value.ToString("N0")đ</span>
+                                                            <span class="old-price">@item.Price.Value.ToString("N0")</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="product-price">@item.Price.Value.ToString("N0")đ</span>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="product-price">Liên hệ</span>
+                                                    }
+                                                </div><!-- End .product-price -->
+                                            </div><!-- End .product-body -->
+                                        </div><!-- End .product -->
+                                    </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            foreach (var item2 in Model.Where(x => x.Status == true))
+                            {
+                                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                    <div class="product product-7 text-left">
+                                        <figure class="product-media">
+                                            <a href="/chi-tiet/@item2.MetaTitle-@item2.ID">
+                                                <img src="@item2.Image" alt="@item2.Name" class="product-image">
+                                            </a>
+                                            <div class="product-action">
+                                                <a data-id="@item2.ID" href="" class="btn-product btn-cart addCart"><span>Thêm giỏ hàng</span></a>
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <h3 class="product-title"><a href="/chi-tiet/@item2.MetaTitle-@item2.ID">@item2.Name</a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                                @if (item2.Price > 0)
                                                 {
-                                                    <span class="new-price">@item.PromotionPrice.Value.ToString("N0")đ</span>
-                                                    <span class="old-price">@item.Price.Value.ToString("N0")</span>
+                                                    if (item2.PromotionPrice > 0)
+                                                    {
+                                                        <span class="new-price">@item2.PromotionPrice.Value.ToString("N0")đ</span>
+                                                        <span class="old-price">@item2.Price.Value.ToString("N0")</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="product-price">@item2.Price.Value.ToString("N0")đ</span>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <span class="product-price">@item.Price.Value.ToString("N0")đ</span>
+                                                    <span class="product-price">Liên hệ</span>
                                                 }
-                                            }
-                                            else
-                                            {
-                                                <span class="product-price">Liên hệ</span>
-                                            }
-                                        </div><!-- End .product-price -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-                            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                                            </div><!-- End .product-price -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                            }
                         }
                     </div><!-- End .row -->
                 </div><!-- End .products -->
@@ -149,8 +201,8 @@
                     @foreach (var item2 in categoryListWithout.Where(x => x.ParentID == 0))
                     {
 
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">
+                        <div class="widget widget-collapsible" style="border-right:1px solid #f8f8f8">
+                            <h3 class="widget-title" style="background-color:#f8f8f8; padding:10px">
                                 <a data-toggle="collapse" href="#widget-@item2.ID" role="button" aria-expanded="true" aria-controls="widget-@item2.ID">
                                     @item2.Name
                                 </a>
@@ -162,8 +214,9 @@
                                         @foreach (var itemChild in categoryListWithout.Where(x => x.ParentID == item2.ID))
                                         {
                                             <div class="filter-item">
-                                                <div class="custom-control">
-                                                    <a href="/san-pham/@itemChild.MetaTitle-@itemChild.ID" class="custom-control-label" for="cat-1">@itemChild.Name</a>
+                                                <div>
+                                                    <i class="icon-long-arrow-right"></i>
+                                                    <a href="/san-pham/@itemChild.MetaTitle-@itemChild.ID" style="color:#666">@itemChild.Name</a>
                                                 </div><!-- End .custom-checkbox -->
                                                 <span class="item-count">@product.Count(x => x.ProductCategoryID == itemChild.ID)</span>
                                             </div><!-- End .filter-item -->

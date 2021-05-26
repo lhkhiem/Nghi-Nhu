@@ -70,5 +70,8 @@ namespace Models.ViewModels
         public string MetaTitleProductCategory { get; set; }
 
         public string Tag { get; set; }
+        public string VAT { get; set; }
+        public byte BrandID { get; set; }
+        public string BrandName { get; set; }
     }
 }

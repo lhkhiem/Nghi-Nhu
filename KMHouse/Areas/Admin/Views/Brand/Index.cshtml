@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Tùy chọn";
+    ViewBag.Title = "Thương hiệu";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-@section headertitle{Danh sách tùy chọn}@section headermenuroot{Tùy chọn sản phẩm}@section headermenusub{Danh sách}
+@section headertitle{Danh sách thương hiệu}@section headermenuroot{Thương hiệu}@section headermenusub{Danh sách}
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
@@ -58,6 +58,7 @@
                                 <th><span style="margin-left:5px">#</span></th>
                                 <th>ID</th>
                                 <th>Tên</th>
+                                <th>Logo</th>
                             </tr>
                         </thead>
                         <tbody id="tblData"></tbody>
@@ -84,6 +85,7 @@
                             </td>
                             <td style="width:60px">{{ID}}</td>
                             <td>{{Name}}</td>
+                            <td><img src="{{Logo}}" style="max-height:30px"></td>
                         </tr>
                     </script>
                 </div>
@@ -91,12 +93,12 @@
         </div>
     </div>
 </section>
-@RenderPage("_OptionAddUpdateModal.cshtml")
+@RenderPage("_BrandAddUpdateModal.cshtml")
 @section JsFooter
 {
     <script src="~/Asset/Admin/Js/jquery.validate.min.js"></script>
     <script src="~/Asset/Admin/Js/mustache.min.js"></script>
     <script src="~/Asset/Admin/Js/jquery.twbsPagination.min.js"></script>
     <script src="~/Asset/Admin/Js/bootbox.min.js"></script>
-    <script src="~/Asset/Admin/Js/controller/OptionController.js"></script>
+    <script src="~/Asset/Admin/Js/controller/BrandController.js"></script>
 }

@@ -42,6 +42,10 @@
         [Display(Name = "Giá giảm")]
         public decimal? PromotionPrice { get; set; }
 
+        [StringLength(50)]
+        [Display(Name = "VAT")]
+        public string VAT { get; set; }
+
         [Display(Name = "Đơn vị")]
         public byte UnitID { get; set; }
 
@@ -91,6 +95,9 @@
 
         [Display(Name = "Danh mục")]
         public long ProductCategoryID { get; set; }
+
+        [Display(Name = "Thương hiệu")]
+        public byte BrandID { get; set; }
 
         [StringLength(500)]
         [Display(Name = "Tag SEO")]

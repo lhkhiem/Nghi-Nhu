@@ -12,6 +12,7 @@ namespace Models.EF
         {
         }
 
+        public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<About> Abouts { get; set; }
         public virtual DbSet<CompanyInfo> CompanyInfoes { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }

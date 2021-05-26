@@ -65,10 +65,12 @@
                         <div class="form-group-sm">
                             <label class="col-sm-12 control-label">VAT?</label>
                             <div class="col-sm-12">
-                                <select class="form-control">
-                                    <option value="VAT">Giá bao gồm VAT</option>
-                                    <option value="NOVAT">Giá không bao gồm VAT</option>
-                                </select>
+                                @Html.DropDownListFor(model => model.VAT, new List<SelectListItem> {
+                                 new SelectListItem { Value="Bao gồm VAT", Text="Bao gồm VAT" },
+                                 new SelectListItem { Value ="Chưa bao gồm VAT", Text="Chưa bao gồm VAT" },
+                                 new SelectListItem { Value ="Không có VAT", Text="Không có VAT"},
+                              },
+                            htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -92,10 +94,7 @@
                         <div class="form-group-sm">
                             <label class="col-sm-12 control-label">Thương hiệu</label>
                             <div class="col-sm-12">
-                                <select class="form-control">
-                                    <option value="RICOH">RICOH</option>
-                                    <option value="FUJIXEROX">FUJI XEROX</option>
-                                </select>
+                                @Html.DropDownListFor(model => model.BrandID, null, htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
                     </div>

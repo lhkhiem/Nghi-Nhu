@@ -61,6 +61,7 @@
     <Compile Include="DAO\FeedbackDao.cs" />
     <Compile Include="DAO\OptionDao.cs" />
     <Compile Include="DAO\ProductOptionDao.cs" />
+    <Compile Include="DAO\BrandDao.cs" />
     <Compile Include="DAO\VisitorDao.cs" />
     <Compile Include="DAO\OrderDao.cs" />
     <Compile Include="DAO\OrderDetailDao.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="DAO\MenuTypeDao.cs" />
     <Compile Include="DAO\UserGroupDao.cs" />
     <Compile Include="EF\About.cs" />
+    <Compile Include="EF\Brand.cs" />
     <Compile Include="EF\CompanyInfo.cs" />
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Credential.cs" />
