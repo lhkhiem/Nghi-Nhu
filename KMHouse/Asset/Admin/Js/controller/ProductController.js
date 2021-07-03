@@ -334,6 +334,7 @@ var productController = {
                             CreateBy: item.CreateBy,
                             Price: numeral(item.Price).format('0,0[.]00') + ' đ',
                             ProductCategoryName: item.ProductCategoryName,
+                            BrandName: item.BrandName,
                             UnitName: item.UnitName,
                             Status: item.Status == true ? "<a data-id=" + item.ID + " class=\"label label-success btn-active\">Active</a>" : "<a data-id=" + item.ID + " class=\"label label-danger btn-active\">Lock</a>"
                         });
