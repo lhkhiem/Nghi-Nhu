@@ -3666,7 +3666,6 @@
     <Content Include="Areas\Admin\Views\Product\Copy.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\_BrandAddUpdateModal.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\Index.cshtml" />
-    <Content Include="nghinhu.03.07.21" />
     <None Include="packages.config" />
     <Content Include="Areas\Admin\Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Header.cshtml" />
