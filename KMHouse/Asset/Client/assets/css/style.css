@@ -2337,7 +2337,7 @@ blockquote {
 
 @media screen and (min-width: 1200px) {
     .menu-vertical .megamenu:not(.megamenu-sm):not(.megamenu-md) {
-        width: 200px;
+        width: 800px;
         min-height: 100%
     }
 }
