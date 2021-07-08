@@ -128,7 +128,7 @@ namespace KMHouse
             );
             routes.MapRoute(
                 name: "Product Of Category",
-                url: "san-pham/{MetaTitle}-{cateId}",
+                url: "san-pham/{MetaTitle}-{cateId}-{brandId}",
                 defaults: new { controller = "ProductHome", action = "ProductOfCategory", id = UrlParameter.Optional },
                 namespaces: new[] { "KMHouse.Controllers" }
             );

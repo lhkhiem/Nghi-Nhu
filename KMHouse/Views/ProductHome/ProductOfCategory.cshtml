@@ -5,6 +5,7 @@
     var product = (List<Models.ViewModels.ProductViewModel>)ViewBag.Product;
     var categoryListWithout = (List<Models.EF.ProductCategory>)ViewBag.ListCategoryWithout;
     var listCateChild = (List<Models.EF.ProductCategory>)ViewBag.ListCateChild;
+    var listBrand = (List<Models.EF.Brand>)ViewBag.ListBrand;
     ViewBag.Title = "" + category.Name;
     ViewBag.Keyword = category.MetaTitle;
 }
@@ -52,15 +53,28 @@
                 </div><!-- End .toolbox -->
                 <div class="products mb-3">
                     <div class="row justify-content-lg-start">
+                        <div class="col-md-12" style="border-bottom:1px solid #f8f8f8">
+                            <a class="btn btn-info" style="background-color: #39f; margin-right: 5px; margin-bottom: 20px; min-width: 50px; padding: 2px" href="/san-pham/@category.MetaTitle-@category.ID-0">Tất cả</a>
+                            @foreach (var item in listBrand)
+                            {
+                                <a class="btn btn-info" style="background-color:#39f;margin-right: 5px; margin-bottom: 20px; min-width:50px;padding:2px" href="/san-pham/@category.MetaTitle-@category.ID-@item.ID">@item.Name</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="row justify-content-lg-start">
                         @if (listCateChild != null)
                         {
                             foreach (var cateChild in listCateChild)
                             {
-                                <div class="col-md-12" style="border-bottom:1px solid #f8f8f8">
-                                    <h5 style="text-transform:uppercase">@cateChild.Name</h5>
-                                </div>
+                                var list = Model.Where(x => x.Status == true && x.ProductCategoryID == cateChild.ID);
+                                if (list.Count() > 0)
+                                {
+                                    <div class="col-md-12" style="border-bottom:1px solid #f8f8f8">
+                                        <h5 style="text-transform:uppercase">@cateChild.Name</h5>
+                                    </div>
+                                }
 
-                                foreach (var item in Model.Where(x => x.Status == true && x.ProductCategoryID == cateChild.ID))
+                                foreach (var item in list)
                                 {
                                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                                         <div class="product product-7 text-left">

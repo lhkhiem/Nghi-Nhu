@@ -92,7 +92,7 @@ namespace KMHouse.Controllers
             return View(model);
         }
 
-        public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 40, string sort = "newest")
+        public ActionResult ProductOfCategory(long cateId, int pageIndex = 1, int pageSize = 40, string sort = "newest", byte brandId = 0)
         {
             var model = new ProductDao().ListByParentCategory2(cateId);
             var productCategoryDao = new ProductCategoryDao();
@@ -111,10 +111,12 @@ namespace KMHouse.Controllers
                 listProduct.AddRange(model.Where(x => x.ProductCategoryID == cateId));
             }
             model = listProduct;
+            if (brandId != 0) model = model.Where(x => x.BrandID == brandId).ToList();
             //Lấy danh sách danh mục sản phẩm
             ViewBag.Category = new ProductCategoryDao().GetByID(cateId);
             ViewBag.ListCategoryWithout = new ProductCategoryDao().ListHasProduct().Where(x => x.ID != cateId).ToList();
             ViewBag.Product = new ProductDao().ListAll().Where(x => x.ProductCategoryID != cateId).ToList();
+            ViewBag.ListBrand = new BrandDao().ListByCate(cateId);
             if (sort == "newest") ViewBag.Newest = "selected";
             if (sort == "price-up") ViewBag.PriceUp = "selected";
             if (sort == "price-down") ViewBag.PriceDown = "selected";

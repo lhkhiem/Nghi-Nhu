@@ -61,5 +61,20 @@ namespace Models.DAO
                 return false;
             }
         }
+
+        public List<Brand> ListByCate(long cateId)
+        {
+            var listBrand = db.Brands.ToList();
+            var listBrandInProduct = new List<Brand>();
+            var listBrandNew = new List<Brand>();
+            var listProduct = new ProductDao().ListByParentCategory(cateId);
+            foreach (var item in listProduct)
+            {
+                listBrandInProduct.Add(this.GetByID(item.BrandID));
+            }
+            listBrandNew = listBrand.Intersect(listBrandInProduct).ToList();
+
+            return listBrandNew;
+        }
     }
 }
