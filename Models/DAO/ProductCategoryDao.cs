@@ -185,7 +185,7 @@ namespace Models.DAO
 
         public List<ProductCategory> GetChild(long id)
         {
-            return db.ProductCategories.Where(x => x.ParentID == id).ToList();
+            return db.ProductCategories.Where(x => x.ParentID == id).OrderBy(x => x.DisplayOrder).ToList();
         }
 
         public bool ParentHasProduct(long id)
@@ -292,7 +292,7 @@ namespace Models.DAO
             foreach (var itemList1 in list1)
             {
                 listOrder.Add(itemList1);
-                listOrder.AddRange(list.Where(x => x.ParentID == itemList1.ID));
+                listOrder.AddRange(list.Where(x => x.ParentID == itemList1.ID).OrderBy(x => x.DisplayOrder));
             }
             //foreach (var item in db.ProductCategories)
             //{
