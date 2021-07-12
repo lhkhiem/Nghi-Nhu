@@ -169,7 +169,7 @@
                         var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
                         var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
                         //link gán cho nút
-                        var link = "/san-pham/" + category.MetaTitle + "-" + category.ID;
+                        var link = "/san-pham/" + category.MetaTitle + "-" + category.ID + "-0";
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 @if (currentPage > ViewBag.First)
@@ -230,7 +230,7 @@
                                             <div class="filter-item">
                                                 <div>
                                                     <i class="icon-long-arrow-right"></i>
-                                                    <a href="/san-pham/@itemChild.MetaTitle-@itemChild.ID" style="color:#666">@itemChild.Name</a>
+                                                    <a href="/san-pham/@itemChild.MetaTitle-@itemChild.ID-0" style="color:#666">@itemChild.Name</a>
                                                 </div><!-- End .custom-checkbox -->
                                                 <span class="item-count">@product.Count(x => x.ProductCategoryID == itemChild.ID)</span>
                                             </div><!-- End .filter-item -->

@@ -155,7 +155,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@item.MetaTitle-@item.ID" role="tab" aria-controls="elec-new-tab" aria-selected="true">Tất cả</a>
                     </li>
-                    @foreach (var childItem in productCategory.Where(x => x.ParentID == item.ID))
+                    @foreach (var childItem in productCategory.Where(x => x.ParentID == item.ID).OrderBy(x => x.DisplayOrder))
                     {
                         <li class="nav-item">
                             <a class="nav-link" id="elec-new-link" data-toggle="tab" href="#@childItem.MetaTitle-@childItem.ID" role="tab" aria-controls="elec-new-tab" aria-selected="true">@childItem.Name</a>
